@@ -1,0 +1,62 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+    min-width: 160px;
+  }
+  
+  .dropdown-button {
+    margin-left: auto;
+    width: 2rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+  }
+
+  #gastroHamburger {
+    width: 100%;
+    margin: 0;
+    transition: all .25s ease-in-out;
+  }
+
+  #gastroHamburger:hover {
+    transform: scale(1.2);
+  }
+  
+  .dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    animation: dropdownFade 0.35s;
+  }
+
+  @keyframes dropdownFade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  .dropdown--link {
+    color: #000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown--link:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /*Desktop View------------------------------------------------------------------*/
+@media (min-width: 420px) {
+  .dropdown-button {
+    width: 2.1rem;
+  }
+}

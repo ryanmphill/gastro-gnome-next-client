@@ -1,0 +1,64 @@
+.navbar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 0;
+    animation: navFade 0.75s;
+}
+
+@keyframes navFade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+.navbar__item {
+    flex-basis: 20%;
+    list-style-type: none;
+    min-width: 15%;
+    /* border: 1px dashed darkslategray; */
+}
+
+.navbar__menu {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navbar__logo {
+    height: 100%;
+    cursor: pointer;
+}
+
+#gastroTitle {
+    cursor: pointer;
+    color: #72875C; 
+    text-shadow: -0.25px 0.25px 0.25px rgba(43, 46, 46, 0.50);
+    font-size: 1.225em;
+}
+
+#logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    list-style-type: none;
+    height: 12vh;
+}
+
+/*Desktop View------------------------------------------------------------------*/
+@media (min-width: 420px) {
+    #logoContainer {
+        height: 15vh;
+    }
+
+    #gastroTitle {
+        font-size: 1.75em;
+        font-weight: bolder;
+    }
+}
+
+@media (min-width: 1080px) {
+    #logoContainer {
+        height: 20vh;
+    }
+}
