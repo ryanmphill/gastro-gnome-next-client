@@ -1,98 +1,133 @@
+'use client'
+
 import Image from 'next/image'
 import styles from './page.module.css'
 import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
+import { getRecipes } from '@/dataManagers/recipeManager'
+import { useAuthContext } from '@/context/AuthContext'
+import { getCurrentUser } from '@/dataManagers/authManager'
+import { useRouter } from 'next/navigation'
+import { FeedChoice } from '@/components/home/FeedChoice'
 
 const Home = () => {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <Link href={'/testroute'}>New Page Link</Link>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={"vercelLogo"}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  // Get the current user
+  const localGastroUser:string | null = localStorage.getItem("gastro_user")
+  const gastroUserObject = JSON.parse(localGastroUser)
 
-      <div className={"center"}>
-        <Image
-          className={"logo"}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+  interface Recipe {
+    id: number,
+    title: string,
+    description: string,
+    genre: {
+      id: number,
+      name: string
+    },
+    prep_instructions: string,
+    cook_instructions: string,
+    prep_time: number,
+    cook_time: number,
+    serving_size: number,
+    user: {
+      id: number,
+      full_name: string
+    },
+    note: string,
+    image: string,
+    created_on: string,
+    included_ingredients: any[],
+    categories: any[]
+  }
 
-      <div className={"grid"}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={"card"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  const { currentUserId, fetchCurrentUserId } = useAuthContext()
+  const [recipes, setRecipes] = useState<Recipe[]>([]) // Observing initial state []
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={"card"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={"card"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+  /*--FILTER-OPTIONS--------------------------------------------------------------------------*/
+  /* State for which posts to display at the broadest level. User can choose
+     'discover', which shows 'allPosts', or 'my feed' which shows 'postsFollowed' - 
+     posts from only users the current user is 'following' */
+  type Display = "allPosts" | "postsFollowed"
+  const [display, setDisplay] = useState<Display>("allPosts")
+  // State for query params that affect which recipes are displayed
+  const [queryParams, updateQueryParams] = useState<string[]>([])
+  // State to allow recipes to be filtered by search query or by selected category tag
+  const [filteredRecipes, setFilteredRecipes] = useState([])
+  /*-------------------------------------------------------------------------------------------*/
+  
+  /*-GET RECIPES FETCH CALL-------------------------------------------------------------------------------*/
+  // Fetch the list of recipes with user info expanded and ingredients and categories embedded
+  const fetchRecipes = useCallback(async (queryParams: string) => {
+      const recipeData = await getRecipes(queryParams)
+      setRecipes(recipeData)
+  },[])
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={"card"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+  useEffect(
+      () => {
+          fetchRecipes("")
+      },
+      [fetchRecipes] // When this array is empty, you are observing initial component state
   )
+  /*-----------------------------------------------------------------------------------------------------*/
+
+  /*-GET CURRENT USER'S FOLLOW DATA-----------------------------------------------------------------------*/
+  // Maintain 'follows' state here so that all listed recipes are updated when user is followed/unfollowed
+  // Set a state variable for the user's follows
+  const [usersFollows, updateUsersFollows] = useState([])
+
+  // Define a function to fetch the current user with their follows embedded
+  const fetchUsersFollows = useCallback(async () => {
+      const userData = await getCurrentUser()
+      const followArray = userData?.following
+      updateUsersFollows(followArray)
+  },[])
+
+  // Get the data for the current user with their follows embedded on initial render
+  useEffect(
+      () => {
+          fetchUsersFollows()
+      },
+      [] // When this array is empty, you are observing initial component state
+  )
+  /*-----------------------------------------------------------------------------------------------------*/
+  
+  // Assign a variable to useRouter()
+  const router = useRouter()
+  
+  /* Render discover/my-feed tab, filter bar for searching/filtering by category, post recipe button,
+     and recipe feed */
+  return <section className="pageBody">
+
+      <FeedChoice queryParams={queryParams}
+              updateQueryParams={updateQueryParams}
+              fetchRecipes={fetchRecipes} 
+              display={display}
+              setDisplay={setDisplay}/>
+      
+
+      <div className="feedControl">
+
+          <FilterBar queryParams={queryParams}
+              updateQueryParams={updateQueryParams}
+              fetchRecipes={fetchRecipes} />
+
+
+          {
+              display === "allPosts"
+                  ? <h2 className="discoverFade feedHeader">Discover New Recipes</h2>
+                  : <h2 className="myFeedFade feedHeader">Recipes From People You're Following</h2>
+          }
+
+
+
+          <button className="btn-primary" onClick={() => router.push("/postrecipe")}>Post a Recipe</button>
+          <RecipeFeed recipes={filteredRecipes}
+              gastroUserObject={gastroUserObject}
+              updateMainFeed={fetchRecipes}
+              usersFollows={usersFollows}
+              fetchUsersFollows={fetchUsersFollows} />
+
+      </div>
+  </section>
 }
 export default Home
