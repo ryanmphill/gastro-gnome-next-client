@@ -1,7 +1,7 @@
 'use client'
 
 import { getCurrentUser } from "@/dataManagers/authManager";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
     token: string | null;
@@ -13,7 +13,15 @@ type AuthContextType = {
   };
 
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const useAuthContext = () => {
+    const obj = useContext(AuthContext)
+    if (!obj) {
+        throw new Error("AuthContext must be used within a provider")
+    }
+    return obj;
+}
 
 export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
     // All your data goes here
