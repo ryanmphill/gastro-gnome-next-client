@@ -2,7 +2,7 @@
 import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
 import { formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
-import Select, { GetOptionValue } from 'react-select';
+import Select, { ActionMeta } from 'react-select';
 
 interface Category {
     id: number,
@@ -85,7 +85,10 @@ export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams
     
 
     // Handle the selected category
-    const handleSelectedCategory = (chosenCategory: any) => {
+    const handleSelectedCategory = (chosenCategory: Category | null) => {
+        if (chosenCategory === null) {
+            return;
+        }
         // Get a copy of the current array of categories that are being used to filter
         const updatedCategories = [ ...chosenCategories ]
         // Check if the category has already been added
@@ -93,16 +96,16 @@ export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams
         if (!alreadyAdded) {
             updatedCategories.push(chosenCategory)
             updateChosenCategories(updatedCategories)
-        }
 
-        let updatedParams = [ ...queryParams ]
-        // Add new category query if exists
-        
-        updatedParams.push(`category=${chosenCategory.id}`)
-        
-        updateQueryParams(updatedParams)
-        const formattedQuery = formatQuery(updatedParams)
-        fetchRecipes(formattedQuery)
+            let updatedParams = [ ...queryParams ]
+            // Add new category query if exists
+            
+            updatedParams.push(`category=${chosenCategory.id}`)
+            
+            updateQueryParams(updatedParams)
+            const formattedQuery = formatQuery(updatedParams)
+            fetchRecipes(formattedQuery)
+        }
     }
 
     return <>
@@ -125,11 +128,11 @@ export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams
                 id="filterByCategories"
                 classNamePrefix="categorySelect"
                 options={filteredCategories}
-                onChange={(selectedOption) => {
+                onChange={(selectedOption: Category | null, actionMeta: ActionMeta<Category>) => {
                     handleSelectedCategory(selectedOption)
                 }}
-                getOptionLabel={(option: any) => option.name}
-                getOptionValue={(option: any) => option.id}
+                getOptionLabel={(option: Category) => option.name}
+                getOptionValue={(option: Category) => option.id.toString()}
                 placeholder="Select a Category"
             />
         </div>

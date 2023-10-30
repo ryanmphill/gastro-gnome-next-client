@@ -9,11 +9,13 @@ import { useAuthContext } from '@/context/AuthContext'
 import { getCurrentUser } from '@/dataManagers/authManager'
 import { useRouter } from 'next/navigation'
 import { FeedChoice } from '@/components/home/FeedChoice'
+import { FilterBar } from '@/components/home/FilterBar'
+import { RecipeFeed } from '@/components/Feed/RecipeFeed'
 
 const Home = () => {
   // Get the current user
   const localGastroUser:string | null = localStorage.getItem("gastro_user")
-  const gastroUserObject = JSON.parse(localGastroUser)
+  const gastroUserObject = localGastroUser !== null ? JSON.parse(localGastroUser) : null;
 
   interface Recipe {
     id: number,
@@ -73,7 +75,7 @@ const Home = () => {
   /*-GET CURRENT USER'S FOLLOW DATA-----------------------------------------------------------------------*/
   // Maintain 'follows' state here so that all listed recipes are updated when user is followed/unfollowed
   // Set a state variable for the user's follows
-  const [usersFollows, updateUsersFollows] = useState([])
+  const [usersFollows, updateUsersFollows] = useState<number[]>([])
 
   // Define a function to fetch the current user with their follows embedded
   const fetchUsersFollows = useCallback(async () => {
@@ -122,10 +124,10 @@ const Home = () => {
 
           <button className="btn-primary" onClick={() => router.push("/postrecipe")}>Post a Recipe</button>
           <RecipeFeed recipes={filteredRecipes}
-              gastroUserObject={gastroUserObject}
               updateMainFeed={fetchRecipes}
               usersFollows={usersFollows}
-              fetchUsersFollows={fetchUsersFollows} />
+              fetchUsersFollows={fetchUsersFollows}
+              queryParams={queryParams} />
 
       </div>
   </section>

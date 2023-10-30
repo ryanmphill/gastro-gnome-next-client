@@ -35,7 +35,17 @@ export const loginUser = async (user : {username: string, password: string}) => 
     return await res.json()
   };
 
-  export const getCurrentUser = async () => {
+  type currentUserType = {
+    id: number,
+    bio: string,
+    image_url: string,
+    full_name: string,
+    date_joined: string,
+    favorites: number[],
+    following: number[]
+  };
+
+  export const getCurrentUser = async (): Promise<currentUserType> => {
     const res = await fetch(`${apiUrl}/users/current`, {
       method: "GET",
       headers: {

@@ -1,113 +1,80 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useAuthContext } from "@/context/AuthContext"
+import { getCurrentUser } from "@/dataManagers/authManager"
+import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManager"
+import { usePathname } from "next/navigation"
+import { MouseEvent, useCallback, useEffect, useState } from "react"
 
+interface FavoriteButtonProps {
+    recipeId: number,
+    updateProfileFavs?: () => Promise<void> | undefined
+}
 
-export const FavoriteButton = ( {recipe, updateProfileFavs} ) => {
+export const FavoriteButton = ( {recipeId, updateProfileFavs} : FavoriteButtonProps ) => {
     // get the current user
-    const localGastroUser = localStorage.getItem("gastro_user")
-    const gastroUserObject = JSON.parse(localGastroUser)
+    const { currentUserId } = useAuthContext()
 
     // Get the current location
-    const location = useLocation()
+    const pathname = usePathname()
 
     // Check if the user is viewing their profile to dynamically update the profile's list of favorites
-    const viewingProfile = location.pathname === `/userprofile/${gastroUserObject.id}`
+    const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
     // Set a state variable for the user's favorites
-    const [usersFavs, updateUsersFavs] = useState([])
-
-    // Define a variable for the favorite object to be POSTed
-    const favoriteObjectToPost = {
-        userId: gastroUserObject.id,
-        recipeCardId: recipe.id
-    }
+    const [usersFavs, updateUsersFavs] = useState<number[]>([])
 
     // Define a function to fetch the current user with their favorites embedded
-    const fetchUserFavs = () => {
-        fetch(`http://localhost:8088/users/${gastroUserObject.id}?_embed=favorites`)
-                .then(response => response.json())
-                .then((userObject) => {
-                    const favoriteArray = userObject.favorites
-                    updateUsersFavs(favoriteArray)
-                })
-    }
+    const fetchUserFavs = useCallback(async () => {
+        try {
+            const userData = await getCurrentUser()
+            const favoriteArray = userData.favorites
+            updateUsersFavs(favoriteArray)
+        } catch(err) {
+            console.error(err)
+        }
+    },[])
 
-    // Get the data for the current user with their favorites embedded on initial render
+    // Get the data for the current user's favorites
     useEffect(
         () => {
             fetchUserFavs()
         },
-        [] // When this array is empty, you are observing initial component state
+        [fetchUserFavs] // When this array is empty, you are observing initial component state
     )
 
     // Handle the click to favorite a post
-    const handleFavorite = (event) => {
+    const handleFavorite = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         
         // POST favorite object to API ///////////////////////////////////
-        fetch("http://localhost:8088/favorites", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(favoriteObjectToPost)
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json() // Await the response.json() Promise
-                } else {
-                    throw new Error("Unable to favorite recipe");
-                }
-            })
-            .then(() => {
-                // Update the user's list of favorites state
-                fetchUserFavs()
-            })
-            .catch(error => {
-                console.error("An error occurred:", error);
-                window.alert("Something went wrong");
-            })
-        
+        try {
+            await addRecipeToFavorites(recipeId)
+            fetchUserFavs()
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     // Handle the click to unfavorite a post
-    const handleUndoFavorite = (event) => {
+    const handleUndoFavorite = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        // Find the favorite relationship between the user and recipeCard
-        const favToDelete = usersFavs.find(userFav => userFav.recipeCardId === recipe.id)
 
-        //DELETE the favorite object
-        fetch(`http://localhost:8088/favorites/${favToDelete.id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
+        //DELETE the favorite
+        try {
+            await removeRecipeFromFavorites(recipeId)
+            // Update the user's list of favorites state
+            if (viewingProfile && updateProfileFavs) { // If the user is on their profile, remove the recipe from view
+                updateProfileFavs()
+            } else { // else, change the button from 'favorited ⭐' to 'favorite ☆'
+                fetchUserFavs()
             }
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error('Unable to undo favorite')
-                }
-            })
-            .then(() => {
-                // Update the user's list of favorites state
-                if (viewingProfile) { // If the user is on their profile, remove the recipe from view
-                    updateProfileFavs()
-                } else { // else, change the button from 'favorited ⭐' to 'favorite ☆'
-                    fetchUserFavs()
-                }
-            })
-            .catch((error) => {
-                console.error('An error occurred:', error)
-                window.alert('Something went wrong')
-            })
-            
+        } catch (err) {
+            console.error(err)
+        }    
     }
 
     /*Define a variable with a value of true if the user has already favorited this post, and false 
     if they haven't favorited this post yet*/
-    const alreadyFavorited = usersFavs.some(userFav => userFav.recipeCardId === recipe.id)
+    const alreadyFavorited = usersFavs.some(userFav => userFav === recipeId)
 
     // Return the UI
     return <>

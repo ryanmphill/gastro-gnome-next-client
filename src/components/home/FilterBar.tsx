@@ -2,6 +2,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
+import { SelectedCategories } from "./SelectedCategories";
 
 interface FilterBarProps {
     queryParams: string[],
