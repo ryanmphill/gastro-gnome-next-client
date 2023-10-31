@@ -89,8 +89,8 @@ export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, 
     return <>
         {
             !alreadyFollowed
-                ? <button className={`${styles["btn--follow"]}`} onClick={click => handleFollow(click)}><img src={followImg.src} alt="follow" className={`${styles["followIcon"]}`}></img></button>
-                : <button className={`${styles["btn--follow"]}`} onClick={click => handleUndoFollow(click)}><img src={followingImg.src} alt="following" className={`${styles["followIcon"]} ${styles["following"]}`}></img></button>
+                ? <button className={styles["btn--follow"]} onClick={click => handleFollow(click)}><img src={followImg.src} alt="follow" className={styles["followIcon"]}></img></button>
+                : <button className={styles["btn--follow"]} onClick={click => handleUndoFollow(click)}><img src={followingImg.src} alt="following" className={`${styles["followIcon"]} ${styles["following"]}`}></img></button>
         }
     </>
 }

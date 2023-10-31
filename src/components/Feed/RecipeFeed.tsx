@@ -5,6 +5,7 @@ import { useAuthContext } from "@/context/AuthContext"
 import { FollowButton } from "./PostInteraction/FollowButton"
 import { DeleteRecipe } from "./PostInteraction/DeleteRecipe"
 import { FavoriteButton } from "./PostInteraction/FavoriteButton"
+import styles from "./RecipeFeed.module.css"
 
 interface Recipe {
     id: number,
@@ -57,12 +58,12 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                 }
                 
 
-                return <section className="recipe" key={`recipe--${recipe.id}`}>
-                    <div className="recipe--imgContainer" style={bgImageStyle} onClick={() => router.push(`/recipe/${recipe.id}`)}></div>
-                    <div className="recipe--content">
-                        <div className="recipe--headerContainer"><h3><Link className="recipe--header" href={`/recipe/${recipe.id}`}>{recipe.title}</Link></h3></div>
+                return <section className={styles["recipe"]} key={`recipe--${recipe.id}`}>
+                    <div className={styles["recipe--imgContainer"]} style={bgImageStyle} onClick={() => router.push(`/recipe/${recipe.id}`)}></div>
+                    <div className={styles["recipe--content"]}>
+                        <div className={styles["recipe--headerContainer"]}><h3><Link className={styles["recipe--header"]} href={`/recipe/${recipe.id}`}>{recipe.title}</Link></h3></div>
                         <div>{recipe.description}</div>
-                        <div className="recipe__userContainer">
+                        <div className={styles["recipe__userContainer"]}>
                             <div>Posted by: <Link href={`/userprofile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></div>
                             {
                                 currentUserId !== recipe?.user?.id
@@ -72,11 +73,11 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                                     fetchUsersFollows={fetchUsersFollows} />
                             }
                         </div>
-                        <footer className="recipe--footer">
+                        <footer className={styles["recipe--footer"]}>
                             {
                                 currentUserId === recipe?.user?.id
                                     ? <div className="recipe__button-group">
-                                        <button className="btn-secondary btn-group-left"
+                                        <button className={`${styles["btn-secondary"]} ${styles["btn-group-left"]}`}
                                             onClick={(evt) => {
                                                 evt.preventDefault()
                                                 router.push(`/recipe/${recipe.id}/edit/${recipe.user.id}`)

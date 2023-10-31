@@ -81,8 +81,8 @@ export const FavoriteButton = ( {recipeId, updateProfileFavs} : FavoriteButtonPr
     return <>
         {
             !alreadyFavorited
-                ? <button className={`${styles["btn-secondary"]}`} onClick={click => handleFavorite(click)}>Favorite ☆</button>
-                : <button className={`${styles["btn-secondary"]}`} id={`${styles["btn-faved"]}`} onClick={click => handleUndoFavorite(click)}>Favorited <div className={`${styles["favstar"]}`}></div></button>
+                ? <button className={styles["btn-secondary"]} onClick={click => handleFavorite(click)}>Favorite ☆</button>
+                : <button className={styles["btn-secondary"]} id={styles["btn-faved"]} onClick={click => handleUndoFavorite(click)}>Favorited <div className={`${styles["favstar"]}`}></div></button>
         }
     </>
 }
