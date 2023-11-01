@@ -66,7 +66,7 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                         <div className={styles["recipe__userContainer"]}>
                             <div>Posted by: <Link href={`/userprofile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></div>
                             {
-                                currentUserId !== recipe?.user?.id
+                                currentUserId !== recipe?.user?.id && currentUserId !== 0
                                 && <FollowButton
                                     userToFollowId={recipe.user.id}
                                     usersFollows={usersFollows}
@@ -76,7 +76,7 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                         <footer className={styles["recipe--footer"]}>
                             {
                                 currentUserId === recipe?.user?.id
-                                    ? <div className="recipe__button-group">
+                                    && <div className="recipe__button-group">
                                         <button className={`${styles["btn-secondary"]} ${styles["btn-group-left"]}`}
                                             onClick={(evt) => {
                                                 evt.preventDefault()
@@ -88,7 +88,10 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                                             updateMainFeed={updateMainFeed}
                                             queryParams={queryParams} />
                                     </div>
-                                    : <FavoriteButton recipeId={recipe.id} />
+                            }
+                            {
+                                currentUserId !== recipe?.user?.id && currentUserId !== 0
+                                && <FavoriteButton recipeId={recipe.id} />
                             }
                         </footer>
                     </div>

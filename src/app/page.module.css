@@ -280,42 +280,35 @@
 
 /* Styles for display tabs -----------------------------------------------------*/
 
-.recipeDisplayTab, .profileDisplayTab {
+.profileDisplayTab {
   display: flex;
-  column-gap: 3rem;
+  /* column-gap: 3rem; */
   border-bottom: 1px solid rgba(143, 159, 174, 0.5);
   border-top: 1px solid rgba(143, 159, 174, 0.5);
   padding: 0.5rem 0;
   margin-bottom: 1rem;
   margin-top: 1rem;
-}
-
-.recipeDisplayTab {
-  justify-content: center;
-}
-
-.profileDisplayTab {
   justify-content: space-between;
   column-gap: 0;
   overflow-x: auto;
 }
 
-.recipeDisplayTabLink, .profileDisplayTabLink {
+.profileDisplayTabLink {
   background-color: inherit;
   border: none;
   outline: none;
   cursor: pointer;
 }
 
-.recipeDisplayTab--hoverEffect, .profileDisplayTab--hoverEffect {
+.profileDisplayTab--hoverEffect {
   transition: all 0.3s ease-in-out;
 }
 
-.recipeDisplayTab--hoverEffect:hover, .profileDisplayTab--hoverEffect:hover {
+.profileDisplayTab--hoverEffect:hover {
   transform: scale(1.2);
 }
 
-.recipeDisplayTabLink.active, .profileDisplayTabLink.active {
+.profileDisplayTabLink.active {
   font-weight: bold;
 }
 
@@ -420,10 +413,6 @@
 
 /*Desktop View ----------------------------------------------------------------*/
 @media (min-width: 820px) {
-  body {
-    padding: 0 3rem;
-  }
-
   .pageBody {
     width: 90%;
     margin-left: auto;
@@ -436,11 +425,5 @@
     justify-content: flex-end;
     column-gap: 3rem;
     overflow-x: visible;
-  }
-}
-
-@media (min-width: 420px) {
-  .recipeDisplayTab {
-    justify-content: flex-end;
   }
 }

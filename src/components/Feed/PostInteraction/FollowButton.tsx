@@ -28,14 +28,6 @@ export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, 
     // Set a state varialbe for if the user is following
     const [alreadyFollowed, updateAlreadyFollowed] = useState(false)
 
-    // Define a variable for the follow object to be POSTed
-    const followObjectToPost = {
-        userId: currentUserId,
-        whoIsFollowed: userToFollowId
-    }
-
-    
-
     // Use the array of follows and update the alreadyFollowed state
     useEffect(
         () => {

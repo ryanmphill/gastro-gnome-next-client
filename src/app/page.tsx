@@ -1,21 +1,16 @@
 'use client'
-
-import Image from 'next/image'
 import styles from './page.module.css'
-import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 import { getRecipes } from '@/dataManagers/recipeManager'
 import { useAuthContext } from '@/context/AuthContext'
 import { getCurrentUser } from '@/dataManagers/authManager'
 import { useRouter } from 'next/navigation'
-import { FeedChoice } from '@/components/home/FeedChoice'
-import { FilterBar } from '@/components/home/FilterBar'
 import { RecipeFeed } from '@/components/Feed/RecipeFeed'
+import { FeedChoice } from '@/components/home/filters/FeedChoice'
+import { FilterBar } from '@/components/home/filters/FilterBar'
 
 const Home = () => {
   // Get the current user
-  const localGastroUser:string | null = localStorage.getItem("gastro_user")
-  const gastroUserObject = localGastroUser !== null ? JSON.parse(localGastroUser) : null;
 
   interface Recipe {
     id: number,
@@ -53,9 +48,12 @@ const Home = () => {
   const [display, setDisplay] = useState<Display>("allPosts")
   // State for query params that affect which recipes are displayed
   const [queryParams, updateQueryParams] = useState<string[]>([])
-  // State to allow recipes to be filtered by search query or by selected category tag
-  const [filteredRecipes, setFilteredRecipes] = useState([])
   /*-------------------------------------------------------------------------------------------*/
+  useEffect(
+    () => {
+        console.log("queryParams", queryParams)
+    }, [queryParams]
+  )
   
   /*-GET RECIPES FETCH CALL-------------------------------------------------------------------------------*/
   // Fetch the list of recipes with user info expanded and ingredients and categories embedded
@@ -87,9 +85,11 @@ const Home = () => {
   // Get the data for the current user with their follows embedded on initial render
   useEffect(
       () => {
-          fetchUsersFollows()
+        if (currentUserId !== 0) {
+            fetchUsersFollows()
+        }
       },
-      [] // When this array is empty, you are observing initial component state
+      [fetchUsersFollows, currentUserId] // When this array is empty, you are observing initial component state
   )
   /*-----------------------------------------------------------------------------------------------------*/
   
@@ -98,7 +98,7 @@ const Home = () => {
   
   /* Render discover/my-feed tab, filter bar for searching/filtering by category, post recipe button,
      and recipe feed */
-  return <section className="pageBody">
+  return <section className={styles["pageBody"]}>
 
       <FeedChoice queryParams={queryParams}
               updateQueryParams={updateQueryParams}
@@ -116,14 +116,14 @@ const Home = () => {
 
           {
               display === "allPosts"
-                  ? <h2 className="discoverFade feedHeader">Discover New Recipes</h2>
-                  : <h2 className="myFeedFade feedHeader">Recipes From People You're Following</h2>
+                  ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
+                  : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You're Following</h2>
           }
 
 
 
-          <button className="btn-primary" onClick={() => router.push("/postrecipe")}>Post a Recipe</button>
-          <RecipeFeed recipes={filteredRecipes}
+          <button className={styles["btn-primary"]} onClick={() => router.push("/postrecipe")}>Post a Recipe</button>
+          <RecipeFeed recipes={recipes}
               updateMainFeed={fetchRecipes}
               usersFollows={usersFollows}
               fetchUsersFollows={fetchUsersFollows}

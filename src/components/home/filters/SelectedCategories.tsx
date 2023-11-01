@@ -1,5 +1,7 @@
+'use client'
 import { formatQuery } from "@/utils/helpers/formatQuery"
 import { Dispatch, MouseEvent, SetStateAction } from "react"
+import styles from "./HomeFilters.module.css"
 
 interface Category {
     id: number,
@@ -34,21 +36,21 @@ export const SelectedCategories = ({ chosenCategories, updateChosenCategories, q
                 updatedParams.push(`category=${category.id}`)
             })
         }
-        updateQueryParams(updatedParams)
+        updateQueryParams( [...updatedParams ])
         const formattedQuery = formatQuery(updatedParams)
         fetchRecipes(formattedQuery)
     }
 
     return <>
-        <div className="chosenCategories">
+        <div className={styles["chosenCategories"]}>
             {
                 chosenCategories.length > 0
                 && chosenCategories.map(category => {
-                    return <div className="chosenCategory" key={`chosenCat--${category.id}`}>
+                    return <div className={styles["chosenCategory"]} key={`chosenCat--${category.id}`}>
                         {category.name}
                         <button
                             onClick={(click) => handleRemoveSelected(click, category)}
-                            className="btn--removeItem btn--removeFilterCat"
+                            className={styles["btn--removeFilterCat"]}
                         >X</button>
                     </div>
                 })

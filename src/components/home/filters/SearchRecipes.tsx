@@ -1,6 +1,8 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useEffect } from "react"
-import searchIcon from "../../assets/skillet-search-small.svg"
+'use client'
+import { ChangeEvent, Dispatch, KeyboardEvent, MouseEvent, SetStateAction } from "react"
+import searchIcon from "../../../../public/assets/skillet-search-small.svg"
 import { formatQuery } from "@/utils/helpers/formatQuery"
+import styles from "./HomeFilters.module.css"
 
 interface SearchRecipesProps {
     searchTerms: string,
@@ -15,16 +17,17 @@ export const SearchRecipes = (
     : SearchRecipesProps) => {
 
     // Handle the search click
-    const handleSearchClick = (evt: any) => {
+    const handleSearchClick = (evt: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLButtonElement>) => {
         evt.preventDefault()
         const copy = [ ...queryParams ]
         // Clear any existing search queries
         let updatedParams = copy.filter(param => !param.includes("search"))
         // Add new search query if exists
         if (searchTerms !== "") {
-            updatedParams.push(`search=${searchTerms}`)
+            updatedParams = [ ...updatedParams, `search=${searchTerms}`]
         }
-        updateQueryParams(updatedParams)
+        console.log("updatedParams", updatedParams)
+        updateQueryParams([ ...updatedParams ])
         const formattedQuery = formatQuery(updatedParams)
         fetchRecipes(formattedQuery)
     }
@@ -35,14 +38,14 @@ export const SearchRecipes = (
             const copy = [ ...queryParams ]
             // Clear any existing search queries
             let updatedParams = copy.filter(param => !param.includes("search"))
-            updateQueryParams(updatedParams)
+            updateQueryParams( [...updatedParams ])
             const formattedQuery = formatQuery(updatedParams)
             fetchRecipes(formattedQuery)
         }
     }
 
-    return <div className="searchBarContainer">
-        <input id="RecipeSearchBar"
+    return <div className={styles["searchBarContainer"]}>
+        <input id={styles["RecipeSearchBar"]}
             onChange={
                 (changeEvent) => {
                     handleSearchChange(changeEvent)
@@ -50,8 +53,8 @@ export const SearchRecipes = (
             }
             onKeyDown={(evt) => evt.key === 'Enter' && evt.target === document.activeElement && handleSearchClick(evt)}
             type="text" placeholder="Find a Recipe" />
-        <button className="btn--search"
+        <button className={styles["btn--search"]}
             onClick={(evt) => handleSearchClick(evt)}
-        ><img className="searchIcon" src={searchIcon} alt="search"></img></button>
+        ><img className={styles["searchIcon"]} src={searchIcon.src} alt="search"></img></button>
     </div>
 }
