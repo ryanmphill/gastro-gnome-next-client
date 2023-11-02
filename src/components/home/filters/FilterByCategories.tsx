@@ -4,13 +4,7 @@ import { formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
-
-interface Category {
-    id: number,
-    name: string,
-    category_type: number,
-    category_type_label: string
-}
+import { Category } from "@/types/categoryType";
 
 interface FilterByCategoriesProps {
     queryParams: string[],
