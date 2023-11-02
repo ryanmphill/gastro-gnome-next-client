@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/dataManagers/authManager"
 import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManager"
 import { usePathname } from "next/navigation"
 import { MouseEvent, useCallback, useEffect, useState } from "react"
+import styles from "./PostInteraction.module.css"
 
 interface FavoriteButtonProps {
     recipeId: number,
@@ -80,8 +81,8 @@ export const FavoriteButton = ( {recipeId, updateProfileFavs} : FavoriteButtonPr
     return <>
         {
             !alreadyFavorited
-                ? <button className="btn-secondary" onClick={click => handleFavorite(click)}>Favorite ☆</button>
-                : <button className="btn-secondary" id="btn-faved" onClick={click => handleUndoFavorite(click)}>Favorited <div className="favstar"></div></button>
+                ? <button className={styles["btn-secondary"]} onClick={click => handleFavorite(click)}>Favorite ☆</button>
+                : <button className={styles["btn-secondary"]} id={styles["btn-faved"]} onClick={click => handleUndoFavorite(click)}>Favorited <div className={`${styles["favstar"]}`}></div></button>
         }
     </>
 }

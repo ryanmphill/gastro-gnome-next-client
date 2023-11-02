@@ -1,0 +1,207 @@
+/*Feed Choice Styles---------------------------------------------------*/
+.recipeDisplayTab {
+    display: flex;
+    column-gap: 3rem;
+    border-bottom: 1px solid rgba(143, 159, 174, 0.5);
+    border-top: 1px solid rgba(143, 159, 174, 0.5);
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.recipeDisplayTabLink {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.recipeDisplayTab--hoverEffect {
+    transition: all 0.3s ease-in-out;
+}
+
+.recipeDisplayTab--hoverEffect:hover {
+    transform: scale(1.2);
+}
+
+.recipeDisplayTabLink.active {
+    font-weight: bold;
+}
+
+.disabledTabLink {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+/* CSS for underline animation --------------------------------------------*/
+
+.underline-effect {
+    position: relative;
+    text-decoration: none;
+}
+
+.underline-effect::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #b0c19d;
+    box-shadow: 0px 2.5px 0.25px rgba(61, 74, 74, 0.15);
+    border-radius: 25px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.underline-effect.active::before {
+    transform: scaleX(1);
+}
+
+/* -------------------------------------------------------------------------*/
+
+/*Filter Bar Styles---------------------------------------------------------*/
+.filterBar {
+    width: 100%;
+    display: block;
+    column-gap: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.searchIcon {
+    width: 100%;
+    margin: 0;
+    transition: all .2s ease-in-out;
+}
+
+.btn--search {
+    border: 1px solid lightgreen;
+    width: 2rem;
+    padding: 4px 0.35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
+    transition: all .2s ease-in-out;
+}
+
+.searchIcon:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.filterBar__categories {
+    display: flex;
+    box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
+    border-radius: 10px;
+    padding: 0.15rem 0.35rem;
+    flex-basis: 50%;
+    font-size: x-small;
+    background-color: field;
+}
+
+/*React-Select for category filters-------------------------------------*/
+.filterBar__categories :global(#filterByCategories) {
+    flex: 1;
+    height: 100%;
+    min-height: 100%;
+}
+
+.filterBar__categories :global(#filterByCategories) :global(.categorySelect__control) {
+    border: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+.filterBar__categories :global(#filterByCategories) :global(.categorySelect__value-container) {
+    height: 100%;
+    min-height: 100%;
+}
+
+.filterBar__categories :global(#filterByCategories) :global(.categorySelect__dropdown-indicator) {
+    padding: 4px;
+}
+
+.filterBar__categories :global(#filterByCategories) :global(.categorySelect__input-container) {
+    margin: 0;
+    padding: 0;
+}
+/*----------------------------------------------------------------------*/
+
+.filterBar__categoryType {
+    border: none;
+    width: 35%;
+    padding: none;
+    color: #495057;
+}
+
+.chosenCategories {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-end;
+}
+
+.chosenCategory {
+    background-color: #b0c19d;
+    border-radius: 20px;
+    padding: .25rem .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 46%;
+}
+
+.btn--removeFilterCat {
+    border: none;
+    background-color: inherit;
+    color: rgba(31, 31, 31, .55);
+    margin-left: .25rem;
+    font-size: smaller;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn--removeFilterCat:hover {
+    color: firebrick;
+    cursor: pointer;
+}
+
+.searchBarContainer {
+    display: flex;
+    column-gap: 0.25rem;
+    /* border: 1px solid lightslategray; */
+    box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
+    border-radius: 10px;
+    padding: 0 0.5rem 0 0;
+    flex-basis: 50%;
+    justify-content: space-between;
+    background-color: field;
+    margin-bottom: 0.25rem;
+    min-height: 32.79px;
+}
+
+#RecipeSearchBar {
+    border: none;
+    border-radius: 10px;
+    padding-left: 0.5rem;
+    flex-basis: 100%;
+    min-width: 0%;
+}
+
+/*Desktop View ----------------------------------------------------------------*/
+@media (min-width: 420px) {
+    .recipeDisplayTab {
+        justify-content: flex-end;
+    }
+}

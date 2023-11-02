@@ -3,7 +3,7 @@
 import { MouseEvent, useEffect, useState } from "react"
 import followImg from "../../../../public/assets/follow.png"
 import followingImg from "../../../../public/assets/following.png"
-import "./PostInteraction.css"
+import styles from "./PostInteraction.module.css"
 import { usePathname } from "next/navigation"
 import { useAuthContext } from "@/context/AuthContext"
 import { followUser, unFollowUser } from "@/dataManagers/userManager"
@@ -27,14 +27,6 @@ export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, 
 
     // Set a state varialbe for if the user is following
     const [alreadyFollowed, updateAlreadyFollowed] = useState(false)
-
-    // Define a variable for the follow object to be POSTed
-    const followObjectToPost = {
-        userId: currentUserId,
-        whoIsFollowed: userToFollowId
-    }
-
-    
 
     // Use the array of follows and update the alreadyFollowed state
     useEffect(
@@ -89,8 +81,8 @@ export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, 
     return <>
         {
             !alreadyFollowed
-                ? <button className="btn--follow" onClick={click => handleFollow(click)}><img src={followImg.src} alt="follow" className="followIcon"></img></button>
-                : <button className="btn--follow" onClick={click => handleUndoFollow(click)}><img src={followingImg.src} alt="following" className="followIcon following"></img></button>
+                ? <button className={styles["btn--follow"]} onClick={click => handleFollow(click)}><img src={followImg.src} alt="follow" className={styles["followIcon"]}></img></button>
+                : <button className={styles["btn--follow"]} onClick={click => handleUndoFollow(click)}><img src={followingImg.src} alt="following" className={`${styles["followIcon"]} ${styles["following"]}`}></img></button>
         }
     </>
 }

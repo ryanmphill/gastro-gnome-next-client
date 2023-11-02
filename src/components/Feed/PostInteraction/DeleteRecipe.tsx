@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from "react"
-import "./PostInteraction.css"
+import styles from "./PostInteraction.module.css"
 import { deleteRecipe } from "@/dataManagers/recipeManager"
 import { formatQuery } from "@/utils/helpers/formatQuery"
 
@@ -46,12 +46,12 @@ export const DeleteRecipe = ({ recipeId, updateMainFeed, queryParams } : DeleteR
             ? 
                 <div className="confirmation-prompt">
                     <p>Are you sure you want to delete?</p>
-                    <button className="btn-secondary btn-group-left" onClick={(click) => handleDeleteRecipe(click)}>Delete</button>
-                    <button className="btn-secondary btn-group-right" id="btn-cancel-dlt" onClick={(click) => handleCancelDelete(click)}>Cancel</button>
+                    <button className={`${styles["btn-secondary"]} ${styles["btn-group-left"]}`} onClick={(click) => handleDeleteRecipe(click)}>Delete</button>
+                    <button className={`${styles["btn-secondary"]} ${styles["btn-group-right"]}`} id="btn-cancel-dlt" onClick={(click) => handleCancelDelete(click)}>Cancel</button>
                 </div>
             
             : 
-                <button className="btn-secondary btn-group-right"
+                <button className={`${styles["btn-secondary"]} ${styles["btn-group-right"]}`}
                     onClick={(click) => handleInitialDeleteClick(click)}
                 >Delete</button>
             

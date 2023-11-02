@@ -155,3 +155,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media (min-width: 820px) {
+  body {
+    padding: 0 3rem;
+  }
+}

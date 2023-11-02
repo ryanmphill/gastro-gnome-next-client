@@ -3,6 +3,7 @@ import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager"
 import { formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
+import styles from "./HomeFilters.module.css"
 
 interface Category {
     id: number,
@@ -12,7 +13,6 @@ interface Category {
 }
 
 interface FilterByCategoriesProps {
-    searchTerms: string,
     queryParams: string[],
     updateQueryParams: Dispatch<SetStateAction<string[]>>,
     fetchRecipes: (queryParams: string) => Promise<void>,
@@ -20,7 +20,7 @@ interface FilterByCategoriesProps {
     updateChosenCategories: Dispatch<SetStateAction<any[]>>
 }
 
-export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} : FilterByCategoriesProps) => {
+export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} : FilterByCategoriesProps) => {
     
     interface CategoryType {
         id: number,
@@ -97,21 +97,20 @@ export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams
             updatedCategories.push(chosenCategory)
             updateChosenCategories(updatedCategories)
 
-            let updatedParams = [ ...queryParams ]
+            let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
             // Add new category query if exists
             
-            updatedParams.push(`category=${chosenCategory.id}`)
-            
-            updateQueryParams(updatedParams)
+            updateQueryParams([ ...updatedParams ])
             const formattedQuery = formatQuery(updatedParams)
             fetchRecipes(formattedQuery)
         }
     }
 
     return <>
-        <div className="filterBar__categories">
+        <div className={styles["filterBar__categories"]}>
             <select
-                className="filterBar__categoryType"
+                className={styles["filterBar__categoryType"]}
+                id="categoryTypeSelect"
                 onChange={(e) => {
                     handleCategoryTypeChange(e)
                 }}
@@ -126,6 +125,7 @@ export const FilterByCategories = ({ searchTerms, queryParams, updateQueryParams
             <Select
                 className="filterBar__categorySelect"
                 id="filterByCategories"
+                instanceId="filterByCategories"
                 classNamePrefix="categorySelect"
                 options={filteredCategories}
                 onChange={(selectedOption: Category | null, actionMeta: ActionMeta<Category>) => {

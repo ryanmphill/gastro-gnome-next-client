@@ -5,7 +5,7 @@ export const getRecipes = async (queryParams: string): Promise<any> => {
     if (!res.ok) {
         throw Error("Unable to fetch Recipes") 
     }
-    return res.json
+    return res.json()
 }
 
 export const deleteRecipe = async (id: number) => {
