@@ -17,7 +17,7 @@ interface RecipeFeedProps {
 }
 
 export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFollows, queryParams } : RecipeFeedProps) => {
-    const { currentUserId, fetchCurrentUserId } = useAuthContext()
+    const { currentUserId } = useAuthContext()
     const router = useRouter()
 
     return <article className="recipeFeed">

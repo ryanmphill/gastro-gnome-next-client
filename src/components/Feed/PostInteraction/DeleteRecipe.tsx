@@ -39,9 +39,6 @@ export const DeleteRecipe = ({ recipeId, updateMainFeed, queryParams } : DeleteR
     };
     
     return <>
-    
-    
-
         {showPrompt
             ? 
                 <div className="confirmation-prompt">

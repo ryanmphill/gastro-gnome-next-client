@@ -12,7 +12,8 @@ interface SelectedCategoryProps {
     fetchRecipes: (queryParams: string) => Promise<void>
 }
 
-export const SelectedCategories = ({ chosenCategories, updateChosenCategories, queryParams, updateQueryParams, fetchRecipes } : SelectedCategoryProps ) => {
+export const SelectedCategories = ({ chosenCategories, updateChosenCategories, queryParams, updateQueryParams, fetchRecipes }
+     : SelectedCategoryProps ) => {
 
     // Handle removing a category
     const handleRemoveSelected = (evt: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, objectToRemove: Category) => {
