@@ -110,6 +110,7 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
         <div className={styles["filterBar__categories"]}>
             <select
                 className={styles["filterBar__categoryType"]}
+                id="categoryTypeSelect"
                 onChange={(e) => {
                     handleCategoryTypeChange(e)
                 }}
