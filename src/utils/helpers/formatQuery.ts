@@ -6,8 +6,7 @@ export const formatQuery = (queryArray : string[]): string => {
             const fullQuery = firstQuery + '&' + queryArray[1]
             console.log(fullQuery)
             return fullQuery
-        }
-        if (queryArray.length > 2) {
+        } else if (queryArray.length > 2) {
             const remainingQuery = query.join("&")
             const fullQuery = firstQuery + '&' + remainingQuery
             console.log(fullQuery)
