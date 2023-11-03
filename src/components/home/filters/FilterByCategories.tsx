@@ -4,13 +4,7 @@ import { formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
-
-interface Category {
-    id: number,
-    name: string,
-    category_type: number,
-    category_type_label: string
-}
+import { Category } from "@/types/categoryType";
 
 interface FilterByCategoriesProps {
     queryParams: string[],
@@ -20,18 +14,17 @@ interface FilterByCategoriesProps {
     updateChosenCategories: Dispatch<SetStateAction<any[]>>
 }
 
-export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} : FilterByCategoriesProps) => {
-    
+export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} 
+    : FilterByCategoriesProps) => {
+
     interface CategoryType {
         id: number,
         label: string
     }
-    // Define a state variable for fetched categories
     const [categories, setCategories] = useState<Category[]>([])
-    // State variable for different types of categories 
     const [categoryTypes, setCategoryTypes] = useState<CategoryType[]>([])
     // State variable for the type of category selected by user in the 'filter by' dropdown
-    const [chosenCategoryType, updateChosenCategoryType] = useState("")
+    const [chosenCategoryType, updateChosenCategoryType] = useState<string>("0")
     // State variable for which category options to display based on chosenCategoryType
     const [filteredCategories, setFilteredCategories] = useState<Category[]>([])
     
@@ -40,6 +33,7 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
     const fetchCategories = useCallback(async () => {
         const allCategories = await getCategories()
         setCategories(allCategories)
+        setFilteredCategories(allCategories)
     },[])
 
     // Fetch the list of category types
@@ -74,15 +68,10 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
             setFilteredCategories(newCatList)
         }
 
-        if (selectedType === "View All") {
+        if (selectedType === "View All" || selectedType === "0") {
             setFilteredCategories(categories)
         }
     }
-
-    /* Update filtered recipes when a category tag is chosen so that only recipes that match
-       ALL chosen categories are displayed. On initial render and if no categories or search entered,
-       set recipe list to default. */
-    
 
     // Handle the selected category
     const handleSelectedCategory = (chosenCategory: Category | null) => {
@@ -111,11 +100,12 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
             <select
                 className={styles["filterBar__categoryType"]}
                 id="categoryTypeSelect"
+                value={chosenCategoryType}
                 onChange={(e) => {
                     handleCategoryTypeChange(e)
                 }}
-            >   {/*Add options for filtering*/}
-                <option value="0">Filter by:</option>
+            >   {/*Options for filtering*/}
+                <option value="0">Filter Tags:</option>
                 {
                     categoryTypes.map(catType => <option value={catType.label} key={`catType--${catType.id}`}>{catType.label}</option>)
                 }
@@ -133,7 +123,7 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
                 }}
                 getOptionLabel={(option: Category) => option.name}
                 getOptionValue={(option: Category) => option.id.toString()}
-                placeholder="Select a Category"
+                placeholder="Search Category Tags"
             />
         </div>
     </>

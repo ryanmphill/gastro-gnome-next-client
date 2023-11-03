@@ -2,13 +2,7 @@
 import { formatQuery } from "@/utils/helpers/formatQuery"
 import { Dispatch, MouseEvent, SetStateAction } from "react"
 import styles from "./HomeFilters.module.css"
-
-interface Category {
-    id: number,
-    name: string,
-    category_type: number,
-    category_type_label: string
-}
+import { Category } from "@/types/categoryType"
 
 interface SelectedCategoryProps {
     chosenCategories: Category[],
@@ -18,7 +12,8 @@ interface SelectedCategoryProps {
     fetchRecipes: (queryParams: string) => Promise<void>
 }
 
-export const SelectedCategories = ({ chosenCategories, updateChosenCategories, queryParams, updateQueryParams, fetchRecipes } : SelectedCategoryProps ) => {
+export const SelectedCategories = ({ chosenCategories, updateChosenCategories, queryParams, updateQueryParams, fetchRecipes }
+     : SelectedCategoryProps ) => {
 
     // Handle removing a category
     const handleRemoveSelected = (evt: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, objectToRemove: Category) => {

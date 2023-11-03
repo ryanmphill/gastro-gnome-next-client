@@ -4,18 +4,12 @@ import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
 import { SelectedCategories } from "./SelectedCategories";
 import styles from "./HomeFilters.module.css"
+import { Category } from "@/types/categoryType";
 
 interface FilterBarProps {
     queryParams: string[],
     updateQueryParams: Dispatch<SetStateAction<string[]>>,
     fetchRecipes: (queryParams: string) => Promise<void>
-}
-
-interface Category {
-    id: number,
-    name: string,
-    category_type: number,
-    category_type_label: string
 }
 
 export const FilterBar = ({ queryParams, updateQueryParams, fetchRecipes } : FilterBarProps) => {

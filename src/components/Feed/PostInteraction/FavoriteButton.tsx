@@ -1,3 +1,4 @@
+'use client'
 import { useAuthContext } from "@/context/AuthContext"
 import { getCurrentUser } from "@/dataManagers/authManager"
 import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManager"

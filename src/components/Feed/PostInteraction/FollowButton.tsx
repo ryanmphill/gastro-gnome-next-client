@@ -1,5 +1,4 @@
 'use client'
-
 import { MouseEvent, useEffect, useState } from "react"
 import followImg from "../../../../public/assets/follow.png"
 import followingImg from "../../../../public/assets/following.png"
@@ -16,7 +15,8 @@ interface FollowButtonProps {
 }
 
 
-export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, updateProfileFollowList } : FollowButtonProps) => {
+export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, updateProfileFollowList } 
+    : FollowButtonProps) => {
     const { currentUserId } = useAuthContext()
     
     // Get the current location
@@ -26,7 +26,7 @@ export const FollowButton = ({ userToFollowId, usersFollows, fetchUsersFollows, 
     const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
     // Set a state varialbe for if the user is following
-    const [alreadyFollowed, updateAlreadyFollowed] = useState(false)
+    const [alreadyFollowed, updateAlreadyFollowed] = useState<boolean>(false)
 
     // Use the array of follows and update the alreadyFollowed state
     useEffect(
