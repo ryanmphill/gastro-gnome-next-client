@@ -151,6 +151,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+fieldset {
+  min-width: 0;
+  /* padding: 1rem 0; */
+  padding: 0.75rem 0;
+  margin: 0;
+  border: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -158,6 +166,6 @@ code {
 
 @media (min-width: 820px) {
   body {
-    padding: 0 3rem;
+    padding: 0 2rem;
   }
 }

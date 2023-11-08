@@ -1,0 +1,88 @@
+'use client'
+
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { FormEvent, useRef } from "react"
+import styles from "./auth.module.css"
+
+const Register = () => {
+    const router = useRouter()
+
+    const firstName = useRef<HTMLInputElement | null>(null)
+    const lastName = useRef<HTMLInputElement | null>(null)
+    const username = useRef<HTMLInputElement | null>(null)
+    const email = useRef<HTMLInputElement | null>(null)
+    const password = useRef<HTMLInputElement | null>(null)
+
+    const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const userData = {
+            first_name: firstName?.current?.value,
+            last_name: lastName?.current?.value,
+            username: username?.current?.value,
+            email: email?.current?.value,
+            password: password?.current?.value
+        }
+        console.log(userData)
+        // TODO: Post the new user data to API
+    }
+
+    return (
+        <main className={styles["container--login"]}>
+            <section className={styles["form--login"]}>
+                <form onSubmit={(e) => handleRegister(e)} id={styles["registerContainer"]}>
+                    <h1 className={styles["login--header"]}>Register for Gastro Gnome</h1>
+                    <section className={styles["nameFlex"]}>
+                        <fieldset className={styles["nameFlexChild"]}>
+                            <label htmlFor="firstName"> First Name </label>
+                            <input 
+                                ref={firstName}
+                                type="text" id="firstName" className={styles["registerForm-control"]}
+                                placeholder="Enter your first name" required autoFocus />
+                        </fieldset>
+                        <fieldset className={styles["nameFlexChild"]}>
+                            <label htmlFor="lastName"> Last Name </label>
+                            <input 
+                                ref={lastName}
+                                type="text" id="lastName" className={styles["registerForm-control"]}
+                                placeholder="Enter your last name" required autoFocus />
+                        </fieldset>
+                    </section>
+                    <fieldset>
+                        <label htmlFor="newUserName"> Username </label>
+                        <input 
+                            ref={username}
+                            type="text" id="newUserName" className={styles["registerForm-control"]}
+                            placeholder="Enter a new username" required autoFocus />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="email"> Email address </label>
+                        <input 
+                            ref={email}
+                            type="email" id="email" className={styles["registerForm-control"]}
+                            placeholder="Email address" required />
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="newPassword"> Password </label>
+                        <input 
+                            ref={password}
+                            type="password" id="newPassword" className={styles["registerForm-control"]}
+                            placeholder="Enter a password" required />
+                    </fieldset>
+                    <fieldset>
+                        <div className={styles["btn-primary-wrapper"]}>
+                            <button type="submit" className={styles["btn-primary"]}> Register </button>
+                        </div>
+                    </fieldset>
+                </form>
+                <section className={styles["linkGroup"]}>
+                    <Link href="/login">Login</Link>
+                    <Link href="/">Back to Home</Link>
+                </section>
+            </section>
+        </main>
+    )
+}
+
+export default Register

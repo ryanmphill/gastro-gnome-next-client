@@ -5,9 +5,11 @@ import styles from './DropdownMenu.module.css' // Import CSS styles for the drop
 import gastroHamburger from "../../../public/assets/hamburger_green.svg"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAuthContext } from '@/context/AuthContext';
 
-export const DropdownMenu = ( {currentUser} : {currentUser: {id?:number}} ) => {
+export const DropdownMenu = ( {currentUser} : {currentUser: number} ) => {
     const [isOpen, setIsOpen] = useState(false) // State to track if the dropdown is open or closed
+    const { fetchCurrentUserId } = useAuthContext()
   
     const toggleDropdown = () => {
       setIsOpen(!isOpen) // Toggle the state to open or close the dropdown
@@ -41,7 +43,7 @@ export const DropdownMenu = ( {currentUser} : {currentUser: {id?:number}} ) => {
         [isOpen]
     )
 
-    //Import useNavigate and assign it to a variable
+    //Import useRouter and assign it to a variable
     const router = useRouter()
 
     return (
@@ -52,16 +54,20 @@ export const DropdownMenu = ( {currentUser} : {currentUser: {id?:number}} ) => {
         {isOpen && <>
             <section className={styles["dropdown-content"]} onClick={toggleDropdown}>
             <Link className={styles["dropdown--link"]} href={"/"}>Home</Link>
-              <Link className={styles["dropdown--link"]} href={`/userprofile/${currentUser.id}`}>Profile</Link>
+              <Link className={styles["dropdown--link"]} href={`/userprofile/${currentUser}`}>Profile</Link>
               { // Logout button
-                localStorage.getItem("gastro_user")
+                currentUser !== 0
                   ? <div className={`${styles["navbar__menuItem"]} ${styles["navbar__logout"]}`}>
                     <Link className={styles["dropdown--link"]} href={""} onClick={() => {
-                      localStorage.removeItem("gastro_user")
+                      localStorage.removeItem("gastro_token")
+                      fetchCurrentUserId()
                       router.push("/")
                     }}>Logout</Link>
                   </div>
-                  : ""
+                  : <>
+                    <Link className={styles["dropdown--link"]} href={"/login"}>Login</Link>
+                    <Link className={styles["dropdown--link"]} href={"/register"}>Register</Link>
+                  </>
               }
             </section>
         </> 
