@@ -9,7 +9,7 @@ import { useAuthContext } from "@/context/AuthContext"
 
 const Login = () => {
     const { fetchCurrentUserId, setToken } = useAuthContext()
-    // TODO: Change useState to useRefs for login info
+    
     const username = useRef<HTMLInputElement | null>(null)
     const password = useRef<HTMLInputElement | null>(null)
     const router = useRouter()
@@ -22,10 +22,7 @@ const Login = () => {
             password: password?.current?.value ?? ""
           }
 
-        console.log(user)
-
         try {
-            // Attempt Login
             const res = await loginUser(user)
             if (res.valid === true) {
                 setToken(res.token)

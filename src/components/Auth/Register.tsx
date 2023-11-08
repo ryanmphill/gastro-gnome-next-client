@@ -26,8 +26,7 @@ const Register = () => {
             email: email?.current?.value ?? "",
             password: password?.current?.value ?? ""
         }
-        console.log(userData)
-        // TODO: Post the new user data to API
+        
         try {
             const res = await registerUser(userData)
             if (res.token) {
