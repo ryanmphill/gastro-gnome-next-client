@@ -1,0 +1,199 @@
+.title--main {
+    margin-block-end: 0;
+  }
+  
+  .pageFooter {
+    height: 10vh;
+    border-top: 1px solid rgba(143, 159, 174, 0.5);
+    margin-top: 1rem;
+  }
+  
+  .pageBody {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+  }
+  
+  .feedHeader {
+    color: #72875C;
+    text-shadow: -0.25px 0.25px 0.25px rgba(43, 46, 46, 0.50);
+  }
+  
+  .followingListItem, .followedByListItem {
+    display: flex;
+    column-gap: 0.75rem;
+  }
+  
+  .followingListItem, .followedByListItem, .pageBody {
+    animation: fadeEffect 0.75s;
+  }
+  
+  .discoverFade {
+    animation: fadeEffect 0.75s;
+  }
+  
+  .myFeedFade {
+    animation: fadeEffect2 0.76s;
+  }
+  
+  
+  @keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeEffect2 {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  /* Styles for display tabs -----------------------------------------------------*/
+  
+  .profileDisplayTab {
+    display: flex;
+    /* column-gap: 3rem; */
+    border-bottom: 1px solid rgba(143, 159, 174, 0.5);
+    border-top: 1px solid rgba(143, 159, 174, 0.5);
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    justify-content: space-between;
+    column-gap: 0;
+    overflow-x: auto;
+  }
+  
+  .profileDisplayTabLink {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .profileDisplayTab--hoverEffect {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .profileDisplayTab--hoverEffect:hover {
+    transform: scale(1.2);
+  }
+  
+  .profileDisplayTabLink.active {
+    font-weight: bold;
+  }
+  
+  
+  /* CSS for underline animation --------------------------------------------*/
+  
+  .underline-effect {
+    position: relative;
+    text-decoration: none;
+  }
+  
+  .underline-effect::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #b0c19d;
+    box-shadow: 0px 2.5px 0.25px rgba(61, 74, 74, 0.15);
+    border-radius: 25px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .underline-effect.active::before {
+    transform: scaleX(1);
+  }
+  /* -------------------------------------------------------------------------*/
+  
+  /*BUTTONS----------------------------------------------------------------------------------*/
+  /*Post/submit button--------------------------------------------------------*/
+  .btn-primary {
+    align-items: center;
+    background-color: #e4b06d;
+    border: 2px solid #e4b06d;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    color: #edf4e4;
+    text-shadow: 0.5px 0.5px 2px rgba(34, 40, 40, 0.75);
+    font-size: larger;
+    font-weight: 700;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: transform .2s ease-out;
+  }
+  
+  .btn-primary:after {
+    background-color: rgb(23, 22, 22, 0.5);
+    border-radius: 10px;
+    content: "";
+    display: block;
+    height: 48px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(4px, 4px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+  }
+  
+  .btn-primary:hover:after {
+    transform: translate(0, 0);
+  }
+  
+  .btn-primary:active {
+    background-color: #c48d46;
+    outline: 0;
+  }
+  
+  .btn-primary:hover {
+    outline: 0;
+    background-color: #eccda5;
+    border: 2px solid #eccda5;
+  }
+  
+  .btn-primary-wrapper {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+  }
+  
+  @media (min-width: 768px) {
+    .btn-primary {
+      padding: 0 40px;
+    }
+  }
+  /*---------------------------------------------------------------------------------*/
+  
+  
+  /*Desktop View ----------------------------------------------------------------*/
+  @media (min-width: 820px) {
+    .pageBody {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  @media (min-width: 700px) {
+    .profileDisplayTab {
+      justify-content: flex-end;
+      column-gap: 3rem;
+      overflow-x: visible;
+    }
+  }

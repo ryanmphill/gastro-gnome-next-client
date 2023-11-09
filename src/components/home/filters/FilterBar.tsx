@@ -1,18 +1,12 @@
 'use client'
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, Suspense, useEffect, useState } from "react";
 import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
 import { SelectedCategories } from "./SelectedCategories";
 import styles from "./HomeFilters.module.css"
 import { Category } from "@/types/categoryType";
 
-interface FilterBarProps {
-    queryParams: string[],
-    updateQueryParams: Dispatch<SetStateAction<string[]>>,
-    fetchRecipes: (queryParams: string) => Promise<void>
-}
-
-export const FilterBar = ({ queryParams, updateQueryParams, fetchRecipes } : FilterBarProps) => {
+export const FilterBar = () => {
 
     // State to track user input in search bar
     const [searchTerms, updateSearchTerms] = useState("")
@@ -27,26 +21,19 @@ export const FilterBar = ({ queryParams, updateQueryParams, fetchRecipes } : Fil
 
 
     return <section className="filterContainer"> 
+    <Suspense>
         <section className={styles["filterBar"]}>
             <SearchRecipes 
             searchTerms={searchTerms}
-            updateSearchTerms={updateSearchTerms}
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams} 
-            fetchRecipes={fetchRecipes} />
+            updateSearchTerms={updateSearchTerms} />
 
             <FilterByCategories
             chosenCategories={chosenCategories}
-            updateChosenCategories={updateChosenCategories}
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams} 
-            fetchRecipes={fetchRecipes} />
+            updateChosenCategories={updateChosenCategories} />
         </section>
         <SelectedCategories
         chosenCategories={chosenCategories}
-        updateChosenCategories={updateChosenCategories}
-        queryParams={queryParams}
-        updateQueryParams={updateQueryParams} 
-        fetchRecipes={fetchRecipes} />
+        updateChosenCategories={updateChosenCategories} />
+    </Suspense>
     </section>
 }

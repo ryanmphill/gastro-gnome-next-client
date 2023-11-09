@@ -1,7 +1,7 @@
 'use client'
 import { useAuthContext } from "@/context/AuthContext"
-import { getCurrentUser } from "@/dataManagers/authManager"
-import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManager"
+import { getCurrentUser } from "@/dataManagers/authManagers/client/authManager"
+import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManagers/client/recipeManager"
 import { usePathname } from "next/navigation"
 import { MouseEvent, useCallback, useEffect, useState } from "react"
 import styles from "./PostInteraction.module.css"

@@ -1,15 +1,13 @@
 import { MouseEvent, useState } from "react"
 import styles from "./PostInteraction.module.css"
-import { deleteRecipe } from "@/dataManagers/recipeManager"
+import { deleteRecipe } from "@/dataManagers/recipeManagers/client/recipeManager"
 import { formatQuery } from "@/utils/helpers/formatQuery"
 
 interface DeleteRecipeProps {
-  recipeId: number,
-  updateMainFeed: (queryParams: string) => Promise<void>,
-  queryParams: string[]
+  recipeId: number
 }
 
-export const DeleteRecipe = ({ recipeId, updateMainFeed, queryParams } : DeleteRecipeProps) => {
+export const DeleteRecipe = ({ recipeId } : DeleteRecipeProps) => {
     // Define state variable for if delete button was clicked
     const [showPrompt, setShowPrompt] = useState(false)
 
@@ -25,13 +23,10 @@ export const DeleteRecipe = ({ recipeId, updateMainFeed, queryParams } : DeleteR
 
     const handleDeleteRecipe = async (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-
-      const appliedFilters = formatQuery(queryParams)
     
       // DELETE the Recipe
       try {
         await deleteRecipe(recipeId)
-        updateMainFeed(appliedFilters)
       } catch (err) {
         console.error(err)
         window.alert("Unable to delete recipe")

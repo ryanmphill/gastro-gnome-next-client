@@ -1,6 +1,6 @@
 'use client'
 
-import { getCurrentUser } from "@/dataManagers/authManager";
+import { getCurrentUser } from "@/dataManagers/authManagers/client/authManager";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {

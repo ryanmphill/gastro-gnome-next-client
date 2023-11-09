@@ -4,8 +4,9 @@ import gastroLogo from "../../../public/assets/Chef_green.svg"
 import { FormEvent, useRef } from "react"
 import Link from "next/link"
 import styles from "./auth.module.css"
-import { loginUser } from "@/dataManagers/authManager"
+import { loginUser } from "@/dataManagers/authManagers/client/authManager"
 import { useAuthContext } from "@/context/AuthContext"
+import { loginAction } from "../../dataManagers/authManagers/server/authManagers"
 
 const Login = () => {
     const { fetchCurrentUserId, setToken } = useAuthContext()
@@ -40,7 +41,7 @@ const Login = () => {
     return (
         <main className={styles["container--login"]}>
             <section className={styles["form--login"]}>
-                <form onSubmit={(e) => handleLogin(e)}>
+                <form action={loginAction}>
                     <section className={styles["login--headerContainer"]}>
                         <div className={styles["login--logoContainer"]}>
                             <img className={styles["login--logo"]} src={gastroLogo.src} alt="Logo"></img>
@@ -54,6 +55,7 @@ const Login = () => {
                         <label htmlFor="inputEmail"> Username </label>
                         <input type="text"
                             ref={username}
+                            name="username"
                             className={styles["form-control"]}
                             id="inputEmail"
                             placeholder="Username"
@@ -62,6 +64,7 @@ const Login = () => {
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
                         <input type="password"
+                            name="password"
                             ref={password}
                             className={styles["form-control"]}
                             id="inputPassword"

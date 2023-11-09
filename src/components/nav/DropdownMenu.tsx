@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import styles from './DropdownMenu.module.css' // Import CSS styles for the dropdown menu
 import gastroHamburger from "../../../public/assets/hamburger_green.svg"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuthContext } from '@/context/AuthContext';
+import { logoutAction } from '@/dataManagers/authManagers/server/authManagers';
 
 export const DropdownMenu = ( {currentUser} : {currentUser: number} ) => {
     const [isOpen, setIsOpen] = useState(false) // State to track if the dropdown is open or closed
@@ -63,6 +64,7 @@ export const DropdownMenu = ( {currentUser} : {currentUser: number} ) => {
                       fetchCurrentUserId()
                       router.push("/")
                     }}>Logout</Link>
+                    <button onClick={() => startTransition(() => logoutAction())}>Logout</button>
                   </div>
                   : <>
                     <Link className={styles["dropdown--link"]} href={"/login"}>Login</Link>

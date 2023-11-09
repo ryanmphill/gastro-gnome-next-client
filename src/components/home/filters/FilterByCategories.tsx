@@ -1,20 +1,18 @@
 'use client'
 import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
-import { formatQuery } from "@/utils/helpers/formatQuery";
+import { addToQuery, formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
 import { Category } from "@/types/categoryType";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FilterByCategoriesProps {
-    queryParams: string[],
-    updateQueryParams: Dispatch<SetStateAction<string[]>>,
-    fetchRecipes: (queryParams: string) => Promise<void>,
     chosenCategories: Category[],
     updateChosenCategories: Dispatch<SetStateAction<any[]>>
 }
 
-export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} 
+export const FilterByCategories = ({ chosenCategories, updateChosenCategories} 
     : FilterByCategoriesProps) => {
 
     interface CategoryType {
@@ -27,6 +25,9 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
     const [chosenCategoryType, updateChosenCategoryType] = useState<string>("0")
     // State variable for which category options to display based on chosenCategoryType
     const [filteredCategories, setFilteredCategories] = useState<Category[]>([])
+
+    const searchParams = useSearchParams()
+    const router = useRouter()
     
 
     // Fetch the list of categories
@@ -86,12 +87,17 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
             updatedCategories.push(chosenCategory)
             updateChosenCategories(updatedCategories)
 
-            let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
-            // Add new category query if exists
+            // let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
+            // // Add new category query if exists
             
-            updateQueryParams([ ...updatedParams ])
-            const formattedQuery = formatQuery(updatedParams)
-            fetchRecipes(formattedQuery)
+            // updateQueryParams([ ...updatedParams ])
+            // const formattedQuery = formatQuery(updatedParams)
+            // fetchRecipes(formattedQuery)
+
+            /*----------------------------------------------------------------*/
+            const newQuery = addToQuery("category", `${chosenCategory.id}`, searchParams)
+            router.push(newQuery, {scroll: false})
+            /*----------------------------------------------------------------*/
         }
     }
 

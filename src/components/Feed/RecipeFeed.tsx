@@ -1,3 +1,4 @@
+'use client'
 import { useRouter } from "next/navigation"
 import placeholderImg from "../../../public/assets/food-placeholder-medium.svg"
 import Link from "next/link"
@@ -7,18 +8,34 @@ import { DeleteRecipe } from "./PostInteraction/DeleteRecipe"
 import { FavoriteButton } from "./PostInteraction/FavoriteButton"
 import styles from "./RecipeFeed.module.css"
 import { Recipe } from "@/types/recipeType"
+import { useCallback, useEffect, useState } from "react"
+import { getCurrentUser } from "@/dataManagers/authManagers/client/authManager"
 
 interface RecipeFeedProps {
-    recipes: Recipe[],
-    updateMainFeed: (queryParams: string) => Promise<void>,
-    usersFollows: number[],
-    fetchUsersFollows: () => Promise<void>,
-    queryParams: string[]
+    recipes: Recipe[]
 }
 
-export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFollows, queryParams } : RecipeFeedProps) => {
+export const RecipeFeed = ({ recipes } : RecipeFeedProps) => {
     const { currentUserId } = useAuthContext()
+    const [usersFollows, updateUsersFollows] = useState<number[]>([])
     const router = useRouter()
+
+    // Function to retrieve users followed from the current user's data
+    const fetchUsersFollows = useCallback(async () => {
+        const userData = await getCurrentUser()
+        const followArray = userData?.following
+        updateUsersFollows(followArray)
+    }, [])
+
+    // Get the data for the current user with their follows embedded on initial render
+    useEffect(
+        () => {
+        if (currentUserId !== 0) {
+            fetchUsersFollows()
+        }
+        },
+        [fetchUsersFollows, currentUserId]
+    )
 
     return <article className="recipeFeed">
     {
@@ -61,9 +78,7 @@ export const RecipeFeed = ({recipes, updateMainFeed, usersFollows, fetchUsersFol
                                             }}
                                         >Edit</button>
 
-                                        <DeleteRecipe recipeId={recipe.id}
-                                            updateMainFeed={updateMainFeed}
-                                            queryParams={queryParams} />
+                                        <DeleteRecipe recipeId={recipe.id} />
                                     </div>
                             }
                             {
