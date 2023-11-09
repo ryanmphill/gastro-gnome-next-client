@@ -29,10 +29,21 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
     const [isAdmin, setIsAdminState] = useState<string | null>(null)
     const [currentUserId, setCurrentUserId] = useState<number>(0)
 
+    const fetchCurrentUserId = useCallback(async () => {
+        if (localStorage.getItem("gastro_token")) {
+            const data = await getCurrentUser()
+            setCurrentUserId(data.id)
+        } else {
+            setCurrentUserId(0)
+        }
+        
+    },[])
+
     useEffect(
         () => {
             if (localStorage.getItem("gastro_token")) {
                 setTokenState(localStorage.getItem("gastro_token"))
+                fetchCurrentUserId()
             }
         },
         [setTokenState]
@@ -47,16 +58,6 @@ export const AuthProvider = ({ children } : {children: React.ReactNode}) => {
         localStorage.setItem('gastro_admin', isStaff)
         setIsAdminState(isStaff)
     }
-
-    const fetchCurrentUserId = useCallback(async () => {
-        if (localStorage.getItem("gastro_token")) {
-            const data = await getCurrentUser()
-            setCurrentUserId(data.id)
-        } else {
-            setCurrentUserId(0)
-        }
-        
-    },[])
 
     
 

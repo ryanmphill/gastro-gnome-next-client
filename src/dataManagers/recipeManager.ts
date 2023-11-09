@@ -1,7 +1,21 @@
 const apiUrl: string = 'http://localhost:8000'
 
 export const getRecipes = async (queryParams: string): Promise<any> => {
-    const res = await fetch(`${apiUrl}/recipes${queryParams}`)
+    const reqHeaders: HeadersInit = queryParams.includes("following=true") 
+    ? {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Token ${localStorage.getItem("gastro_token")}`
+      }
+    : {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+      }
+    
+    const res = await fetch(`${apiUrl}/recipes${queryParams}`, {
+      method: "GET",
+      headers: reqHeaders
+    })
     if (!res.ok) {
         throw Error("Unable to fetch Recipes") 
     }

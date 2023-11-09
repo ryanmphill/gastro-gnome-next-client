@@ -1,0 +1,194 @@
+/* .h1, h1 {
+    font-size: 2.0rem;
+} */
+
+.login--header {
+    color: #72875C;
+    text-shadow: -0.25px 0.25px 0.25px rgba(43, 46, 46, 0.50);
+    margin: 0 0 0.5rem 0;
+}
+
+#pleaseSignIn {
+    margin-bottom: 0;
+}
+
+.login--headerContainer {
+    display: flex;
+    column-gap: 0.75rem;
+    height: 19vh;
+    margin-bottom: 1rem;
+}
+
+.login--logoContainer {
+    height: 100%;
+}
+
+.login--logo {
+    height: 100%;
+}
+
+.form--login {
+    display: inline-block;
+    /* margin: 2rem auto; */
+    text-align: left;
+    padding: 4rem 1rem;
+    min-width: 98%;
+    box-shadow: -1px 1px 4px rgba(47, 77, 77, 0.5);
+    border-radius: 10px;
+    background-image: linear-gradient(45deg, #c8d3bc 0%, #edf4e4  51%, #c7d3b9  100%);
+    height: 95%;
+}
+
+.label--login {
+    width: 8rem;
+    display: inline-block;
+}
+
+.form-control {
+    display: block;
+    width: 94%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.registerForm-control {
+    display: block;
+    width: 100%;
+    height: 2.05rem;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057;
+    box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.container--login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#registerContainer .nameFlexChild {
+    width: 48%;
+}
+
+#registerContainer fieldset {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.linkGroup {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nameFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*BUTTONS----------------------------------------------------------------------------------*/
+.button--close {
+    position: relative;
+    bottom: -2rem;
+}
+
+/*Post/submit button--------------------------------------------------------*/
+.btn-primary {
+    align-items: center;
+    background-color: #e4b06d;
+    border: 2px solid #e4b06d;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    color: #edf4e4;
+    text-shadow: 0.5px 0.5px 2px rgba(34, 40, 40, 0.75);
+    font-size: larger;
+    font-weight: 700;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: transform .2s ease-out;
+  }
+  
+  .btn-primary:after {
+    background-color: rgb(23, 22, 22, 0.5);
+    border-radius: 10px;
+    content: "";
+    display: block;
+    height: 48px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(4px, 4px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+  }
+  
+  .btn-primary:hover:after {
+    transform: translate(0, 0);
+  }
+  
+  .btn-primary:active {
+    background-color: #c48d46;
+    outline: 0;
+  }
+  
+  .btn-primary:hover {
+    outline: 0;
+    background-color: #eccda5;
+    border: 2px solid #eccda5;
+  }
+  
+  .btn-primary-wrapper {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+  }
+  
+  @media (min-width: 768px) {
+    .btn-primary {
+      padding: 0 40px;
+    }
+  }
+  /*---------------------------------------------------------------------------------*/
+
+/*Desktop View--------------------------------------------------------------------------*/
+@media (min-width: 600px) {
+    /* .h1, h1 {
+        font-size: 2.5rem;
+    } */
+
+    .form--login {
+        max-height: 86vh;
+        padding: 2rem;
+        min-width: 75%;
+    }
+}

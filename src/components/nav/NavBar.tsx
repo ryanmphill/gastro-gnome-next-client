@@ -3,10 +3,11 @@ import styles from "./NavBar.module.css"
 import gastroLogo from "../../../public/assets/Chef_green.svg"
 import { useRouter } from "next/navigation"
 import { DropdownMenu } from "./DropdownMenu"
+import { useAuthContext } from "@/context/AuthContext"
 
 export const NavBar = () => {
     const router = useRouter()
-    const currentUser = {id: 1}
+    const { currentUserId } = useAuthContext()
     return (
         <ul className={styles["navbar"]}>
             <li id={styles["logoContainer"]}>
@@ -17,7 +18,7 @@ export const NavBar = () => {
                 
             </li>
             <li className={`${styles["navbar__item"]} ${styles["navbar__menu"]}`}>
-                <DropdownMenu currentUser={currentUser} />
+                <DropdownMenu currentUser={currentUserId} />
             </li>
         </ul>
     )
