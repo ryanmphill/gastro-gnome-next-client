@@ -1,10 +1,8 @@
 'use server'
 
 import { loginUser } from "@/dataManagers/authManagers/client/authManager"
-import { revalidatePath } from "next/cache"
 import { cookies } from 'next/headers'
 import { redirect } from "next/navigation"
-import { FormEvent } from "react"
 
 const apiUrl:string = "http://localhost:8000";
 
@@ -36,7 +34,8 @@ export const logoutAction = () => {
 export const getCurrentUserId = async (): Promise<number> => {
     const cookieStore = cookies()
     const token = cookieStore.get('gastro_token')
-    if (token) {
+    console.log("getCurrentUserId running...", "token=", token)
+    if (token && token.value.length > 0) {
         const res = await fetch(`${apiUrl}/users/current`, {
             method: "GET",
             headers: {
