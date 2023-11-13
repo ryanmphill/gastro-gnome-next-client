@@ -4,14 +4,20 @@ import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
 import { SelectedCategories } from "./SelectedCategories";
 import styles from "./HomeFilters.module.css"
-import { Category } from "@/types/categoryType";
+import { Category, CategoryType } from "@/types/categoryType";
 
-export const FilterBar = () => {
+interface FilterBarProps {
+    categories: Category[],
+    categoryTypes: CategoryType[],
+    chosenCategories: string[]
+}
+
+export const FilterBar = ({ categories, categoryTypes, chosenCategories } : FilterBarProps) => {
 
     // State to track user input in search bar
     const [searchTerms, updateSearchTerms] = useState("")
     // State to keep track of all selected categories the user wants to use to filter recipe feed
-    const [chosenCategories, updateChosenCategories] = useState<Category[]>([])
+    // const [chosenCategories, updateChosenCategories] = useState<Category[]>([])
 
     useEffect(
         () => {
@@ -29,11 +35,11 @@ export const FilterBar = () => {
 
             <FilterByCategories
             chosenCategories={chosenCategories}
-            updateChosenCategories={updateChosenCategories} />
+            categories={categories}
+            categoryTypes={categoryTypes} />
         </section>
         <SelectedCategories
-        chosenCategories={chosenCategories}
-        updateChosenCategories={updateChosenCategories} />
+        chosenCategories={chosenCategories} />
     </Suspense>
     </section>
 }

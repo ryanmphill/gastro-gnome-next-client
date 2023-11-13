@@ -1,63 +1,28 @@
 'use client'
-import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
+// import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
 import { addToQuery, formatQuery } from "@/utils/helpers/formatQuery";
 import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
-import { Category } from "@/types/categoryType";
+import { Category, CategoryType } from "@/types/categoryType";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface FilterByCategoriesProps {
-    chosenCategories: Category[],
-    updateChosenCategories: Dispatch<SetStateAction<any[]>>
+    chosenCategories: string[],
+    categories: Category[],
+    categoryTypes: CategoryType[]
 }
 
-export const FilterByCategories = ({ chosenCategories, updateChosenCategories} 
+export const FilterByCategories = ({ chosenCategories, categories, categoryTypes} 
     : FilterByCategoriesProps) => {
 
-    interface CategoryType {
-        id: number,
-        label: string
-    }
-    const [categories, setCategories] = useState<Category[]>([])
-    const [categoryTypes, setCategoryTypes] = useState<CategoryType[]>([])
     // State variable for the type of category selected by user in the 'filter by' dropdown
     const [chosenCategoryType, updateChosenCategoryType] = useState<string>("0")
     // State variable for which category options to display based on chosenCategoryType
-    const [filteredCategories, setFilteredCategories] = useState<Category[]>([])
+    const [filteredCategories, setFilteredCategories] = useState<Category[]>(categories)
 
     const searchParams = useSearchParams()
     const router = useRouter()
-    
-
-    // Fetch the list of categories
-    const fetchCategories = useCallback(async () => {
-        const allCategories = await getCategories()
-        setCategories(allCategories)
-        setFilteredCategories(allCategories)
-    },[])
-
-    // Fetch the list of category types
-    const fetchCategoryTypes = useCallback(async () => {
-        const allCategoryTypes = await getCategoryTypes()
-        setCategoryTypes(allCategoryTypes)
-    },[])
-
-    useEffect(
-        () => {
-            // Get categories upon initial render
-            fetchCategories()
-        },
-        [fetchCategories] 
-    )
-
-    useEffect(
-        () => {
-            // Get category types upon initial render
-            fetchCategoryTypes()
-        },
-        [fetchCategoryTypes] 
-    )
 
     // Filter the categories based on chosen category type
     const handleCategoryTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -80,12 +45,12 @@ export const FilterByCategories = ({ chosenCategories, updateChosenCategories}
             return;
         }
         // Get a copy of the current array of categories that are being used to filter
-        const updatedCategories = [ ...chosenCategories ]
+        const currentCategories = [ ...chosenCategories ]
         // Check if the category has already been added
-        const alreadyAdded = updatedCategories.some(category => category.id === chosenCategory.id)
+        const alreadyAdded = currentCategories.some(categoryName => categoryName === chosenCategory.name)
         if (!alreadyAdded) {
-            updatedCategories.push(chosenCategory)
-            updateChosenCategories(updatedCategories)
+            // updatedCategories.push(chosenCategory)
+            // updateChosenCategories(updatedCategories)
 
             // let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
             // // Add new category query if exists
@@ -95,7 +60,7 @@ export const FilterByCategories = ({ chosenCategories, updateChosenCategories}
             // fetchRecipes(formattedQuery)
 
             /*----------------------------------------------------------------*/
-            const newQuery = addToQuery("category", `${chosenCategory.id}`, searchParams)
+            const newQuery = addToQuery("category", `${chosenCategory.name}`, searchParams)
             router.push(newQuery, {scroll: false})
             /*----------------------------------------------------------------*/
         }

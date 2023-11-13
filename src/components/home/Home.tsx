@@ -4,9 +4,9 @@ import { getRecipes } from '@/dataManagers/recipeManagers/server/recipeManager'
 import { RecipeFeed } from '@/components/Feed/RecipeFeed'
 import { FeedChoice } from '@/components/home/filters/FeedChoice'
 import { FilterBar } from '@/components/home/filters/FilterBar'
-import { Recipe } from '@/types/recipeType'
-import { convertToQueryString } from '@/utils/helpers/formatQuery'
+import { convertToQueryString, formatCategoryQueryParams } from '@/utils/helpers/formatQuery'
 import { getCurrentUserId } from '@/dataManagers/authManagers/server/authManagers'
+import { getCategories, getCategoryTypes } from '@/dataManagers/categoryManager'
 
 interface searchParamsProp {
     searchParams?: {
@@ -20,8 +20,25 @@ const Home = async ({ searchParams } : searchParamsProp ) => {
 console.log("query", searchParams)
 const queryString = searchParams ? convertToQueryString(searchParams) : ""
 const display = searchParams && searchParams.following === "true" ? "postsFollowed" : "allPosts"
-const recipes: Recipe[] = await getRecipes(queryString)
-const currentUserId = await getCurrentUserId()
+const recipeData = getRecipes(queryString)
+const currentUserIdData = getCurrentUserId()
+const categoryData = getCategories()
+const categoryTypeData = getCategoryTypes()
+const [
+    recipes, 
+    currentUserId, 
+    categories, 
+    categoryTypes
+] = await Promise.all([
+    recipeData, 
+    currentUserIdData, 
+    categoryData, 
+    categoryTypeData
+])
+
+console.log("selectedCategories:", searchParams?.category)
+const chosenCategories = formatCategoryQueryParams(searchParams?.category)
+console.log("formatted categories:", chosenCategories)
 //   const [recipes, setRecipes] = useState<Recipe[]>([])
 //   type Display = "allPosts" | "postsFollowed"
 //   const [display, setDisplay] = useState<Display>("allPosts")
@@ -53,7 +70,10 @@ const currentUserId = await getCurrentUserId()
 
     <div className="feedControl">
 
-      <FilterBar />
+      <FilterBar
+        categories={categories}
+        categoryTypes={categoryTypes} 
+        chosenCategories={chosenCategories}/>
 
       {
         display === "allPosts"
