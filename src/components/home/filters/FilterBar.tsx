@@ -1,5 +1,4 @@
-'use client'
-import { Dispatch, SetStateAction, Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
 import { SelectedCategories } from "./SelectedCategories";
