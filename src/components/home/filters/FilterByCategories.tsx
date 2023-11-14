@@ -1,62 +1,28 @@
 'use client'
-import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
-import { formatQuery } from "@/utils/helpers/formatQuery";
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
+
+import { addToQuery } from "@/utils/helpers/formatQuery";
+import { ChangeEvent, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
-import { Category } from "@/types/categoryType";
+import { Category, CategoryType } from "@/types/categoryType";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FilterByCategoriesProps {
-    queryParams: string[],
-    updateQueryParams: Dispatch<SetStateAction<string[]>>,
-    fetchRecipes: (queryParams: string) => Promise<void>,
-    chosenCategories: Category[],
-    updateChosenCategories: Dispatch<SetStateAction<any[]>>
+    chosenCategories: string[],
+    categories: Category[],
+    categoryTypes: CategoryType[]
 }
 
-export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipes, chosenCategories, updateChosenCategories} 
+export const FilterByCategories = ({ chosenCategories, categories, categoryTypes} 
     : FilterByCategoriesProps) => {
 
-    interface CategoryType {
-        id: number,
-        label: string
-    }
-    const [categories, setCategories] = useState<Category[]>([])
-    const [categoryTypes, setCategoryTypes] = useState<CategoryType[]>([])
     // State variable for the type of category selected by user in the 'filter by' dropdown
     const [chosenCategoryType, updateChosenCategoryType] = useState<string>("0")
     // State variable for which category options to display based on chosenCategoryType
-    const [filteredCategories, setFilteredCategories] = useState<Category[]>([])
-    
+    const [filteredCategories, setFilteredCategories] = useState<Category[]>(categories)
 
-    // Fetch the list of categories
-    const fetchCategories = useCallback(async () => {
-        const allCategories = await getCategories()
-        setCategories(allCategories)
-        setFilteredCategories(allCategories)
-    },[])
-
-    // Fetch the list of category types
-    const fetchCategoryTypes = useCallback(async () => {
-        const allCategoryTypes = await getCategoryTypes()
-        setCategoryTypes(allCategoryTypes)
-    },[])
-
-    useEffect(
-        () => {
-            // Get categories upon initial render
-            fetchCategories()
-        },
-        [fetchCategories] 
-    )
-
-    useEffect(
-        () => {
-            // Get category types upon initial render
-            fetchCategoryTypes()
-        },
-        [fetchCategoryTypes] 
-    )
+    const searchParams = useSearchParams()
+    const router = useRouter()
 
     // Filter the categories based on chosen category type
     const handleCategoryTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -79,19 +45,12 @@ export const FilterByCategories = ({ queryParams, updateQueryParams, fetchRecipe
             return;
         }
         // Get a copy of the current array of categories that are being used to filter
-        const updatedCategories = [ ...chosenCategories ]
+        const currentCategories = [ ...chosenCategories ]
         // Check if the category has already been added
-        const alreadyAdded = updatedCategories.some(category => category.id === chosenCategory.id)
+        const alreadyAdded = currentCategories.some(categoryName => categoryName === chosenCategory.name)
         if (!alreadyAdded) {
-            updatedCategories.push(chosenCategory)
-            updateChosenCategories(updatedCategories)
-
-            let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
-            // Add new category query if exists
-            
-            updateQueryParams([ ...updatedParams ])
-            const formattedQuery = formatQuery(updatedParams)
-            fetchRecipes(formattedQuery)
+            const newQuery = addToQuery("category", `${chosenCategory.name}`, searchParams)
+            router.push(newQuery, {scroll: false})
         }
     }
 

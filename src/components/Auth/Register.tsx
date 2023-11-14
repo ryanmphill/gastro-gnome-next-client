@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef } from "react"
 import styles from "./auth.module.css"
-import { registerUser } from "@/dataManagers/authManager"
+import { registerUser } from "@/dataManagers/authManagers/client/authManager"
 import { useAuthContext } from "@/context/AuthContext"
 
 const Register = () => {

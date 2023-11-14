@@ -1,19 +1,22 @@
 'use client'
-import { useAuthContext } from "@/context/AuthContext"
-import { getCurrentUser } from "@/dataManagers/authManager"
-import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/recipeManager"
 import { usePathname } from "next/navigation"
-import { MouseEvent, useCallback, useEffect, useState } from "react"
+import { MouseEvent, startTransition, useOptimistic } from "react"
 import styles from "./PostInteraction.module.css"
+import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/userManager"
 
 interface FavoriteButtonProps {
+    currentUserId: number
     recipeId: number,
-    updateProfileFavs?: () => Promise<void> | undefined
+    updateProfileFavs?: () => Promise<void> | undefined,
+    usersFavs: number[]
 }
 
-export const FavoriteButton = ( {recipeId, updateProfileFavs} : FavoriteButtonProps ) => {
-    // get the current user
-    const { currentUserId } = useAuthContext()
+export const FavoriteButton = ( {currentUserId, recipeId, updateProfileFavs, usersFavs} : FavoriteButtonProps ) => {
+    
+    const [optimisticFavs, updateOptimisticFavs] = useOptimistic(
+        usersFavs,
+        (_currentState, updatedFavs: number[]) => updatedFavs   
+        )
 
     // Get the current location
     const pathname = usePathname()
@@ -21,64 +24,34 @@ export const FavoriteButton = ( {recipeId, updateProfileFavs} : FavoriteButtonPr
     // Check if the user is viewing their profile to dynamically update the profile's list of favorites
     const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
-    // Set a state variable for the user's favorites
-    const [usersFavs, updateUsersFavs] = useState<number[]>([])
-
-    // Define a function to fetch the current user with their favorites embedded
-    const fetchUserFavs = useCallback(async () => {
-        try {
-            const userData = await getCurrentUser()
-            const favoriteArray = userData.favorites
-            updateUsersFavs(favoriteArray)
-        } catch(err) {
-            console.error(err)
-        }
-    },[])
-
-    // Get the data for the current user's favorites
-    useEffect(
-        () => {
-            fetchUserFavs()
-        },
-        [fetchUserFavs] // When this array is empty, you are observing initial component state
-    )
-
     // Handle the click to favorite a post
     const handleFavorite = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        
-        // POST favorite object to API ///////////////////////////////////
-        try {
-            await addRecipeToFavorites(recipeId)
-            fetchUserFavs()
-        } catch (err) {
-            console.error(err)
-        }
+
+        startTransition(() => {
+            const optimisticCopy = [ ...usersFavs ]
+            optimisticCopy.push(recipeId)
+            updateOptimisticFavs([ ...optimisticCopy ])
+            addRecipeToFavorites(recipeId)
+        })
     }
 
     // Handle the click to unfavorite a post
     const handleUndoFavorite = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
 
-        //DELETE the favorite
-        try {
-            await removeRecipeFromFavorites(recipeId)
-            // Update the user's list of favorites state
-            if (viewingProfile && updateProfileFavs) { // If the user is on their profile, remove the recipe from view
-                updateProfileFavs()
-            } else { // else, change the button from 'favorited ⭐' to 'favorite ☆'
-                fetchUserFavs()
-            }
-        } catch (err) {
-            console.error(err)
-        }    
+        startTransition(() => {
+            const optimisticCopy = [ ...usersFavs ]
+            optimisticCopy.filter((favId) => favId != recipeId)
+            updateOptimisticFavs([ ...optimisticCopy ])
+            removeRecipeFromFavorites(recipeId)
+        })
     }
 
     /*Define a variable with a value of true if the user has already favorited this post, and false 
     if they haven't favorited this post yet*/
-    const alreadyFavorited = usersFavs.some(userFav => userFav === recipeId)
+    const alreadyFavorited = optimisticFavs.some(userFav => userFav === recipeId)
 
-    // Return the UI
     return <>
         {
             !alreadyFavorited

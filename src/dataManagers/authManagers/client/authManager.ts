@@ -1,3 +1,5 @@
+import { currentUserType } from "@/types/userTypes";
+
 const apiUrl:string = "http://localhost:8000";
 
 export const loginUser = async (user : {username: string, password: string}) => {
@@ -30,16 +32,6 @@ export const loginUser = async (user : {username: string, password: string}) => 
       body: JSON.stringify(newUser)
     })
     return await res.json()
-  };
-
-  type currentUserType = {
-    id: number,
-    bio: string,
-    image_url: string,
-    full_name: string,
-    date_joined: string,
-    favorites: number[],
-    following: number[]
   };
 
   export const getCurrentUser = async (): Promise<currentUserType> => {

@@ -1,52 +1,30 @@
-'use client'
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { SearchRecipes } from "./SearchRecipes";
 import { FilterByCategories } from "./FilterByCategories";
 import { SelectedCategories } from "./SelectedCategories";
 import styles from "./HomeFilters.module.css"
-import { Category } from "@/types/categoryType";
+import { Category, CategoryType } from "@/types/categoryType";
 
 interface FilterBarProps {
-    queryParams: string[],
-    updateQueryParams: Dispatch<SetStateAction<string[]>>,
-    fetchRecipes: (queryParams: string) => Promise<void>
+    categories: Category[],
+    categoryTypes: CategoryType[],
+    chosenCategories: string[]
 }
 
-export const FilterBar = ({ queryParams, updateQueryParams, fetchRecipes } : FilterBarProps) => {
-
-    // State to track user input in search bar
-    const [searchTerms, updateSearchTerms] = useState("")
-    // State to keep track of all selected categories the user wants to use to filter recipe feed
-    const [chosenCategories, updateChosenCategories] = useState<Category[]>([])
-
-    useEffect(
-        () => {
-            console.log(chosenCategories)
-        },[chosenCategories]
-    )
-
+export const FilterBar = ({ categories, categoryTypes, chosenCategories } : FilterBarProps) => {
 
     return <section className="filterContainer"> 
+    <Suspense>
         <section className={styles["filterBar"]}>
-            <SearchRecipes 
-            searchTerms={searchTerms}
-            updateSearchTerms={updateSearchTerms}
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams} 
-            fetchRecipes={fetchRecipes} />
+            <SearchRecipes />
 
             <FilterByCategories
             chosenCategories={chosenCategories}
-            updateChosenCategories={updateChosenCategories}
-            queryParams={queryParams}
-            updateQueryParams={updateQueryParams} 
-            fetchRecipes={fetchRecipes} />
+            categories={categories}
+            categoryTypes={categoryTypes} />
         </section>
         <SelectedCategories
-        chosenCategories={chosenCategories}
-        updateChosenCategories={updateChosenCategories}
-        queryParams={queryParams}
-        updateQueryParams={updateQueryParams} 
-        fetchRecipes={fetchRecipes} />
+        chosenCategories={chosenCategories} />
+    </Suspense>
     </section>
 }

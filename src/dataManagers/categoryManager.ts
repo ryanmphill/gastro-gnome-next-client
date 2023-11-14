@@ -1,27 +1,18 @@
+import { Category, CategoryType } from "@/types/categoryType"
+
 const apiUrl: string = 'http://localhost:8000'
 
-interface Category {
-    id: number,
-    name: string,
-    category_type: number,
-    category_type_label: string
-}
 
 export const getCategories = async (): Promise<Category[]> => {
-    const res = await fetch(`${apiUrl}/categories`)
+    const res = await fetch(`${apiUrl}/categories`, {cache: "force-cache"})
     if (!res.ok) {
         throw Error("Unable to fetch Categories") 
     }
     return res.json()
 }
 
-interface CategoryType {
-    id: number,
-    label: string
-}
-
 export const getCategoryTypes = async (): Promise<CategoryType[]> => {
-    const res = await fetch(`${apiUrl}/category_types`)
+    const res = await fetch(`${apiUrl}/category_types`, {cache: "force-cache"})
     if (!res.ok) {
         throw Error("Unable to fetch Category Types") 
     }
