@@ -21,6 +21,7 @@ export const followUser = async (id: number) => {
     throw new Error("Failed to follow user")
   }
   revalidateTag('follows')
+  revalidateTag('recipes')
   return await res.json()
   };
 
@@ -39,6 +40,7 @@ export const unFollowUser = async (id: number) => {
     throw new Error("Failed to follow user")
   }
   revalidateTag('follows')
+  revalidateTag('recipes')
   return await res.json()
   };
 
