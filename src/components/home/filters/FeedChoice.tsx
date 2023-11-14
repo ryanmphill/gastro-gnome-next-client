@@ -1,6 +1,5 @@
 'use client'
 import { addToQuery, removeFromQuery } from "@/utils/helpers/formatQuery"
-import { Suspense } from "react"
 import styles from "./HomeFilters.module.css"
 import { useRouter, useSearchParams } from "next/navigation"
 
@@ -14,7 +13,6 @@ export const FeedChoice = ({ display, currentUserId } : FeedChoiceProps) => {
     const router = useRouter()
 
     return <>
-        <Suspense>
         <div className={styles["recipeDisplayTab"]}>
             <button className={`${styles["recipeDisplayTabLink"]} ${styles["recipeDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${display === "allPosts" ? styles["active"] : ''}`}
             onClick={(e) => {
@@ -31,6 +29,5 @@ export const FeedChoice = ({ display, currentUserId } : FeedChoiceProps) => {
                 router.push(newQuery, {scroll: false})
             }}>My Feed</button>
         </div>
-        </Suspense>
     </>
 }

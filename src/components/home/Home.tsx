@@ -40,9 +40,11 @@ const [
 const chosenCategories = formatCategoryQueryParams(searchParams?.category)
 
   return <section className={styles["pageBody"]}>
-    <FeedChoice 
-      display={display}
-      currentUserId={currentUserId} />
+    <Suspense>
+        <FeedChoice 
+        display={display}
+        currentUserId={currentUserId} />
+    </Suspense>
 
     <div className="feedControl">
 

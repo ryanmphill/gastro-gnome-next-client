@@ -17,24 +17,6 @@ interface RecipeFeedProps {
 }
 
 export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) => {
-    // const [usersFollows, updateUsersFollows] = useState<number[]>([])
-
-    // // Function to retrieve users followed from the current user's data
-    // const fetchUsersFollows = useCallback(async () => {
-    //     const userData = await getCurrentUser()
-    //     const followArray = userData?.following
-    //     updateUsersFollows(followArray)
-    // }, [])
-
-    // // Get the data for the current user with their follows embedded on initial render
-    // useEffect(
-    //     () => {
-    //     if (currentUserId !== 0) {
-    //         fetchUsersFollows()
-    //     }
-    //     },
-    //     [fetchUsersFollows, currentUserId]
-    // )
     const usersFollowsData = getCurrentUserFollows()
     const usersFavsData = getCurrentUserFavorites()
     const [usersFollows, usersFavs] = await Promise.all([usersFollowsData, usersFavsData])
