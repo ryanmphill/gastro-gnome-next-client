@@ -22,7 +22,8 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
     const res = await fetch(`${apiUrl}/recipes${queryParams}`, {
       method: "GET",
       headers: reqHeaders,
-      cache: "force-cache"
+      cache: "force-cache",
+      next: { tags: ['recipes'] }
     })
     if (!res.ok) {
         throw Error("Unable to fetch Recipes") 
