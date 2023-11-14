@@ -14,24 +14,10 @@ interface FilterBarProps {
 
 export const FilterBar = ({ categories, categoryTypes, chosenCategories } : FilterBarProps) => {
 
-    // State to track user input in search bar
-    const [searchTerms, updateSearchTerms] = useState("")
-    // State to keep track of all selected categories the user wants to use to filter recipe feed
-    // const [chosenCategories, updateChosenCategories] = useState<Category[]>([])
-
-    useEffect(
-        () => {
-            console.log(chosenCategories)
-        },[chosenCategories]
-    )
-
-
     return <section className="filterContainer"> 
     <Suspense>
         <section className={styles["filterBar"]}>
-            <SearchRecipes 
-            searchTerms={searchTerms}
-            updateSearchTerms={updateSearchTerms} />
+            <SearchRecipes />
 
             <FilterByCategories
             chosenCategories={chosenCategories}
