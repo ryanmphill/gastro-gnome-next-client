@@ -43,7 +43,7 @@ export const getCurrentUserId = async (): Promise<number> => {
               "Accept": "application/json",
               "Authorization": `Token ${token.value}`,
             },
-            cache: 'no-store'
+            // cache: 'no-store'
           })
           if (res.status !== 200) {
             return 0

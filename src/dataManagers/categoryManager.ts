@@ -4,7 +4,7 @@ const apiUrl: string = 'http://localhost:8000'
 
 
 export const getCategories = async (): Promise<Category[]> => {
-    const res = await fetch(`${apiUrl}/categories`)
+    const res = await fetch(`${apiUrl}/categories`, {cache: "force-cache"})
     if (!res.ok) {
         throw Error("Unable to fetch Categories") 
     }
@@ -12,7 +12,7 @@ export const getCategories = async (): Promise<Category[]> => {
 }
 
 export const getCategoryTypes = async (): Promise<CategoryType[]> => {
-    const res = await fetch(`${apiUrl}/category_types`)
+    const res = await fetch(`${apiUrl}/category_types`, {cache: "force-cache"})
     if (!res.ok) {
         throw Error("Unable to fetch Category Types") 
     }

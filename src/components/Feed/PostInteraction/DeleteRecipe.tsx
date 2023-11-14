@@ -1,3 +1,4 @@
+'use client'
 import { MouseEvent, useState } from "react"
 import styles from "./PostInteraction.module.css"
 import { deleteRecipe } from "@/dataManagers/recipeManagers/client/recipeManager"

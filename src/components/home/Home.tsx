@@ -7,6 +7,7 @@ import { FilterBar } from '@/components/home/filters/FilterBar'
 import { convertToQueryString, formatCategoryQueryParams } from '@/utils/helpers/formatQuery'
 import { getCurrentUserId } from '@/dataManagers/authManagers/server/authManagers'
 import { getCategories, getCategoryTypes } from '@/dataManagers/categoryManager'
+import { Suspense } from 'react'
 
 interface searchParamsProp {
     searchParams?: {
@@ -57,8 +58,10 @@ const chosenCategories = formatCategoryQueryParams(searchParams?.category)
       }
 
       <button className={styles["btn-primary"]}>Post a Recipe</button>
-      <RecipeFeed recipes={recipes}
-        currentUserId={currentUserId} />
+      <Suspense>
+        <RecipeFeed recipes={recipes}
+            currentUserId={currentUserId} />
+      </Suspense>
 
     </div>
   </section>
