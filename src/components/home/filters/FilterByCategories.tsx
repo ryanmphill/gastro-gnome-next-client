@@ -1,7 +1,7 @@
 'use client'
-// import { getCategories, getCategoryTypes } from "@/dataManagers/categoryManager";
-import { addToQuery, formatQuery } from "@/utils/helpers/formatQuery";
-import { ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState } from "react"
+
+import { addToQuery } from "@/utils/helpers/formatQuery";
+import { ChangeEvent, useState } from "react"
 import Select, { ActionMeta } from 'react-select';
 import styles from "./HomeFilters.module.css"
 import { Category, CategoryType } from "@/types/categoryType";
@@ -49,20 +49,8 @@ export const FilterByCategories = ({ chosenCategories, categories, categoryTypes
         // Check if the category has already been added
         const alreadyAdded = currentCategories.some(categoryName => categoryName === chosenCategory.name)
         if (!alreadyAdded) {
-            // updatedCategories.push(chosenCategory)
-            // updateChosenCategories(updatedCategories)
-
-            // let updatedParams = [ ...queryParams, `category=${chosenCategory.id}` ]
-            // // Add new category query if exists
-            
-            // updateQueryParams([ ...updatedParams ])
-            // const formattedQuery = formatQuery(updatedParams)
-            // fetchRecipes(formattedQuery)
-
-            /*----------------------------------------------------------------*/
             const newQuery = addToQuery("category", `${chosenCategory.name}`, searchParams)
             router.push(newQuery, {scroll: false})
-            /*----------------------------------------------------------------*/
         }
     }
 

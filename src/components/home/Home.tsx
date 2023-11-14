@@ -36,32 +36,7 @@ const [
     categoryTypeData
 ])
 
-console.log("selectedCategories:", searchParams?.category)
 const chosenCategories = formatCategoryQueryParams(searchParams?.category)
-console.log("formatted categories:", chosenCategories)
-//   const [recipes, setRecipes] = useState<Recipe[]>([])
-//   type Display = "allPosts" | "postsFollowed"
-//   const [display, setDisplay] = useState<Display>("allPosts")
-//   // State for query params that affect which recipes are displayed
-//   const [queryParams, updateQueryParams] = useState<string[]>([])
-  /*-------------------------------------------------------------------------------------------*/
-
-  /*-FETCH CALLS-------------------------------------------------------------------------------*/
-  // Fetch the list of recipes with user info expanded and ingredients and categories embedded
-//   const fetchRecipes = useCallback(async (queryParams: string) => {
-//     const recipeData = await getRecipes(queryParams)
-//     setRecipes(recipeData)
-//   }, [])
-
-//   useEffect(
-//     () => {
-//       fetchRecipes("")
-//     },
-//     [fetchRecipes] 
-//   )
-
-  /*-----------------------------------------------------------------------------------------------------*/
-
 
   return <section className={styles["pageBody"]}>
     <FeedChoice 
@@ -82,7 +57,8 @@ console.log("formatted categories:", chosenCategories)
       }
 
       <button className={styles["btn-primary"]}>Post a Recipe</button>
-      <RecipeFeed recipes={recipes} />
+      <RecipeFeed recipes={recipes}
+        currentUserId={currentUserId} />
 
     </div>
   </section>

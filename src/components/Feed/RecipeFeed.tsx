@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation"
 import placeholderImg from "../../../public/assets/food-placeholder-medium.svg"
 import Link from "next/link"
-import { useAuthContext } from "@/context/AuthContext"
 import { FollowButton } from "./PostInteraction/FollowButton"
 import { DeleteRecipe } from "./PostInteraction/DeleteRecipe"
 import { FavoriteButton } from "./PostInteraction/FavoriteButton"
@@ -12,11 +11,11 @@ import { useCallback, useEffect, useState } from "react"
 import { getCurrentUser } from "@/dataManagers/authManagers/client/authManager"
 
 interface RecipeFeedProps {
-    recipes: Recipe[]
+    recipes: Recipe[],
+    currentUserId: number
 }
 
-export const RecipeFeed = ({ recipes } : RecipeFeedProps) => {
-    const { currentUserId } = useAuthContext()
+export const RecipeFeed = ({ recipes, currentUserId } : RecipeFeedProps) => {
     const [usersFollows, updateUsersFollows] = useState<number[]>([])
     const router = useRouter()
 
