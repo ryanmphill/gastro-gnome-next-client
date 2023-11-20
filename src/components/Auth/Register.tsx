@@ -6,6 +6,7 @@ import { FormEvent, useRef } from "react"
 import styles from "./auth.module.css"
 import { registerUser } from "@/dataManagers/authManagers/client/authManager"
 import { useAuthContext } from "@/context/AuthContext"
+import { registerAction } from "@/dataManagers/authManagers/server/authManagers"
 
 const Register = () => {
     const router = useRouter()
@@ -48,13 +49,14 @@ const Register = () => {
     return (
         <main className={styles["container--login"]}>
             <section className={styles["form--login"]}>
-                <form onSubmit={(e) => handleRegister(e)} id={styles["registerContainer"]}>
+                <form action={registerAction} id={styles["registerContainer"]}>
                     <h1 className={styles["login--header"]}>Register for Gastro Gnome</h1>
                     <section className={styles["nameFlex"]}>
                         <fieldset className={styles["nameFlexChild"]}>
                             <label htmlFor="firstName"> First Name </label>
                             <input 
                                 ref={firstName}
+                                name="first_name"
                                 type="text" id="firstName" className={styles["registerForm-control"]}
                                 placeholder="Enter your first name" required autoFocus />
                         </fieldset>
@@ -62,6 +64,7 @@ const Register = () => {
                             <label htmlFor="lastName"> Last Name </label>
                             <input 
                                 ref={lastName}
+                                name="last_name"
                                 type="text" id="lastName" className={styles["registerForm-control"]}
                                 placeholder="Enter your last name" required autoFocus />
                         </fieldset>
@@ -70,6 +73,7 @@ const Register = () => {
                         <label htmlFor="newUserName"> Username </label>
                         <input 
                             ref={username}
+                            name="username"
                             type="text" id="newUserName" className={styles["registerForm-control"]}
                             placeholder="Enter a new username" required autoFocus />
                     </fieldset>
@@ -77,6 +81,7 @@ const Register = () => {
                         <label htmlFor="email"> Email address </label>
                         <input 
                             ref={email}
+                            name="email"
                             type="email" id="email" className={styles["registerForm-control"]}
                             placeholder="Email address" required />
                     </fieldset>
@@ -84,6 +89,7 @@ const Register = () => {
                         <label htmlFor="newPassword"> Password </label>
                         <input 
                             ref={password}
+                            name="password"
                             type="password" id="newPassword" className={styles["registerForm-control"]}
                             placeholder="Enter a password" required />
                     </fieldset>

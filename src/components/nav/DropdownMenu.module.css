@@ -49,6 +49,13 @@
     text-decoration: none;
     display: block;
   }
+
+  .dropdown--btn_link {
+    border: none;
+    background-color: inherit;
+    width: 100%;
+    text-align: inherit;
+  }
   
   .dropdown--link:hover {
     background-color: #f1f1f1;
