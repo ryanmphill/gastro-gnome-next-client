@@ -30,3 +30,18 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
     }
     return res.json()
 }
+
+export const getSingleRecipe = async (recipeId: number): Promise<Recipe> => {
+  const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+      },
+    next: { tags: ['singleRecipe'] }
+  })
+  if (!res.ok) {
+      throw Error("Unable to fetch Recipes") 
+  }
+  return res.json()
+}

@@ -1,0 +1,32 @@
+import { getSingleRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import RecipeContent from "./content/RecipeContent"
+import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
+import { getCurrentUserFavorites } from "@/dataManagers/userManager"
+
+interface RecipeProps {
+    recipeId: number
+}
+
+const Recipe = async ({ recipeId } : RecipeProps) => {
+    const recipeDetailData = getSingleRecipe(recipeId)
+    const currentUserIdData = getCurrentUserId()
+    const usersFavsData = getCurrentUserFavorites()
+    const [
+        recipeDetails,
+        currentUserId,
+        usersFavs
+    ] = await Promise.all([
+        recipeDetailData, 
+        currentUserIdData,
+        usersFavsData
+    ])
+
+    return <>
+    <RecipeContent 
+    recipeDetails={recipeDetails}
+    currentUserId={currentUserId}
+    recipeId={recipeId}
+    usersFavs={usersFavs} />
+    </>
+}
+export default Recipe
