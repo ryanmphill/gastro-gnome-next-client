@@ -2,6 +2,7 @@
 
 import { Recipe } from "@/types/recipeType"
 import { cookies } from "next/headers"
+import { notFound } from "next/navigation"
 
 const apiUrl: string = 'http://localhost:8000'
 
@@ -41,7 +42,11 @@ export const getSingleRecipe = async (recipeId: number): Promise<Recipe> => {
     next: { tags: ['singleRecipe'] }
   })
   if (!res.ok) {
-      throw Error("Unable to fetch Recipes") 
+    if (res.status === 404) {
+      return notFound()
+    } else {
+      throw Error("Unable to fetch Recipes")
+    } 
   }
   return res.json()
 }

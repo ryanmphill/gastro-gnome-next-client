@@ -4,6 +4,7 @@ import { FavoriteButton } from "@/components/Feed/PostInteraction/FavoriteButton
 import Link from "next/link"
 import { Nutrition } from "./Nutrition"
 import { RecipeEditButton } from "./RecipeEditButton"
+import styles from "../recipe.module.css"
 
 interface RecipeContentProps {
     recipeId: number,
@@ -17,15 +18,15 @@ const RecipeContent = ( { recipeId, currentUserId, recipeDetails, usersFavs } : 
     const attachedCategories = [ ...recipeDetails.categories ]
     
     
-    return <article className="recipeDetails">
-        <header className="recipeDetails--header">
+    return <article className={styles["recipeDetails"]}>
+        <header className={styles["recipeDetails--header"]}>
             <h1 className="recipeDetails--title">{recipeDetails.title}</h1>
         </header>
 
-        <section className="recipeDetails--topContainer">
+        <section className={styles["recipeDetails--topContainer"]}>
             {
                 currentUserId !== 0 && recipeDetails?.user?.id !== currentUserId
-                && <div className="recipeDetails_fav">
+                && <div className={styles["recipeDetails_fav"]}>
                     <FavoriteButton currentUserId={currentUserId} 
                     recipeId={recipeId}
                     usersFavs={usersFavs} />
@@ -33,48 +34,48 @@ const RecipeContent = ( { recipeId, currentUserId, recipeDetails, usersFavs } : 
             }
             {
                 currentUserId !== 0 && recipeDetails?.user?.id === currentUserId
-                    && <div className="recipeDetails_fav">
+                    && <div className={styles["recipeDetails_fav"]}>
                         <RecipeEditButton recipeId={recipeId} authorId={recipeDetails.user.id} />
                     </div>
             }
         </section>
 
-        <section className="recipeDetails__userInfo">
+        <section className={styles["recipeDetails__userInfo"]}>
             <div><b>{recipeDetails?.genre?.name}</b></div>
             <div>Posted by: <Link href={""}>{recipeDetails?.user?.full_name}</Link></div>
         </section>
-        <div className="recipeDetails__imageAndTimesContainer">
-            <section className="recipeDetails__imgContainer">
-                <div className="recipeDetails__imgWrapper">
+        <div className={styles["recipeDetails__imageAndTimesContainer"]}>
+            <section className={styles["recipeDetails__imgContainer"]}>
+                <div className={styles["recipeDetails__imgWrapper"]}>
                     {
                         recipeDetails?.image?.length > 0
-                        ? <img className="recipeDetails--img" src={recipeDetails.image} alt="recipe" />
-                        : <img className="recipeDetails--img" src={placeholderImg.src} alt="recipe" />
+                        ? <img className={styles["recipeDetails--img"]} src={recipeDetails.image} alt="recipe" />
+                        : <img className={styles["recipeDetails--img"]} src={placeholderImg.src} alt="recipe" />
                     }
                 </div>
             </section>
-            <div className="recipeDetails__timesServingsDescription">
-                <section className="recipeDetails_times">
-                    <div className="recipeDetails_time"><div><b>Prep Time:</b></div>  <div>{recipeDetails.prep_time} minutes</div></div>
-                    <div className="recipeDetails_time"><div><b>Cooking Time:</b></div>  <div>{recipeDetails.cook_time} minutes</div></div>
-                    <div className="recipeDetails_time"><div><b>Total Time:</b></div>  <div>{recipeDetails.prep_time + recipeDetails.cook_time} minutes</div></div>
+            <div className={styles["recipeDetails__timesServingsDescription"]}>
+                <section className={styles["recipeDetails_times"]}>
+                    <div className={styles["recipeDetails_time"]}><div><b>Prep Time:</b></div>  <div>{recipeDetails.prep_time} minutes</div></div>
+                    <div className={styles["recipeDetails_time"]}><div><b>Cooking Time:</b></div>  <div>{recipeDetails.cook_time} minutes</div></div>
+                    <div className={styles["recipeDetails_time"]}><div><b>Total Time:</b></div>  <div>{recipeDetails.prep_time + recipeDetails.cook_time} minutes</div></div>
                 </section>
 
-                <section className="recipeDetails__servings">
+                <section className={styles["recipeDetails__servings"]}>
                     <div><b>Servings:</b> {recipeDetails.serving_size}</div>
                 </section>
 
                 <section>
                     <div>
                         <h4>Description</h4>
-                        <div className="recipeDetails--textblock" id="recipeDetails--desc" >{recipeDetails.description}</div>
+                        <div className={styles["recipeDetails--textblock"]} id={styles["recipeDetails--desc"]} >{recipeDetails.description}</div>
                     </div>
                 </section>
             </div>
         </div>
         
-        <section className="IngrNutritionContainer">
-            <div className="recipeDetails__ingredientContainer">
+        <section className={styles["IngrNutritionContainer"]}>
+            <div className={styles["recipeDetails__ingredientContainer"]}>
                 <h4>Ingredients</h4>
                 <ul>
                     {
@@ -96,27 +97,27 @@ const RecipeContent = ( { recipeId, currentUserId, recipeDetails, usersFavs } : 
 
         <section>
             <h4>Preparation</h4>
-            <div className="recipeDetails--textblock" >{recipeDetails.prep_instructions}</div>
+            <div className={styles["recipeDetails--textblock"]} >{recipeDetails.prep_instructions}</div>
         </section>
 
         <section>
             <h4>Cooking Instructions</h4>
-            <div className="recipeDetails--textblock" >{recipeDetails.cook_instructions}</div>
+            <div className={styles["recipeDetails--textblock"]} >{recipeDetails.cook_instructions}</div>
         </section>
 
         {
             recipeDetails.note
             && <section>
                 <h4>Additional Notes and Tips</h4>
-                <div className="recipeDetails--textblock" >{recipeDetails.note}</div>
+                <div className={styles["recipeDetails--textblock"]} >{recipeDetails.note}</div>
             </section>
         }
 
-        <section className="recipeDetails__categories">
+        <section className={styles["recipeDetails__categories"]}>
             {
                 attachedCategories.length > 0 &&
                 attachedCategories.map(cat => {
-                    return <div className="recipeDetails__category" key={`categorydetails--${cat.id}`}>
+                    return <div className={styles["recipeDetails__category"]} key={`categorydetails--${cat.id}`}>
                         # {cat.name}
                     </div>
                 })

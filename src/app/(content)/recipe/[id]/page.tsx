@@ -7,6 +7,7 @@ interface ParamsProp {
   }
   
   const RecipePage = ({ params } : ParamsProp ) => {
+    console.log("params", params)
     let recipeId = null
     try {
         recipeId = parseInt(params?.id ?? "0")
