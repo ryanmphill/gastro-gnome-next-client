@@ -1,3 +1,6 @@
+import { AttachedCategory } from "./categoryType"
+import { AttachedIngredient } from "./ingredientType"
+
 export type Recipe = {
     id: number,
     title: string,
@@ -18,6 +21,6 @@ export type Recipe = {
     note: string,
     image: string,
     created_on: string,
-    included_ingredients: any[],
-    categories: any[]
+    included_ingredients: AttachedIngredient[],
+    categories: AttachedCategory[]
 }

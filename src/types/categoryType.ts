@@ -9,3 +9,8 @@ export type CategoryType = {
     id: number,
     label: string
 }
+
+export type AttachedCategory = {
+    id: number,
+    name: string
+}
