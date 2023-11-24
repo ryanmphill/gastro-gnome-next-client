@@ -49,7 +49,7 @@ export const DropdownMenu = ( {currentUser} : {currentUser: number} ) => {
         {isOpen && <>
             <section className={styles["dropdown-content"]} onClick={toggleDropdown}>
             <Link className={styles["dropdown--link"]} href={"/"}>Home</Link>
-              <Link className={styles["dropdown--link"]} href={`/userprofile/${currentUser}`}>Profile</Link>
+              <Link className={styles["dropdown--link"]} href={`/profile/${currentUser}`}>Profile</Link>
               { // Logout button
                 currentUser !== 0
                   ? <div className={`${styles["navbar__menuItem"]} ${styles["navbar__logout"]}`}>

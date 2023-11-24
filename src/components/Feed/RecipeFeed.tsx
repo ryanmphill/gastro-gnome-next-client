@@ -38,7 +38,7 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                         <div className={styles["recipe--headerContainer"]}><h3><Link className={styles["recipe--header"]} href={`/recipe/${recipe.id}`}>{recipe.title}</Link></h3></div>
                         <div>{recipe.description}</div>
                         <div className={styles["recipe__userContainer"]}>
-                            <div>Posted by: <Link href={`/userprofile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></div>
+                            <div>Posted by: <Link href={`/profile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></div>
                             {
                                 currentUserId !== recipe?.user?.id && currentUserId !== 0
                                 && <Suspense>

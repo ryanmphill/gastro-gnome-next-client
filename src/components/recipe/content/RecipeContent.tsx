@@ -42,7 +42,7 @@ const RecipeContent = ( { recipeId, currentUserId, recipeDetails, usersFavs } : 
 
         <section className={styles["recipeDetails__userInfo"]}>
             <div><b>{recipeDetails?.genre?.name}</b></div>
-            <div>Posted by: <Link href={""}>{recipeDetails?.user?.full_name}</Link></div>
+            <div>Posted by: <Link href={`/profile/${recipeDetails?.user?.id}`}>{recipeDetails?.user?.full_name}</Link></div>
         </section>
         <div className={styles["recipeDetails__imageAndTimesContainer"]}>
             <section className={styles["recipeDetails__imgContainer"]}>
