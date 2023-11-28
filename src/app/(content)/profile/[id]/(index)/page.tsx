@@ -1,12 +1,21 @@
+import { ProfileAuthoredPosts } from "@/components/profile/nested/ProfileAuthoredPosts";
+
 interface ParamsProp {
-    params?: {
-        id?: string
+    params: {
+        id: string
     }
 }
 
 const ProfilePostsTab = ({params} : ParamsProp) => {
+    let profileId: number;
+
+    try {
+        profileId = parseInt(params.id)
+    } catch (err) {
+        profileId = 0 // Redirects to 'not found' page
+    }
     return <>
-    <h2>Profile # {params?.id} Index Page - Profile Posts Tab</h2>
+        <ProfileAuthoredPosts profileId={profileId} />
     </>
 }
 export default ProfilePostsTab

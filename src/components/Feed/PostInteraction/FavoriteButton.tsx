@@ -7,11 +7,10 @@ import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/
 interface FavoriteButtonProps {
     currentUserId: number
     recipeId: number,
-    updateProfileFavs?: () => Promise<void> | undefined,
     usersFavs: number[]
 }
 
-export const FavoriteButton = ( {currentUserId, recipeId, updateProfileFavs, usersFavs} : FavoriteButtonProps ) => {
+export const FavoriteButton = ( {currentUserId, recipeId, usersFavs} : FavoriteButtonProps ) => {
     
     const [optimisticFavs, updateOptimisticFavs] = useOptimistic(
         usersFavs,

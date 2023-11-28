@@ -9,12 +9,11 @@ import { followUser, unFollowUser } from "@/dataManagers/userManager"
 interface FollowButtonProps {
     currentUserId: number,
     userToFollowId: number,
-    usersFollows: number[],
-    updateProfileFollowList?: () => Promise<void> | undefined
+    usersFollows: number[]
 }
 
 
-export const FollowButton = ({ currentUserId, userToFollowId, usersFollows, updateProfileFollowList } 
+export const FollowButton = ({ currentUserId, userToFollowId, usersFollows } 
     : FollowButtonProps) => {
 
     const [optimisticFollows, updateOptimisticFollows] = useOptimistic(

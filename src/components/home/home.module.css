@@ -50,9 +50,8 @@
   
   /* Styles for display tabs -----------------------------------------------------*/
   
-  .profileDisplayTab {
+  /* .profileDisplayTab {
     display: flex;
-    /* column-gap: 3rem; */
     border-bottom: 1px solid rgba(143, 159, 174, 0.5);
     border-top: 1px solid rgba(143, 159, 174, 0.5);
     padding: 0.5rem 0;
@@ -80,12 +79,12 @@
   
   .profileDisplayTabLink.active {
     font-weight: bold;
-  }
+  } */
   
   
   /* CSS for underline animation --------------------------------------------*/
   
-  .underline-effect {
+  /* .underline-effect {
     position: relative;
     text-decoration: none;
   }
@@ -107,8 +106,8 @@
   
   .underline-effect.active::before {
     transform: scaleX(1);
-  }
-  /* -------------------------------------------------------------------------*/
+  } */
+  /* ------------------------------------------------------------------------- */
   
   /*BUTTONS----------------------------------------------------------------------------------*/
   /*Post/submit button--------------------------------------------------------*/
@@ -190,10 +189,10 @@
     }
   }
   
-  @media (min-width: 700px) {
+  /* @media (min-width: 700px) {
     .profileDisplayTab {
       justify-content: flex-end;
       column-gap: 3rem;
       overflow-x: visible;
     }
-  }
+  } */

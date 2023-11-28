@@ -1,12 +1,23 @@
+import { ProfileFavoritedPosts } from "@/components/profile/nested/ProfileFavoritedPosts";
+
 interface ParamsProp {
-    params?: {
-        id?: string
+    params: {
+        id: string
     }
 }
 
 const ProfileFavsTab = ({params} : ParamsProp) => {
+    console.log("params", params)
+    let profileId: number;
+
+    try {
+        profileId = parseInt(params.id)
+    } catch (err) {
+        profileId = 0 // Redirects to 'not found' page
+    }
+
     return <>
-    <h2>Favorites Tab for Profile #{params?.id}</h2>
+    <ProfileFavoritedPosts profileId={profileId} />
     </>
 }
 export default ProfileFavsTab
