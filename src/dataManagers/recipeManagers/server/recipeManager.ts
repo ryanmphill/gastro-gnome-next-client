@@ -50,3 +50,33 @@ export const getSingleRecipe = async (recipeId: number): Promise<Recipe> => {
   }
   return res.json()
 }
+
+export const getAuthoredRecipes = async (userId: number): Promise<Recipe[]> => {
+  const res = await fetch(`${apiUrl}/users/${userId}/authored_recipes`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+      },
+    next: { tags: ['authoredRecipes'] }
+  })
+  if (!res.ok) {
+    throw Error("Unable to fetch Recipes")
+  }
+  return res.json()
+}
+
+export const getFavoritedRecipes = async (userId: number): Promise<Recipe[]> => {
+  const res = await fetch(`${apiUrl}/users/${userId}/favorited_recipes`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+      },
+    next: { tags: ['favoritedRecipes'] }
+  })
+  if (!res.ok) {
+    throw Error("Unable to fetch Recipes")
+  }
+  return res.json()
+}
