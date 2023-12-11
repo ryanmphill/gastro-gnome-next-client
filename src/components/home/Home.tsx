@@ -8,6 +8,7 @@ import { convertToQueryString, formatCategoryQueryParams } from '@/utils/helpers
 import { getCurrentUserId } from '@/dataManagers/authManagers/server/authManagers'
 import { getCategories, getCategoryTypes } from '@/dataManagers/categoryManager'
 import { Suspense } from 'react'
+import Link from 'next/link'
 
 interface searchParamsProp {
     searchParams?: {
@@ -58,8 +59,9 @@ const chosenCategories = formatCategoryQueryParams(searchParams?.category)
           ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
           : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You're Following</h2>
       }
-
+      <Link className={styles["newRecipeLink"]} href={"/new-recipe"}>
       <button className={styles["btn-primary"]}>Post a Recipe</button>
+      </Link>
       <Suspense>
         <RecipeFeed recipes={recipes}
             currentUserId={currentUserId} />
