@@ -178,6 +178,15 @@
     }
   }
   /*---------------------------------------------------------------------------------*/
+
+  /*Wraps button in Next.js Link component while hiding Link properties so that a button
+  element can be used for server-side optimized navigation*/
+  .newRecipeLink {
+    display: inline-block;
+    color: inherit;
+    text-decoration: inherit;
+    width: fit-content;
+  }
   
   
   /*Desktop View ----------------------------------------------------------------*/

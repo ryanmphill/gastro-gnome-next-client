@@ -14,3 +14,8 @@ export type AttachedCategory = {
     id: number,
     name: string
 }
+
+export type CategoryToAdd = {
+    categoryId: number,
+    name: string
+}

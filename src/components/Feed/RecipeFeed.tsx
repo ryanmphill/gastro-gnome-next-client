@@ -25,7 +25,7 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
     {
         recipes.map(
             (recipe) => {
-                const recipeCardImg = recipe.image.length > 0 ? recipe.image : placeholderImg
+                const recipeCardImg = recipe.image.length > 0 ? recipe.image : placeholderImg.src
                 
                 const bgImageStyle: BgImageStyle = { /*Dynamically set recipe image as background for div element*/
                     '--bg-image': `url(${recipeCardImg})`,

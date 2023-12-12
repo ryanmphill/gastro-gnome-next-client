@@ -1,8 +1,11 @@
 'use server'
 
+import { CategoryToAdd } from "@/types/categoryType"
+import { IngredientToAdd } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
+import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 const apiUrl: string = 'http://localhost:8000'
 
@@ -80,3 +83,47 @@ export const getFavoritedRecipes = async (userId: number): Promise<Recipe[]> => 
   }
   return res.json()
 }
+
+export const createNewRecipe = async (ingredientData: IngredientToAdd[], categoryData: CategoryToAdd[], formData: FormData) => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('gastro_token')
+
+  const categoryIdArray = categoryData.map(category => category.categoryId)
+
+  const data = {
+    "title": formData.get("title"),
+    "genre": formData.get("genre"),
+    "description": formData.get("description"),
+    "prep_instructions": formData.get("prepInstructions"),
+    "cook_instructions": formData.get("cookInstructions"),
+    "prep_time": formData.get("prepTime"),
+    "cook_time": formData.get("cookTime"),
+    "serving_size": formData.get("servingSize"),
+    "note": formData.get("notes"),
+    "image": formData.get("image"),
+    "ingredients": ingredientData,
+    "categories": categoryIdArray
+  }
+
+  const res = await fetch(`${apiUrl}/recipes`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Token ${token?.value}`
+      },
+      body: JSON.stringify(data)
+  })
+
+  if (res && res.ok) {
+    console.log(res.status, res.statusText)
+    revalidateTag("recipes")
+    revalidateTag("authoredRecipes")
+    redirect('/')
+  } else if (res && !res.ok) {
+    console.error(res)
+    throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)
+  } else {
+    throw Error("Server is unresponsive... unable to POST recipe")
+  }
+};
