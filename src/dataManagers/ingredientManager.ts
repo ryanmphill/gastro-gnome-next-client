@@ -29,6 +29,7 @@ export const createNewIngredient = async (newIngredient: {name: string}): Promis
         },
         body: JSON.stringify(newIngredient)
     })
+    console.log(res.status, res.statusText)
     if (!res.ok) {
         throw Error("Unable to post ingredient") 
     }
