@@ -35,7 +35,8 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
     return res.json()
 }
 
-export const getSingleRecipe = async (recipeId: number): Promise<Recipe> => {
+/**Fetches data for single recipe. If API responds with 404, user is redirected to 404 not found page */
+export const getSingleRecipe = async (recipeId: number): Promise<Recipe | never> => {
   const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
     method: "GET",
     headers: {

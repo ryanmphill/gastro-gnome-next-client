@@ -3,17 +3,16 @@ import { useRouter } from "next/navigation"
 import styles from "../recipe.module.css"
 
 interface EditButtonProps {
-    recipeId: number,
-    authorId: number
+    recipeId: number
 }
 
-export const RecipeEditButton = ({ recipeId, authorId } : EditButtonProps) => {
+export const RecipeEditButton = ({ recipeId } : EditButtonProps) => {
     const router = useRouter()
     return <>
         <button className={styles["btn-secondary"]}
             onClick={(evt) => {
                 evt.preventDefault()
-                router.push(`/recipe/${recipeId}/edit/${authorId}`) //TODO: Add path to edit page
+                router.push(`/edit-recipe/${recipeId}`)
             }}
         >Edit</button>
     </>
