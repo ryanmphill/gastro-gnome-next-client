@@ -1,13 +1,13 @@
 'use client'
-import { AttachedCategory, Category, CategoryToAdd } from '@/types/categoryType';
+import { AttachedCategory, Category } from '@/types/categoryType';
 import { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 
 interface EditCategoryProps {
-    categoriesToPost: CategoryToAdd[],
+    categoriesToPost: AttachedCategory[],
     allCategories: Category[],
-    updateCategoriesToPost: Dispatch<SetStateAction<CategoryToAdd[]>>,
+    updateCategoriesToPost: Dispatch<SetStateAction<AttachedCategory[]>>,
     initialCategories: AttachedCategory[],
     categoriesToDelete: AttachedCategory[],
     updateCategoriesToDelete: Dispatch<SetStateAction<AttachedCategory[]>>
@@ -17,9 +17,9 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
     initialCategories, categoriesToDelete, updateCategoriesToDelete
 }: EditCategoryProps) => {
 
-    const [categoryToAdd, updateCategoryToAdd] = useState<CategoryToAdd>(
+    const [categoryToAdd, updateCategoryToAdd] = useState<AttachedCategory>(
         {
-            "categoryId": 0,
+            "id": 0,
             "name": ""
         }
     )
@@ -27,12 +27,12 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
     const handleAddCategory = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         // Check if category has been selected
-        if (categoryToAdd.categoryId > 0) {
+        if (categoryToAdd.id > 0) {
             // Get a copy of the current array of categories that are staged to be added
             const copy = [...categoriesToPost]
             // Check if the category has already been added
-            const alreadyAdded = copy.some(category => category.categoryId === categoryToAdd.categoryId)
-            const inInitialRecipe = initialCategories.some(category => category.id === categoryToAdd.categoryId)
+            const alreadyAdded = copy.some(category => category.id === categoryToAdd.id)
+            const inInitialRecipe = initialCategories.some(category => category.id === categoryToAdd.id)
             if (!alreadyAdded && !inInitialRecipe) {
                 copy.push(categoryToAdd)
                 updateCategoriesToPost(copy)
@@ -44,9 +44,9 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
         }
     }
 
-    const handleRemoveCategory = (event: MouseEvent<HTMLButtonElement>, objectToRemove: CategoryToAdd) => {
+    const handleRemoveCategory = (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedCategory) => {
         event.preventDefault()
-        const updatedCategories = categoriesToPost.filter(category => category.categoryId !== objectToRemove.categoryId)
+        const updatedCategories = categoriesToPost.filter(category => category.id !== objectToRemove.id)
         updateCategoriesToPost(updatedCategories)
 
     }
@@ -116,9 +116,9 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
                 categoriesToPost.length > 0
                 && categoriesToPost.map(includedCategory => {
                     const matchedCategory = allCategories.find(
-                        category => category.id === includedCategory.categoryId
+                        category => category.id === includedCategory.id
                     )
-                    return <div className={`${styles["addedCategory"]} ${styles["addedCategory--editForm"]}`} key={`addededCat2--${includedCategory.categoryId}`}>
+                    return <div className={`${styles["addedCategory"]} ${styles["addedCategory--editForm"]}`} key={`addededCat2--${includedCategory.id}`}>
                         {matchedCategory?.name}
                         <button
                             onClick={(click) => handleRemoveCategory(click, includedCategory)}
@@ -138,7 +138,7 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
                         options={allCategories}
                         onChange={(selectedOption) => {
                             const copy = { ...categoryToAdd }
-                            copy.categoryId = selectedOption?.id ?? 0
+                            copy.id = selectedOption?.id ?? 0
                             copy.name = selectedOption?.name ?? ""
                             updateCategoryToAdd(copy)
                         }}
