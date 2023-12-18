@@ -19,6 +19,15 @@ interface EditIngredientFormProps {
     setShowCustom: Dispatch<SetStateAction<boolean>>
 }
 
+/**Renders a user interface and display for editing ingredients in the database associated with recipe as
+ * part of the `form within a form`.
+ * 
+ * A user can select the `ingredient` via a searchable select, enter the `quantity`, and enter a `unit` for the quantity. The added ingredients
+ * are displayed to the user in a small window with the option to remove them.
+ * 
+ * Newly added ingredients are presented to the user with a green highlight, deleted ingredients with a red highlight,
+ * and unchanged ingredients remain neutral. 
+  */
 export const EditIngredientForm = ({ initialIngredients, allIngredients, markedForDeletion, handleUndoDelete,
     handleDeleteExistingIngredient, handleRemoveIngredient, ingredientsToPost, ingredientToAdd,
     updateIngredientToAdd, handleAddIngredient, setShowCustom }: EditIngredientFormProps) => {

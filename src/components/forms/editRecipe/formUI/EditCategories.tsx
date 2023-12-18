@@ -13,6 +13,13 @@ interface EditCategoryProps {
     updateCategoriesToDelete: Dispatch<SetStateAction<AttachedCategory[]>>
 }
 
+/**Renders a searchable select with a button for adding or removing multiple category 'tags' to a recipe
+ * 
+ * Added categories are displayed above the searchable select
+ * 
+ * Newly added categories are presented to the user with a green highlight, deleted categories with a red highlight,
+ * and unchanged categories remain neutral.
+ */
 export const EditCategories = ({ categoriesToPost, allCategories, updateCategoriesToPost,
     initialCategories, categoriesToDelete, updateCategoriesToDelete
 }: EditCategoryProps) => {

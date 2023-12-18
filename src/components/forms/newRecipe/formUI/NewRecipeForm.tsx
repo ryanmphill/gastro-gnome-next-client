@@ -46,40 +46,6 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
     // the values in  invisible input elements with `type` set to `hidden`
     const createNew = createNewRecipe.bind(null, includedIngredients, includedCategories)
 
-    // Handle the post recipe click
-    const handlePostRecipeClick = (event : MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault()
-        
-        // // Check if all required fields have been entered
-        // const requiredStr = ['title', 'description', 'prepInstructions', 'cookInstructions']
-        // const requiredNum = ['genreId', 'prepTime', 'cookTime', 'servingSize']
-        // const formFilled = requiredStr.every(field => newRecipe[field].length > 0) && requiredNum.every(field => newRecipe[field] > 0)
-        // if (formFilled) {
-        //     // POST recipe to API ////////////////////////////////////////////
-        //     
-        // } else {window.alert("Please fill all required fields")}
-
-        const categoryIdArray = includedCategories.map(category => category.categoryId)
-        
-        const data = {
-            "title": newRecipe.title,
-            "genre": newRecipe.genreId,
-            "description": newRecipe.description,
-            "prep_instructions": newRecipe.prepInstructions,
-            "cook_instructions": newRecipe.cookInstructions,
-            "prep_time": newRecipe.prepTime,
-            "cook_time": newRecipe.cookTime,
-            "serving_size": newRecipe.servingSize,
-            "note": newRecipe.note,
-            "image": newRecipe.image,
-            "ingredients": includedIngredients,
-            "categories": categoryIdArray
-        }
-
-        console.log(data)
-        
-    }
-
     return <>
         <form action={createNew} className={`${styles["postRecipeForm"]} ${styles["fadeIn"]}`} id="newRecipeForm">
             <h2 className={styles["postRecipeForm__title"]}>Add Your Recipe</h2>
@@ -301,7 +267,6 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
             </fieldset>
             
             <button type="submit"
-                // onClick={ (clickEvent) => {handlePostRecipeClick(clickEvent)} }
                 className={`${styles["btn-primary"]} ${styles["submitRecipe"]}`}>
                 Submit New Recipe
             </button>

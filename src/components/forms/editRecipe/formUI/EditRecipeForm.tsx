@@ -3,7 +3,7 @@ import { AttachedCategory, Category } from "@/types/categoryType"
 import { Genre } from "@/types/genreType"
 import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
-import { MouseEvent, useState } from "react"
+import { useState } from "react"
 import { EditIngredients } from "./EditIngredients"
 import { EditCategories } from "./EditCategories"
 import styles from "../../recipeForm.module.css"
@@ -17,6 +17,9 @@ interface EditRecipeFormProps {
     recipeDetails: Recipe
 }
 
+/**Renders form elements and maintains state related to editing a recipe. 
+ * When a user is ready to submit, performs server mutation and makes PUT request to API.
+ */
 export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories, recipeDetails }: EditRecipeFormProps) => {
 
     /* Define and set state variable for the recipe object to be edited,
