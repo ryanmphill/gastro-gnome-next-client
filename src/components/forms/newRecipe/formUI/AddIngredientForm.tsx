@@ -54,6 +54,7 @@ export const AddIngredientForm = ({
                         className="ingredient--control--select"
                         classNamePrefix="ingredient-select"
                         id="ingredientChoices"
+                        instanceId="ingredientChoices"
                         options={allIngredients}
                         onChange={(selectedOption) => {
                             const copy = { ...ingredientToAdd }

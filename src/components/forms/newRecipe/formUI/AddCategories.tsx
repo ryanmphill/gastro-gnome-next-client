@@ -71,6 +71,7 @@ export const AddCategories = ({
                     <Select
                         className="category--select"
                         id="categoryChoices"
+                        instanceId="categoryChoices"
                         options={allCategories}
                         onChange={(selectedOption) => {
                             const copy = { ...categoryToAdd }
