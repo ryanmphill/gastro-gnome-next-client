@@ -1,5 +1,5 @@
 'use client'
-import { AttachedCategory, Category, CategoryToAdd } from "@/types/categoryType"
+import { AttachedCategory, Category } from "@/types/categoryType"
 import { Genre } from "@/types/genreType"
 import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
@@ -39,22 +39,9 @@ export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories
     const [ingredientsToDelete, updateIngredientsToDelete] = useState<AttachedIngredient[]>([])
     const [ingredientsToPost, updateIngredientsToPost] = useState<AttachedIngredient[]>([])
     const [categoriesToDelete, updateCategoriesToDelete] = useState<AttachedCategory[]>([])
-    const [categoriesToPost, updateCategoriesToPost] = useState<CategoryToAdd[]>([])
+    const [categoriesToPost, updateCategoriesToPost] = useState<AttachedCategory[]>([])
     const initialCategories = [...recipeDetails.categories]
-    const initialIngredients: AttachedIngredient[] = [...recipeDetails.included_ingredients].map(({ ingredient, name, quantity, quantity_unit }) => ({
-        ingredient,
-        name,
-        quantity,
-        quantity_unit
-    })); // Give the ingredients on the recipe the same "shape" as newly added ingredients by removing `id` and `recipe properties
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    // Handle the edit recipe click ////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////
-    const handleEditRecipeClick = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault()
-
-    }
+    const initialIngredients = [...recipeDetails.included_ingredients]
 
     const relationshipData = {
         initialIngredients,

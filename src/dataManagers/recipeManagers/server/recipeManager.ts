@@ -134,7 +134,7 @@ type RelationshipData = {
   ingredientsToPost: AttachedIngredient[];
   ingredientsToDelete: AttachedIngredient[];
   initialCategories: AttachedCategory[];
-  categoriesToPost: CategoryToAdd[];
+  categoriesToPost: AttachedCategory[];
   categoriesToDelete: AttachedCategory[];
 }
 export const editRecipe = async (recipeId: number, relationshipData: RelationshipData, formData: FormData) => {
@@ -150,15 +150,18 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
     categoriesToDelete
   } = relationshipData
 
+  /*The client tracks the ingredients/categories being added and removed for user experience.
+    Only the updated list of related items needs to be sent to the API
+  */
   const updatedIngredients = initialIngredients.filter((initialIngredient) => {
     return !ingredientsToDelete.some(ingToDlt => ingToDlt.ingredient === initialIngredient.ingredient)
   }).concat(ingredientsToPost)
 
   const updatedCategories = initialCategories.filter((initialCategory) => {
     return !categoriesToDelete.some((catToDlt) => catToDlt.id === initialCategory.id)
-  }).concat(categoriesToPost.map(category => { return {id: category.categoryId, name: category.name}}))
+  }).concat(categoriesToPost).map(category => category.id)
 
-  
+
 
   const data = {
     "title": formData.get("title"),
@@ -177,27 +180,28 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
   console.log("recipeId", recipeId)
   console.log("editData", data)
 
-  
 
-  // const res = await fetch(`${apiUrl}/recipes`, {
-  //     method: "PUT",
-  //     headers: {
-  //         "Content-Type": "application/json",
-  //         "Accept": "application/json",
-  //         "Authorization": `Token ${token?.value}`
-  //     },
-  //     body: JSON.stringify(data)
-  // })
 
-  // if (res && res.ok) {
-  //   console.log(res.status, res.statusText)
-  //   revalidateTag("recipes")
-  //   revalidateTag("authoredRecipes")
-  //   redirect('/')
-  // } else if (res && !res.ok) {
-  //   console.error(res)
-  //   throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)
-  // } else {
-  //   throw Error("Server is unresponsive... unable to POST recipe")
-  // }
+  const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Token ${token?.value}`
+    },
+    body: JSON.stringify(data)
+  })
+
+  if (res && res.ok) {
+    console.log(`PUT '/recipes/${recipeId}'`, res.status, res.statusText)
+    revalidateTag("recipes")
+    revalidateTag("authoredRecipes")
+    revalidateTag("singleRecipe")
+    redirect(`/recipe/${recipeId}`)
+  } else if (res && !res.ok) {
+    console.error(res)
+    throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)
+  } else {
+    throw Error("Server is unresponsive... unable to POST recipe")
+  }
 };

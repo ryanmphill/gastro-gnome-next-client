@@ -108,7 +108,6 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, markedF
             <div className={`form-group ${styles["ingredientInputs"]}`}>
                 <label htmlFor="ingredientQuantity_input">Quantity:</label>
                 <input
-                    required
                     type="text"
                     className={styles["ingredient--control"]}
                     placeholder="Enter a quantity"
@@ -128,7 +127,6 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, markedF
             <div className={`form-group ${styles["ingredientInputs"]}`}>
                 <label htmlFor="quantityType_input">Unit:</label>
                 <input
-                    required
                     type="text"
                     className={styles["ingredient--control"]}
                     placeholder="Enter a unit of measurement"
