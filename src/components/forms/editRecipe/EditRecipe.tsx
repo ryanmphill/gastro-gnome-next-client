@@ -4,6 +4,7 @@ import { getGenres } from "@/dataManagers/genreManager"
 import { getIngredients } from "@/dataManagers/ingredientManager"
 import { getSingleRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
 import { notFound } from "next/navigation"
+import { EditRecipeForm } from "./formUI/EditRecipeForm"
 
 /**Fetches data while running on the server and renders `EditRecipeForm`. 
  * 
@@ -11,7 +12,7 @@ import { notFound } from "next/navigation"
  * 
  * If user is not logged in, redirects to login page
  */
-export const EditRecipe = async ({recipeId} : {recipeId: number}) => {
+export const EditRecipe = async ({ recipeId }: { recipeId: number }) => {
     const genreData = getGenres()
     const ingredientData = getIngredients()
     const categoryData = getCategories()
@@ -19,26 +20,25 @@ export const EditRecipe = async ({recipeId} : {recipeId: number}) => {
     const authorizedToEditData = authorizedToEditRecipe(recipeId)
     
     const [
-        genres, 
-        allIngredients, 
+        genres,
+        allIngredients,
         allCategories,
         recipeDetails,
         isAuthorizedToEdit
     ] = await Promise.all([
-        genreData, 
-        ingredientData, 
+        genreData,
+        ingredientData,
         categoryData,
         recipeDetailData,
         authorizedToEditData
     ])
     if (isAuthorizedToEdit) {
         return <>
-        <div>Authorized to edit recipe with title: {recipeDetails.title}</div>
-        {/* <EditRecipeForm
-            recipeId={recipeId}
-            genres={genres}
-            allIngredients={allIngredients}
-            allCategories={allCategories} /> */}
+            <EditRecipeForm
+                genres={genres}
+                allIngredients={allIngredients}
+                allCategories={allCategories}
+                recipeDetails={recipeDetails} />
         </>
     } else {
         notFound()
