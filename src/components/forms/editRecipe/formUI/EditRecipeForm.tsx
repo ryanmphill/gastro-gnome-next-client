@@ -7,15 +7,17 @@ import { MouseEvent, useState } from "react"
 import { EditIngredients } from "./EditIngredients"
 import { EditCategories } from "./EditCategories"
 import styles from "../../recipeForm.module.css"
+import { editRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
 
 interface EditRecipeFormProps {
+    recipeId: number,
     genres: Genre[],
     allIngredients: Ingredient[],
     allCategories: Category[],
     recipeDetails: Recipe
 }
 
-export const EditRecipeForm = ({ genres, allIngredients, allCategories, recipeDetails }: EditRecipeFormProps) => {
+export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories, recipeDetails }: EditRecipeFormProps) => {
 
     /* Define and set state variable for the recipe object to be edited,
        the initial ingredient and category relationships, ingredient and category relationships 
@@ -54,8 +56,19 @@ export const EditRecipeForm = ({ genres, allIngredients, allCategories, recipeDe
 
     }
 
+    const relationshipData = {
+        initialIngredients,
+        ingredientsToPost,
+        ingredientsToDelete,
+        initialCategories,
+        categoriesToPost,
+        categoriesToDelete
+    }
+    
+    const editAction = editRecipe.bind(null, recipeId, relationshipData)
+
     return <>
-        <form className={`${styles["postRecipeForm"]} ${styles["fadeIn"]}`}>
+        <form action={editAction} className={`${styles["postRecipeForm"]} ${styles["fadeIn"]}`}>
             <h2 className={styles["postRecipeForm__title"]}>Edit Your Recipe</h2>
             <fieldset>
                 <div className="form-group">
@@ -280,8 +293,7 @@ export const EditRecipeForm = ({ genres, allIngredients, allCategories, recipeDe
                 </div>
             </fieldset>
 
-            <button
-                onClick={(clickEvent) => { handleEditRecipeClick(clickEvent) }}
+            <button type="submit"
                 className={`${styles["btn-primary"]} ${styles["submitRecipe"]}`}>
                 Submit Changes
             </button>

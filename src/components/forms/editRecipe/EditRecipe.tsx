@@ -35,6 +35,7 @@ export const EditRecipe = async ({ recipeId }: { recipeId: number }) => {
     if (isAuthorizedToEdit) {
         return <>
             <EditRecipeForm
+                recipeId={recipeId}
                 genres={genres}
                 allIngredients={allIngredients}
                 allCategories={allCategories}

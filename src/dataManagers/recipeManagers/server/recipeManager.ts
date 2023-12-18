@@ -1,6 +1,6 @@
 'use server'
 
-import { CategoryToAdd } from "@/types/categoryType"
+import { AttachedCategory, CategoryToAdd } from "@/types/categoryType"
 import { AttachedIngredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
 import { revalidateTag } from "next/cache"
@@ -127,4 +127,77 @@ export const createNewRecipe = async (ingredientData: AttachedIngredient[], cate
   } else {
     throw Error("Server is unresponsive... unable to POST recipe")
   }
+};
+
+type RelationshipData = {
+  initialIngredients: AttachedIngredient[];
+  ingredientsToPost: AttachedIngredient[];
+  ingredientsToDelete: AttachedIngredient[];
+  initialCategories: AttachedCategory[];
+  categoriesToPost: CategoryToAdd[];
+  categoriesToDelete: AttachedCategory[];
+}
+export const editRecipe = async (recipeId: number, relationshipData: RelationshipData, formData: FormData) => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('gastro_token')
+
+  const {
+    initialIngredients,
+    ingredientsToPost,
+    ingredientsToDelete,
+    initialCategories,
+    categoriesToPost,
+    categoriesToDelete
+  } = relationshipData
+
+  const updatedIngredients = initialIngredients.filter((initialIngredient) => {
+    return !ingredientsToDelete.some(ingToDlt => ingToDlt.ingredient === initialIngredient.ingredient)
+  }).concat(ingredientsToPost)
+
+  const updatedCategories = initialCategories.filter((initialCategory) => {
+    return !categoriesToDelete.some((catToDlt) => catToDlt.id === initialCategory.id)
+  }).concat(categoriesToPost.map(category => { return {id: category.categoryId, name: category.name}}))
+
+  
+
+  const data = {
+    "title": formData.get("title"),
+    "genre": formData.get("genre"),
+    "description": formData.get("description"),
+    "prep_instructions": formData.get("prepInstructions"),
+    "cook_instructions": formData.get("cookInstructions"),
+    "prep_time": formData.get("prepTime"),
+    "cook_time": formData.get("cookTime"),
+    "serving_size": formData.get("servingSize"),
+    "note": formData.get("notes"),
+    "image": formData.get("image"),
+    "ingredients": updatedIngredients,
+    "categories": updatedCategories
+  }
+  console.log("recipeId", recipeId)
+  console.log("editData", data)
+
+  
+
+  // const res = await fetch(`${apiUrl}/recipes`, {
+  //     method: "PUT",
+  //     headers: {
+  //         "Content-Type": "application/json",
+  //         "Accept": "application/json",
+  //         "Authorization": `Token ${token?.value}`
+  //     },
+  //     body: JSON.stringify(data)
+  // })
+
+  // if (res && res.ok) {
+  //   console.log(res.status, res.statusText)
+  //   revalidateTag("recipes")
+  //   revalidateTag("authoredRecipes")
+  //   redirect('/')
+  // } else if (res && !res.ok) {
+  //   console.error(res)
+  //   throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)
+  // } else {
+  //   throw Error("Server is unresponsive... unable to POST recipe")
+  // }
 };
