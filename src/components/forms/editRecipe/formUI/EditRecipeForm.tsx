@@ -1,70 +1,81 @@
 'use client'
-import { MouseEvent, useEffect, useState } from "react"
-import { AddIngredients } from "./AddIngredients"
-import { AddCategories } from "./AddCategories"
+import { AttachedCategory, Category } from "@/types/categoryType"
 import { Genre } from "@/types/genreType"
-import { Ingredient, AttachedIngredient } from "@/types/ingredientType"
-import { Category, CategoryToAdd } from "@/types/categoryType"
+import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
+import { Recipe } from "@/types/recipeType"
+import { useState } from "react"
+import { EditIngredients } from "./EditIngredients"
+import { EditCategories } from "./EditCategories"
 import styles from "../../recipeForm.module.css"
-import { createNewRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { editRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
 
-interface RecipeFormProps {
+interface EditRecipeFormProps {
+    recipeId: number,
     genres: Genre[],
     allIngredients: Ingredient[],
-    allCategories: Category[]
+    allCategories: Category[],
+    recipeDetails: Recipe
 }
 
-/**Renders form elements and maintains state related to creating a new recipe. 
- * When a user is ready to submit, performs server mutation via POST request.
+/**Renders form elements and maintains state related to editing a recipe. 
+ * When a user is ready to submit, performs server mutation and makes PUT request to API.
  */
-export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFormProps) => {
+export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories, recipeDetails }: EditRecipeFormProps) => {
 
-    /* Define and set state variable for the recipe object to be posted,
-       the ingredient relationships to be posted, and the category relationships
-       to be posted */
-    const [newRecipe, updateNewRecipe] = useState(
+    /* Define and set state variable for the recipe object to be edited,
+       the initial ingredient and category relationships, ingredient and category relationships 
+       to be posted, and the ingredient and category relationships to be deleted */
+    const [recipe, updateRecipe] = useState(
         {
-            "title": "",
-            "genreId": 0,
-            "description": "",
-            "prepInstructions": "",
-            "cookInstructions": "",
-            "prepTime": 0,
-            "cookTime": 0,
-            "servingSize": 0,
-            "note": "",
-            "image": ""
+            "title": recipeDetails.title,
+            "genreId": recipeDetails.genre.id,
+            "description": recipeDetails.description,
+            "prepInstructions": recipeDetails.prep_instructions,
+            "cookInstructions": recipeDetails.cook_instructions,
+            "prepTime": recipeDetails.prep_time,
+            "cookTime": recipeDetails.cook_time,
+            "servingSize": recipeDetails.serving_size,
+            "note": recipeDetails.note,
+            "image": recipeDetails.image
         }
     )
-    const [includedIngredients, updateIncludedIngredients] = useState<AttachedIngredient[]>([])
-    const [includedCategories, updateIncludedCategories] = useState<CategoryToAdd[]>([])
+    const [ingredientsToDelete, updateIngredientsToDelete] = useState<AttachedIngredient[]>([])
+    const [ingredientsToPost, updateIngredientsToPost] = useState<AttachedIngredient[]>([])
+    const [categoriesToDelete, updateCategoriesToDelete] = useState<AttachedCategory[]>([])
+    const [categoriesToPost, updateCategoriesToPost] = useState<AttachedCategory[]>([])
+    const initialCategories = [...recipeDetails.categories]
+    const initialIngredients = [...recipeDetails.included_ingredients]
+
+    const relationshipData = {
+        initialIngredients,
+        ingredientsToPost,
+        ingredientsToDelete,
+        initialCategories,
+        categoriesToPost,
+        categoriesToDelete
+    }
     
-    // The server action to POST the new recipe will take the formData object as an argument by default.
-    // The `bind` method is being used here to add additional preset arguments to the function call, with
-    // `null` provided for the `this` parameter.
-    // since these are not being stored in the formData object. An alternative would be to store
-    // the values in  invisible input elements with `type` set to `hidden`
-    const createNew = createNewRecipe.bind(null, includedIngredients, includedCategories)
+    const editAction = editRecipe.bind(null, recipeId, relationshipData)
 
     return <>
-        <form action={createNew} className={`${styles["postRecipeForm"]} ${styles["fadeIn"]}`} id="newRecipeForm">
-            <h2 className={styles["postRecipeForm__title"]}>Add Your Recipe</h2>
+        <form action={editAction} className={`${styles["postRecipeForm"]} ${styles["fadeIn"]}`}>
+            <h2 className={styles["postRecipeForm__title"]}>Edit Your Recipe</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="recipeTitle__input">Recipe Title:</label>
                     <input
                         required autoFocus
                         type="text"
-                        name="title"
                         className={styles["recipeForm--control"]}
+                        name="title"
                         placeholder="Add a title"
                         id="recipeTitle__input"
-                        value={newRecipe.title}
+                        value={recipe.title}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.title = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe title with value of copy
+                                updateRecipe(copy) // Updating recipe title with value of copy
                             }
                         } />
                 </div>
@@ -75,18 +86,18 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                     <label htmlFor="genre_dropdown">What course is this recipe?:</label>
                     <select
                         className={styles["recipeForm--control"]}
-                        id="genre_dropdown"
                         name="genre"
-                        value={newRecipe.genreId}
+                        id="genre_dropdown"
+                        value={recipe.genreId}
                         onChange={(changeEvent) => {
-                            const copy = { ...newRecipe };
+                            const copy = { ...recipe };
                             copy.genreId = parseInt(changeEvent.target.value);
-                            updateNewRecipe(copy); // Updating recipe with value of copy
+                            updateRecipe(copy); // Updating recipe with value of copy
                         }}
                     >   {/*Add options for choosing a genre*/}
                         <option value="0">Select a course</option>
                         {
-                            genres.map(genre => <option value={genre.id} key={`genre--${genre.id}`}>{genre.name}</option> )
+                            genres.map(genre => <option value={genre.id} key={`genre--${genre.id}`}>{genre.name}</option>)
                         }
                     </select>
                 </div>
@@ -96,43 +107,46 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                 <div className="form-group">
                     <label htmlFor="recipeDescription_input">Description:</label>
                     <textarea
-                        required 
+                        required
                         className={`${styles["recipeForm--control"]} ${styles["recipe--textarea"]}`}
                         name="description"
                         placeholder="Add a description for your recipe"
-                        id = "recipeDescription_input"
-                        value={newRecipe.description}
+                        id="recipeDescription_input"
+                        value={recipe.description}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.description = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe with value of copy
+                                updateRecipe(copy) // Updating recipe with value of copy
                             }
                         } />
                 </div>
             </fieldset>
 
             <fieldset id={styles["addIngredients"]}>
-                <AddIngredients includedIngredients={includedIngredients}
+                <EditIngredients ingredientsToPost={ingredientsToPost}
                     allIngredients={allIngredients}
-                    updateIncludedIngredients={updateIncludedIngredients} />
+                    updateIngredientsToPost={updateIngredientsToPost}
+                    initialIngredients={initialIngredients}
+                    ingredientsToDelete={ingredientsToDelete}
+                    updateIngredientsToDelete={updateIngredientsToDelete} />
             </fieldset>
 
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="recipePrep_input">Preparation:</label>
                     <textarea
-                        required 
+                        required
                         className={`${styles["recipeForm--control"]} ${styles["recipe--textarea"]}`}
                         name="prepInstructions"
                         placeholder="Add preparation instructions for your recipe"
                         id="recipePrep_input"
-                        value={newRecipe.prepInstructions}
+                        value={recipe.prepInstructions}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.prepInstructions = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe with value of copy
+                                updateRecipe(copy) // Updating recipe with value of copy
                             }
                         } />
                 </div>
@@ -142,17 +156,17 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                 <div className="form-group">
                     <label htmlFor="recipeCook_input">Cooking Instructions:</label>
                     <textarea
-                        required 
+                        required
                         className={`${styles["recipeForm--control"]} ${styles["recipe--textarea"]}`}
                         name="cookInstructions"
                         placeholder="Add cooking instructions for your recipe"
                         id="recipeCook_input"
-                        value={newRecipe.cookInstructions}
+                        value={recipe.cookInstructions}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.cookInstructions = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe with value of copy
+                                updateRecipe(copy) // Updating recipe with value of copy
                             }
                         } />
                 </div>
@@ -162,38 +176,38 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                 <div className={`form-group ${styles["recipeTime--div"]}`}>
                     <label htmlFor="prepTime_input">Prep Time:</label>
                     <input
-                        required 
+                        required
                         type="number"
                         className={`${styles["recipeForm--control"]} ${styles["recipeTime--input"]}`}
                         name="prepTime"
-                        placeholder="Enter a time (minutes)"
+                        placeholder="Enter a time"
                         id="prepTime_input"
-                        value={newRecipe.prepTime > 0 ? newRecipe.prepTime : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
+                        value={recipe.prepTime > 0 ? recipe.prepTime : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
                         onWheel={(event) => event.currentTarget.blur()} // Remove focus from the input on wheel event
                         onChange={
                             (changeEvent) => {
-                                const copy = { ...newRecipe }
+                                const copy = { ...recipe }
                                 copy.prepTime = changeEvent.target.value !== "" ? Math.round(parseFloat(changeEvent.target.value) * 100) / 100 : 0
-                                updateNewRecipe(copy) // Updating time with value of copy
+                                updateRecipe(copy) // Updating time with value of copy
                             }
                         } />
                 </div>
                 <div className={`form-group ${styles["recipeTime--div"]}`}>
                     <label htmlFor="cookTime_input">Cooking Time:</label>
                     <input
-                        required 
+                        required
                         type="number"
                         className={`${styles["recipeForm--control"]} ${styles["recipeTime--input"]}`}
                         name="cookTime"
-                        placeholder="Enter a time (minutes)"
+                        placeholder="Enter a time"
                         id="cookTime_input"
-                        value={newRecipe.cookTime > 0 ? newRecipe.cookTime : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
+                        value={recipe.cookTime > 0 ? recipe.cookTime : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
                         onWheel={(event) => event.currentTarget.blur()} // Remove focus from the input on wheel event
                         onChange={
                             (changeEvent) => {
-                                const copy = { ...newRecipe }
+                                const copy = { ...recipe }
                                 copy.cookTime = changeEvent.target.value !== "" ? Math.round(parseFloat(changeEvent.target.value) * 100) / 100 : 0
-                                updateNewRecipe(copy) // Updating time with value of copy
+                                updateRecipe(copy) // Updating time with value of copy
                             }
                         } />
                 </div>
@@ -203,28 +217,31 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                 <div className="form-group recipeServings--div">
                     <label htmlFor="recipeServings_input">Serving Size:</label>
                     <input
-                        required 
+                        required
                         type="number"
                         className={styles["recipeForm--control"]}
                         name="servingSize"
                         placeholder="How many people will this meal feed?"
                         id="recipeServings_input"
-                        value={newRecipe.servingSize > 0 ? newRecipe.servingSize : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
+                        value={recipe.servingSize > 0 ? recipe.servingSize : ""} // If value is is zero, change to empty string to display placeholder text by default instead of zero
                         onWheel={(event) => event.currentTarget.blur()} // Remove focus from the input on wheel event
                         onChange={
                             (changeEvent) => {
-                                const copy = { ...newRecipe }
+                                const copy = { ...recipe }
                                 copy.servingSize = changeEvent.target.value !== "" ? Math.round(parseInt(changeEvent.target.value) * 100) / 100 : 0
-                                updateNewRecipe(copy) // Updating serving size with value of copy
+                                updateRecipe(copy) // Updating serving size with value of copy
                             }
                         } />
                 </div>
             </fieldset>
 
             <fieldset className="addCategories">
-                <AddCategories includedCategories={includedCategories}
+                <EditCategories categoriesToPost={categoriesToPost}
                     allCategories={allCategories}
-                    updateIncludedCategories={updateIncludedCategories} />
+                    updateCategoriesToPost={updateCategoriesToPost}
+                    initialCategories={initialCategories}
+                    categoriesToDelete={categoriesToDelete}
+                    updateCategoriesToDelete={updateCategoriesToDelete} />
             </fieldset>
 
             <fieldset>
@@ -234,13 +251,13 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                         className={`${styles["recipeForm--control"]} ${styles["recipe--textarea"]}`}
                         name="notes"
                         placeholder="Optional"
-                        id = "recipeNotes_input"
-                        value={newRecipe.note}
+                        id="recipeNotes_input"
+                        value={recipe.note}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.note = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe with value of copy
+                                updateRecipe(copy) // Updating recipe with value of copy
                             }
                         } />
                 </div>
@@ -255,20 +272,20 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
                         name="image"
                         placeholder="Paste image url here"
                         id="recipeImage__input"
-                        value={newRecipe.image}
+                        value={recipe.image}
                         onChange={
                             (changeEvent) => {
-                                const copy = {...newRecipe}
+                                const copy = { ...recipe }
                                 copy.image = changeEvent.target.value
-                                updateNewRecipe(copy) // Updating recipe with value of copy
+                                updateRecipe(copy) // Updating recipe with value of copy
                             }
                         } />
                 </div>
             </fieldset>
-            
+
             <button type="submit"
                 className={`${styles["btn-primary"]} ${styles["submitRecipe"]}`}>
-                Submit New Recipe
+                Submit Changes
             </button>
         </form>
     </>

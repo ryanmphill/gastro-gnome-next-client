@@ -1,7 +1,7 @@
 export type AttachedIngredient = {
-    id: number,
+    id?: number,
     ingredient: number,
-    recipe: number,
+    recipe?: number,
     quantity: string,
     quantity_unit: string,
     name: string
@@ -10,11 +10,4 @@ export type AttachedIngredient = {
 export type Ingredient = {
     id: number,
     name: string
-}
-
-export type IngredientToAdd = {
-    ingredient: number,
-    name: string,
-    quantity: string,
-    quantity_unit: string
 }

@@ -35,7 +35,7 @@ const RecipeContent = ( { recipeId, currentUserId, recipeDetails, usersFavs } : 
             {
                 currentUserId !== 0 && recipeDetails?.user?.id === currentUserId
                     && <div className={styles["recipeDetails_fav"]}>
-                        <RecipeEditButton recipeId={recipeId} authorId={recipeDetails.user.id} />
+                        <RecipeEditButton recipeId={recipeId} />
                     </div>
             }
         </section>

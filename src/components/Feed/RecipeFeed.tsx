@@ -53,7 +53,7 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                             {
                                 currentUserId === recipe?.user?.id
                                     && <div className="recipe__button-group">
-                                        <EditButton recipeId={recipe.id} authorId={recipe.user.id}/>
+                                        <EditButton recipeId={recipe.id}/>
                                         <DeleteRecipe recipeId={recipe.id} />
                                     </div>
                             }

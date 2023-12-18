@@ -108,3 +108,38 @@ export const getCurrentUserId = async (): Promise<number> => {
         return 0
     }
 };
+
+/**Makes a fetch call to the API to verify that a user is authorized to edit a given recipe. 
+ * 
+ * Returns `true` if user is authorized to edit recipe, either as the author of that recipe or as a
+ * user with admin privileges.
+ * 
+ * Else, if user info is valid but not authorized to edit, returns `false` 
+ * 
+ * If no authenticated user credentials provided, redirects to login page*/
+export const authorizedToEditRecipe = async (recipeId: number): Promise<boolean | never> => {
+    const token = cookies().get('gastro_token')
+    if (token) {
+        const res = await fetch(`${apiUrl}/recipes/${recipeId}/authorized_to_edit`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Token ${token.value}`
+            },
+            cache: "no-store"
+        })
+        console.log(res.status, res.statusText)
+        if (!res.ok) {
+            return false
+        }
+        type editAuth = {
+            "isAuthor": boolean,
+            "isAdmin": boolean
+        }
+        const data: editAuth = await res.json()
+        return data.isAuthor || data.isAdmin
+    } else {
+        redirect('/login')
+    }
+}

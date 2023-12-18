@@ -1,7 +1,7 @@
 'use server'
 
-import { CategoryToAdd } from "@/types/categoryType"
-import { IngredientToAdd } from "@/types/ingredientType"
+import { AttachedCategory, CategoryToAdd } from "@/types/categoryType"
+import { AttachedIngredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
@@ -35,7 +35,8 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
     return res.json()
 }
 
-export const getSingleRecipe = async (recipeId: number): Promise<Recipe> => {
+/**Fetches data for single recipe. If API responds with 404, user is redirected to 404 not found page */
+export const getSingleRecipe = async (recipeId: number): Promise<Recipe | never> => {
   const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
     method: "GET",
     headers: {
@@ -84,7 +85,7 @@ export const getFavoritedRecipes = async (userId: number): Promise<Recipe[]> => 
   return res.json()
 }
 
-export const createNewRecipe = async (ingredientData: IngredientToAdd[], categoryData: CategoryToAdd[], formData: FormData) => {
+export const createNewRecipe = async (ingredientData: AttachedIngredient[], categoryData: CategoryToAdd[], formData: FormData) => {
   const cookieStore = cookies()
   const token = cookieStore.get('gastro_token')
 
@@ -120,6 +121,83 @@ export const createNewRecipe = async (ingredientData: IngredientToAdd[], categor
     revalidateTag("recipes")
     revalidateTag("authoredRecipes")
     redirect('/')
+  } else if (res && !res.ok) {
+    console.error(res)
+    throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)
+  } else {
+    throw Error("Server is unresponsive... unable to POST recipe")
+  }
+};
+
+type RelationshipData = {
+  initialIngredients: AttachedIngredient[];
+  ingredientsToPost: AttachedIngredient[];
+  ingredientsToDelete: AttachedIngredient[];
+  initialCategories: AttachedCategory[];
+  categoriesToPost: AttachedCategory[];
+  categoriesToDelete: AttachedCategory[];
+}
+export const editRecipe = async (recipeId: number, relationshipData: RelationshipData, formData: FormData) => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('gastro_token')
+
+  const {
+    initialIngredients,
+    ingredientsToPost,
+    ingredientsToDelete,
+    initialCategories,
+    categoriesToPost,
+    categoriesToDelete
+  } = relationshipData
+
+  /*The client tracks the ingredients/categories being added and removed for user experience.
+    Only the updated list of related items needs to be sent to the API
+  */
+  const updatedIngredients = initialIngredients.filter((initialIngredient) => {
+    return !ingredientsToDelete.some(ingToDlt => ingToDlt.ingredient === initialIngredient.ingredient)
+  }).concat(ingredientsToPost)
+
+  const updatedCategories = initialCategories.filter((initialCategory) => {
+    return !categoriesToDelete.some((catToDlt) => catToDlt.id === initialCategory.id)
+  }).concat(categoriesToPost).map(category => category.id)
+
+
+
+  const data = {
+    "title": formData.get("title"),
+    "genre": formData.get("genre"),
+    "description": formData.get("description"),
+    "prep_instructions": formData.get("prepInstructions"),
+    "cook_instructions": formData.get("cookInstructions"),
+    "prep_time": formData.get("prepTime"),
+    "cook_time": formData.get("cookTime"),
+    "serving_size": formData.get("servingSize"),
+    "note": formData.get("notes"),
+    "image": formData.get("image"),
+    "ingredients": updatedIngredients,
+    "categories": updatedCategories
+  }
+  console.log("recipeId", recipeId)
+  console.log("editData", data)
+
+
+
+  const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Token ${token?.value}`
+    },
+    body: JSON.stringify(data)
+  })
+
+  if (res && res.ok) {
+    console.log(`PUT '/recipes/${recipeId}'`, res.status, res.statusText)
+    revalidateTag("recipes")
+    revalidateTag("authoredRecipes")
+    revalidateTag("singleRecipe")
+    redirect(`/recipe/${recipeId}`)
   } else if (res && !res.ok) {
     console.error(res)
     throw Error(`Unable to POST recipe. Server responed with: ${res.status} ${res.statusText}`)

@@ -3,17 +3,16 @@ import { useRouter } from "next/navigation"
 import styles from "../RecipeFeed.module.css"
 
 interface EditButtonProps {
-    recipeId: number,
-    authorId: number
+    recipeId: number
 }
 
-export const EditButton = ({ recipeId, authorId } : EditButtonProps) => {
+export const EditButton = ({ recipeId } : EditButtonProps) => {
     const router = useRouter()
     return <>
         <button className={`${styles["btn-secondary"]} ${styles["btn-group-left"]}`}
             onClick={(evt) => {
                 evt.preventDefault()
-                router.push(`/recipe/${recipeId}/edit/${authorId}`)
+                router.push(`/edit-recipe/${recipeId}`)
             }}
         >Edit</button>
     </>
