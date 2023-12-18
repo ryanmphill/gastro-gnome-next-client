@@ -3,7 +3,7 @@ import { MouseEvent, useEffect, useState } from "react"
 import { AddIngredients } from "./AddIngredients"
 import { AddCategories } from "./AddCategories"
 import { Genre } from "@/types/genreType"
-import { Ingredient, IngredientToAdd } from "@/types/ingredientType"
+import { Ingredient, AttachedIngredient } from "@/types/ingredientType"
 import { Category, CategoryToAdd } from "@/types/categoryType"
 import styles from "../../recipeForm.module.css"
 import { createNewRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
@@ -36,7 +36,7 @@ export const NewRecipeForm = ({genres, allIngredients, allCategories} : RecipeFo
             "image": ""
         }
     )
-    const [includedIngredients, updateIncludedIngredients] = useState<IngredientToAdd[]>([])
+    const [includedIngredients, updateIncludedIngredients] = useState<AttachedIngredient[]>([])
     const [includedCategories, updateIncludedCategories] = useState<CategoryToAdd[]>([])
     
     // The server action to POST the new recipe will take the formData object as an argument by default.

@@ -1,20 +1,20 @@
 'use client'
-import { AttachedIngredient, Ingredient, IngredientToAdd } from '@/types/ingredientType';
+import { AttachedIngredient, Ingredient } from '@/types/ingredientType';
 import { validateQuantityInput } from '@/utils/helpers/validateQuantityInput';
 import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 
 interface EditIngredientFormProps {
-    initialIngredients: IngredientToAdd[],
+    initialIngredients: AttachedIngredient[],
     allIngredients: Ingredient[],
-    markedForDeletion: (ingredientObject: IngredientToAdd) => boolean,
-    handleUndoDelete: (event: MouseEvent<HTMLButtonElement>, objectToUndo: IngredientToAdd) => void,
-    handleDeleteExistingIngredient: (event: MouseEvent<HTMLButtonElement>, objectToDelete: IngredientToAdd) => void,
-    handleRemoveIngredient: (event: MouseEvent<HTMLButtonElement>, objectToRemove: IngredientToAdd) => void,
-    ingredientsToPost: IngredientToAdd[],
-    ingredientToAdd: IngredientToAdd,
-    updateIngredientToAdd: Dispatch<SetStateAction<IngredientToAdd>>,
+    markedForDeletion: (ingredientObject: AttachedIngredient) => boolean,
+    handleUndoDelete: (event: MouseEvent<HTMLButtonElement>, objectToUndo: AttachedIngredient) => void,
+    handleDeleteExistingIngredient: (event: MouseEvent<HTMLButtonElement>, objectToDelete: AttachedIngredient) => void,
+    handleRemoveIngredient: (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => void,
+    ingredientsToPost: AttachedIngredient[],
+    ingredientToAdd: AttachedIngredient,
+    updateIngredientToAdd: Dispatch<SetStateAction<AttachedIngredient>>,
     handleAddIngredient: (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => void,
     setShowCustom: Dispatch<SetStateAction<boolean>>
 }

@@ -1,16 +1,16 @@
 'use client'
-import { AttachedIngredient, Ingredient, IngredientToAdd } from "@/types/ingredientType"
+import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
 import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useState } from "react"
 import { CustomIngredient } from "../../sharedUI/CustomIngredient"
 import { EditIngredientForm } from "./EditIngredientForm"
 
 interface EditIngredientsProps {
-    ingredientsToPost: IngredientToAdd[],
+    ingredientsToPost: AttachedIngredient[],
     allIngredients: Ingredient[],
-    updateIngredientsToPost: Dispatch<SetStateAction<IngredientToAdd[]>>,
-    initialIngredients: IngredientToAdd[],
-    ingredientsToDelete: IngredientToAdd[],
-    updateIngredientsToDelete: Dispatch<SetStateAction<IngredientToAdd[]>>
+    updateIngredientsToPost: Dispatch<SetStateAction<AttachedIngredient[]>>,
+    initialIngredients: AttachedIngredient[],
+    ingredientsToDelete: AttachedIngredient[],
+    updateIngredientsToDelete: Dispatch<SetStateAction<AttachedIngredient[]>>
 }
 
 export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngredientsToPost,
@@ -18,7 +18,7 @@ export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngre
 }: EditIngredientsProps) => {
     // Set state variable for tracking if the create custom ingredient view should be shown
     const [showCustom, setShowCustom] = useState(false)
-    const [ingredientToAdd, updateIngredientToAdd] = useState<IngredientToAdd>(
+    const [ingredientToAdd, updateIngredientToAdd] = useState<AttachedIngredient>(
         {
             "ingredient": 0,
             "name": "",
@@ -57,13 +57,15 @@ export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngre
         }
     }
 
-    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: IngredientToAdd) => {
+    /**Removes a recently added ingredient that was not originally on recipe */
+    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => {
         event.preventDefault()
         const updatedIngredients = ingredientsToPost.filter(ingredient => ingredient.ingredient !== objectToRemove.ingredient)
         updateIngredientsToPost(updatedIngredients)
     }
 
-    const handleDeleteExistingIngredient = (event: MouseEvent<HTMLButtonElement>, objectToDelete: IngredientToAdd) => {
+    /**Stages ingredient originally on recipe for deletion */
+    const handleDeleteExistingIngredient = (event: MouseEvent<HTMLButtonElement>, objectToDelete: AttachedIngredient) => {
         event.preventDefault()
 
         // Get a copy of the current array of ingredients that are staged to be deleted
@@ -81,7 +83,8 @@ export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngre
 
     }
 
-    const handleUndoDelete = (event: MouseEvent<HTMLButtonElement>, objectToUndo: IngredientToAdd) => {
+    /**Unstages ingredient that was originally on recipe and has been staged for deletion */
+    const handleUndoDelete = (event: MouseEvent<HTMLButtonElement>, objectToUndo: AttachedIngredient) => {
         event.preventDefault()
         // Get a copy of the current array of ingredients that are staged to be added and deleted
         const addedIngCopy = [...ingredientsToPost]
@@ -103,8 +106,8 @@ export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngre
 
     }
 
-    // Define function to check if an ingredient has been marked for deletion
-    const markedForDeletion = (ingredientObject: IngredientToAdd) => {
+    /**Checks if an ingredient has been marked for deletion. Returns true or false */ 
+    const markedForDeletion = (ingredientObject: AttachedIngredient) => {
         const alreadyStaged = ingredientsToDelete.some(ingredient => ingredient.ingredient === ingredientObject.ingredient)
         return alreadyStaged
     }

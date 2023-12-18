@@ -1,16 +1,16 @@
 'use client'
-import { Ingredient, IngredientToAdd } from '@/types/ingredientType';
+import { Ingredient, AttachedIngredient } from '@/types/ingredientType';
 import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 import { validateQuantityInput } from '@/utils/helpers/validateQuantityInput';
 
 interface AddIngredientFormProps {
-    includedIngredients: IngredientToAdd[],
-    handleRemoveIngredient: (event: MouseEvent<HTMLButtonElement>, objectToRemove: IngredientToAdd) => void,
+    includedIngredients: AttachedIngredient[],
+    handleRemoveIngredient: (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => void,
     allIngredients: Ingredient[],
-    ingredientToAdd: IngredientToAdd,
-    updateIngredientToAdd: Dispatch<SetStateAction<IngredientToAdd>>,
+    ingredientToAdd: AttachedIngredient,
+    updateIngredientToAdd: Dispatch<SetStateAction<AttachedIngredient>>,
     handleAddIngredient: (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => void,
     setShowCustom: Dispatch<SetStateAction<boolean>>
 }

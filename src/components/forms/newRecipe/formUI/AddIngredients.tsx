@@ -1,12 +1,12 @@
 import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useState } from 'react';
 import { AddIngredientForm } from './AddIngredientForm';
 import { CustomIngredient } from '../../sharedUI/CustomIngredient';
-import { Ingredient, IngredientToAdd } from '@/types/ingredientType';
+import { Ingredient, AttachedIngredient } from '@/types/ingredientType';
 
 interface AddIngredientsProps {
-    includedIngredients: IngredientToAdd[],
+    includedIngredients: AttachedIngredient[],
     allIngredients: Ingredient[],
-    updateIncludedIngredients: Dispatch<SetStateAction<IngredientToAdd[]>>
+    updateIncludedIngredients: Dispatch<SetStateAction<AttachedIngredient[]>>
 }
 
 /** By default, renders `AddIngredientsForm` for adding existing ingredients in database to recipe.
@@ -19,7 +19,7 @@ interface AddIngredientsProps {
 export const AddIngredients = ({includedIngredients, allIngredients, updateIncludedIngredients} : AddIngredientsProps) => {
     // Set state variable for tracking if the create custom ingredient view should be shown
     const [showCustom, setShowCustom] = useState(false)
-    const [ingredientToAdd, updateIngredientToAdd] = useState<IngredientToAdd>(
+    const [ingredientToAdd, updateIngredientToAdd] = useState(
         {
             "ingredient": 0,
             "name": "",
@@ -53,7 +53,7 @@ export const AddIngredients = ({includedIngredients, allIngredients, updateInclu
         }
     }
 
-    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: IngredientToAdd) => {
+    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => {
         event.preventDefault()
         const updatedIngredients = includedIngredients.filter(ingredient => ingredient.ingredient !== objectToRemove.ingredient)
         updateIncludedIngredients(updatedIngredients)

@@ -1,7 +1,7 @@
 'use server'
 
 import { CategoryToAdd } from "@/types/categoryType"
-import { IngredientToAdd } from "@/types/ingredientType"
+import { AttachedIngredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
@@ -85,7 +85,7 @@ export const getFavoritedRecipes = async (userId: number): Promise<Recipe[]> => 
   return res.json()
 }
 
-export const createNewRecipe = async (ingredientData: IngredientToAdd[], categoryData: CategoryToAdd[], formData: FormData) => {
+export const createNewRecipe = async (ingredientData: AttachedIngredient[], categoryData: CategoryToAdd[], formData: FormData) => {
   const cookieStore = cookies()
   const token = cookieStore.get('gastro_token')
 
