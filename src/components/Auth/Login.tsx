@@ -1,42 +1,9 @@
-'use client'
-import { useRouter } from "next/navigation"
 import gastroLogo from "../../../public/assets/Chef_green.svg"
-import { FormEvent, useRef } from "react"
 import Link from "next/link"
 import styles from "./auth.module.css"
-import { loginUser } from "@/dataManagers/authManagers/client/authManager"
-import { useAuthContext } from "@/context/AuthContext"
 import { loginAction } from "../../dataManagers/authManagers/server/authManagers"
 
 const Login = () => {
-    const { fetchCurrentUserId, setToken } = useAuthContext()
-    
-    const username = useRef<HTMLInputElement | null>(null)
-    const password = useRef<HTMLInputElement | null>(null)
-    const router = useRouter()
-
-    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        const user = {
-            username: username?.current?.value ?? "",
-            password: password?.current?.value ?? ""
-          }
-
-        try {
-            const res = await loginUser(user)
-            if (res.valid === true) {
-                setToken(res.token)
-                fetchCurrentUserId()
-                router.push("/")
-            } else {
-                window.alert("Invalid username or password")
-            }
-        } catch (err) {
-            console.error(err)
-            window.alert("Unable to login")
-        }
-    }
 
     return (
         <main className={styles["container--login"]}>
@@ -54,7 +21,6 @@ const Login = () => {
                     <fieldset>
                         <label htmlFor="inputEmail"> Username </label>
                         <input type="text"
-                            ref={username}
                             name="username"
                             className={styles["form-control"]}
                             id="inputEmail"
@@ -65,11 +31,10 @@ const Login = () => {
                         <label htmlFor="inputPassword"> Password </label>
                         <input type="password"
                             name="password"
-                            ref={password}
                             className={styles["form-control"]}
                             id="inputPassword"
                             placeholder="Password"
-                            required autoFocus />
+                            required />
                     </fieldset>
                     <fieldset>
                         <div className={styles["btn-primary-wrapper"]}>
