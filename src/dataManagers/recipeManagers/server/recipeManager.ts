@@ -151,8 +151,7 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
   } = relationshipData
 
   /*The client tracks the ingredients/categories being added and removed for user experience.
-    Only the updated list of related items needs to be sent to the API
-  */
+    Only the updated list of related items needs to be sent to the API */
   const updatedIngredients = initialIngredients.filter((initialIngredient) => {
     return !ingredientsToDelete.some(ingToDlt => ingToDlt.ingredient === initialIngredient.ingredient)
   }).concat(ingredientsToPost)
@@ -160,8 +159,6 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
   const updatedCategories = initialCategories.filter((initialCategory) => {
     return !categoriesToDelete.some((catToDlt) => catToDlt.id === initialCategory.id)
   }).concat(categoriesToPost).map(category => category.id)
-
-
 
   const data = {
     "title": formData.get("title"),
@@ -177,10 +174,6 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
     "ingredients": updatedIngredients,
     "categories": updatedCategories
   }
-  console.log("recipeId", recipeId)
-  console.log("editData", data)
-
-
 
   const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
     method: "PUT",
