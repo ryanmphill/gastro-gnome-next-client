@@ -198,3 +198,28 @@ export const editRecipe = async (recipeId: number, relationshipData: Relationshi
     throw Error("Server is unresponsive... unable to POST recipe")
   }
 };
+
+export const deleteRecipe = async (recipeId: number) => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('gastro_token')
+
+  const res = await fetch(`${apiUrl}/recipes/${recipeId}`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Token ${token?.value}`
+      }
+  })
+
+  if (res && res.ok) {
+    console.log(res.status, res.statusText)
+    revalidateTag("recipes")
+    revalidateTag("authoredRecipes")
+  } else if (res && !res.ok) {
+    console.error(res)
+    throw Error(`Unable to DELETE recipe. Server responed with: ${res.status} ${res.statusText}`)
+  } else {
+    throw Error("Server is unresponsive... unable to DELETE recipe")
+  }
+};
