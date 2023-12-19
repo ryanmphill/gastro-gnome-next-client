@@ -1,17 +1,14 @@
 'use client'
 import { Ingredient, AttachedIngredient } from '@/types/ingredientType';
-import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction } from 'react';
+import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 import { validateQuantityInput } from '@/utils/helpers/validateQuantityInput';
 
 interface AddIngredientFormProps {
     includedIngredients: AttachedIngredient[],
-    handleRemoveIngredient: (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => void,
+    updateIncludedIngredients: Dispatch<SetStateAction<AttachedIngredient[]>>,
     allIngredients: Ingredient[],
-    ingredientToAdd: AttachedIngredient,
-    updateIngredientToAdd: Dispatch<SetStateAction<AttachedIngredient>>,
-    handleAddIngredient: (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => void,
     setShowCustom: Dispatch<SetStateAction<boolean>>
 }
 
@@ -22,15 +19,55 @@ interface AddIngredientFormProps {
  * are displayed to the user in a small window with the option to remove them. 
   */
 export const AddIngredientForm = ({
-    includedIngredients, handleRemoveIngredient, allIngredients, 
-    ingredientToAdd, updateIngredientToAdd, handleAddIngredient, setShowCustom 
+    includedIngredients, updateIncludedIngredients, allIngredients, setShowCustom
 }: AddIngredientFormProps) => {
+
+    const [ingredientToAdd, updateIngredientToAdd] = useState(
+        {
+            "ingredient": 0,
+            "name": "",
+            "quantity": "",
+            "quantity_unit": ""
+        }
+    )
+
+    const handleAddIngredient = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
+        event.preventDefault()
+        // Check if required fields are entered
+        if (ingredientToAdd.ingredient > 0 && ingredientToAdd.quantity.length > 0) {
+            // Get a copy of the ingredientToAdd
+            const copyIngToAdd = { ...ingredientToAdd }
+            // Trim any whitespace on the quantity
+            copyIngToAdd.quantity = ingredientToAdd.quantity.trim()
+            updateIngredientToAdd(copyIngToAdd)
+
+            // Get a copy of the current array of ingredients that are staged to be added
+            const copy = [...includedIngredients]
+            // Check if the ingredient has already been added
+            const alreadyAdded = copy.some(ingredient => ingredient.ingredient === copyIngToAdd.ingredient)
+            if (!alreadyAdded) {
+                copy.push(copyIngToAdd)
+                updateIncludedIngredients(copy)
+            } else {
+                window.alert("That ingredient has already been added")
+            }
+        } else {
+            window.alert("Please enter an ingredient and a quantity")
+        }
+    }
+
+    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => {
+        event.preventDefault()
+        const updatedIngredients = includedIngredients.filter(ingredient => ingredient.ingredient !== objectToRemove.ingredient)
+        updateIncludedIngredients(updatedIngredients)
+    }
+
     return <>
         <div className={`${styles["addedIngredients"]} ${styles["fadeIn"]}`}>
             {
                 includedIngredients.length > 0
                 && includedIngredients.map(includedIngredient => {
-                    
+
                     return <div className={styles["addedIngredientRow"]} key={`addedIngDetails--${includedIngredient.ingredient}`}>
                         <span className={styles["flex-column1"]}>{includedIngredient.name}</span>
                         <span className={styles["flex-column2"]}>{includedIngredient.quantity} {includedIngredient.quantity_unit}</span>
@@ -38,7 +75,8 @@ export const AddIngredientForm = ({
                             <button data-id={includedIngredient.ingredient}
                                 onClick={(click) => {
                                     click.preventDefault()
-                                    click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)}
+                                    click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)
+                                }
                                 }
                                 className={styles["btn--removeItem"]}>X</button>
                         </span>
@@ -77,7 +115,7 @@ export const AddIngredientForm = ({
                     placeholder="Enter a quantity"
                     id="ingredientQuantity_input"
                     value={ingredientToAdd.quantity}
-                    onKeyDown={(evt) => evt.key === 'Enter' && evt.target === document.activeElement && handleAddIngredient(evt)} 
+                    onKeyDown={(evt) => evt.key === 'Enter' && evt.target === document.activeElement && handleAddIngredient(evt)}
                     onChange={
                         (changeEvent) => {
                             const copy = { ...ingredientToAdd }
@@ -109,9 +147,9 @@ export const AddIngredientForm = ({
         </section>
         <button className={styles["btn-secondary"]} id={styles["btn--addIngredient"]}
             onClick={
-                (event) => { 
-                    event.preventDefault() 
-                    event.target === document.activeElement && handleAddIngredient(event) 
+                (event) => {
+                    event.preventDefault()
+                    event.target === document.activeElement && handleAddIngredient(event)
                 }
             }
         >Add Ingredient</button>
