@@ -16,66 +16,24 @@ interface AddIngredientsProps {
  * will render the form for adding a new ingredient to the database, which will then be available
  * to be added to the user's recipe.
  */
-export const AddIngredients = ({includedIngredients, allIngredients, updateIncludedIngredients} : AddIngredientsProps) => {
+export const AddIngredients = ({ includedIngredients, allIngredients, updateIncludedIngredients }
+    : AddIngredientsProps) => {
     // Set state variable for tracking if the create custom ingredient view should be shown
     const [showCustom, setShowCustom] = useState(false)
-    const [ingredientToAdd, updateIngredientToAdd] = useState(
-        {
-            "ingredient": 0,
-            "name": "",
-            "quantity": "",
-            "quantity_unit": ""
-        }
-    )
-    
-    const handleAddIngredient = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
-        event.preventDefault()
-        // Check if required fields are entered
-        if (ingredientToAdd.ingredient > 0 && ingredientToAdd.quantity.length > 0) {
-            // Get a copy of the ingredientToAdd
-            const copyIngToAdd = { ...ingredientToAdd }
-            // Trim any whitespace on the quantity
-            copyIngToAdd.quantity = ingredientToAdd.quantity.trim()
-            updateIngredientToAdd(copyIngToAdd)
 
-            // Get a copy of the current array of ingredients that are staged to be added
-            const copy = [...includedIngredients]
-            // Check if the ingredient has already been added
-            const alreadyAdded = copy.some(ingredient => ingredient.ingredient === copyIngToAdd.ingredient)
-            if (!alreadyAdded) {
-                copy.push(copyIngToAdd)
-                updateIncludedIngredients(copy)
-            } else {
-                window.alert("That ingredient has already been added")
-            }
-        } else {
-            window.alert("Please enter an ingredient and a quantity")
-        }
-    }
-
-    const handleRemoveIngredient = (event: MouseEvent<HTMLButtonElement>, objectToRemove: AttachedIngredient) => {
-        event.preventDefault()
-        const updatedIngredients = includedIngredients.filter(ingredient => ingredient.ingredient !== objectToRemove.ingredient)
-        updateIncludedIngredients(updatedIngredients)
-    }
-    
     return <>
         {
             !showCustom
-                ? <AddIngredientForm 
-                includedIngredients={includedIngredients}
-                handleRemoveIngredient={handleRemoveIngredient}
-                allIngredients={allIngredients}
-                ingredientToAdd={ingredientToAdd}
-                updateIngredientToAdd={updateIngredientToAdd}
-                handleAddIngredient={handleAddIngredient}
-                setShowCustom={setShowCustom}
+                ? <AddIngredientForm
+                    includedIngredients={includedIngredients}
+                    updateIncludedIngredients={updateIncludedIngredients}
+                    allIngredients={allIngredients}
+                    setShowCustom={setShowCustom}
                 />
 
                 : <CustomIngredient
-                allIngredients={allIngredients}
-                setShowCustom={setShowCustom} />
+                    allIngredients={allIngredients}
+                    setShowCustom={setShowCustom} />
         }
-        
     </>
 }

@@ -12,6 +12,7 @@ const loginUser = async (user: { username: string, password: string }) => {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
+        cache: "no-store",
         body: JSON.stringify(user)
     })
     return await res.json()
@@ -49,6 +50,7 @@ const registerUser = async (newUser: newUserType) => {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
+        cache: "no-store",
         body: JSON.stringify(newUser)
     })
     return await res.json()
