@@ -121,7 +121,7 @@ export const getCurrentUserId = async (): Promise<number> => {
  * If no authenticated user credentials provided, redirects to login page*/
 export const authorizedToEditRecipe = async (recipeId: number): Promise<boolean | never> => {
     const token = cookies().get('gastro_token')
-    if (token) {
+    if (token && token.value.length > 0) {
         const res = await fetch(`${apiUrl}/recipes/${recipeId}/authorized_to_edit`, {
             method: "POST",
             headers: {
