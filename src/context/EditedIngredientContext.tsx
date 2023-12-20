@@ -12,6 +12,9 @@ type IngredientContextType = {
 
 export const EditedIngredientContext = createContext<IngredientContextType | null>(null);
 
+/**Returns stateful values and update functions for ingredients being added
+ * and removed from a recipe when using the Edit Recipe Form.
+ */
 export const useEditedIngredientContext = () => {
     const obj = useContext(EditedIngredientContext)
     if (!obj) {
@@ -20,12 +23,12 @@ export const useEditedIngredientContext = () => {
     return obj;
 }
 
+/**Provides access to stateful values and update functions for ingredients being added
+ * and removed from a recipe to all children components */
 export const EditedIngredientProvider = ({ children } : {children: React.ReactNode}) => {
-    // All your data goes here
     const [ingredientsToDelete, updateIngredientsToDelete] = useState<AttachedIngredient[]>([])
     const [ingredientsToPost, updateIngredientsToPost] = useState<AttachedIngredient[]>([])
     
-    // Return this context provider wrapping, it passes down the value prop to its children
     return (
         <EditedIngredientContext.Provider
             value={{ ingredientsToDelete, updateIngredientsToDelete, ingredientsToPost, updateIngredientsToPost }}

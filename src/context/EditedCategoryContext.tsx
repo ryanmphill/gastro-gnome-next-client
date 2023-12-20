@@ -11,6 +11,9 @@ type CategoryContextType = {
 
 export const EditedCategoryContext = createContext<CategoryContextType | null>(null);
 
+/**Returns stateful values and update functions for categories being added
+ * and removed from a recipe when using the Edit Recipe Form.
+ */
 export const useEditedCategoryContext = () => {
     const obj = useContext(EditedCategoryContext)
     if (!obj) {
@@ -19,12 +22,12 @@ export const useEditedCategoryContext = () => {
     return obj;
 }
 
+/**Provides access to stateful values and update functions for categories being added
+ * and removed from a recipe to all children components */
 export const EditedCategoryProvider = ({ children } : {children: React.ReactNode}) => {
-    // All your data goes here
     const [categoriesToDelete, updateCategoriesToDelete] = useState<AttachedCategory[]>([])
     const [categoriesToPost, updateCategoriesToPost] = useState<AttachedCategory[]>([])
     
-    // Return this context provider wrapping, it passes down the value prop to its children
     return (
         <EditedCategoryContext.Provider
             value={{ categoriesToDelete, updateCategoriesToDelete, categoriesToPost, updateCategoriesToPost }}
