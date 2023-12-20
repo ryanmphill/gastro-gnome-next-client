@@ -3,7 +3,7 @@ import { startTransition, useEffect, useState } from 'react';
 import styles from './DropdownMenu.module.css' // Import CSS styles for the dropdown menu
 import gastroHamburger from "../../../public/assets/hamburger_green.svg"
 import Link from 'next/link';
-import { logoutAction } from '@/dataManagers/authManagers/server/authManagers';
+import { logoutAction } from '@/dataManagers/authManagers/authManagers';
 
 export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   const [isOpen, setIsOpen] = useState(false) // State to track if the dropdown is open or closed

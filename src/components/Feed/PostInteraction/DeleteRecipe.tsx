@@ -1,7 +1,7 @@
 'use client'
 import { MouseEvent, useState } from "react"
 import styles from "./PostInteraction.module.css"
-import { deleteRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { deleteRecipe } from "@/dataManagers/recipeManagers/recipeManager"
 
 interface DeleteRecipeProps {
   recipeId: number

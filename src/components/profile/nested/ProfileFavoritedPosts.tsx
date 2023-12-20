@@ -1,6 +1,6 @@
 import { RecipeFeed } from "@/components/Feed/RecipeFeed"
-import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
-import { getFavoritedRecipes } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
+import { getFavoritedRecipes } from "@/dataManagers/recipeManagers/recipeManager"
 import { getProfileInfo } from "@/dataManagers/userManager"
 import styles from "../profile.module.css"
 

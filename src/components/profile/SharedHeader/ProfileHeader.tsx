@@ -1,4 +1,4 @@
-import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
+import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import { getProfileInfo } from "@/dataManagers/userManager"
 import { ProfileDisplayTab } from "./ProfileDisplayTab"
 import styles from "../profile.module.css"
