@@ -1,5 +1,5 @@
 import { FollowButton } from "@/components/Feed/PostInteraction/FollowButton"
-import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
+import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import { getCurrentUserFollows, getProfileFollowers } from "@/dataManagers/userManager"
 import Link from "next/link"
 import styles from "../profile.module.css"

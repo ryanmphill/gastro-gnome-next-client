@@ -1,6 +1,6 @@
 import Link from "next/link"
 import styles from "./auth.module.css"
-import { registerAction } from "@/dataManagers/authManagers/server/authManagers"
+import { registerAction } from "@/dataManagers/authManagers/authManagers"
 
 const Register = () => {
 

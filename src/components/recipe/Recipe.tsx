@@ -1,6 +1,6 @@
-import { getSingleRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { getSingleRecipe } from "@/dataManagers/recipeManagers/recipeManager"
 import RecipeContent from "./content/RecipeContent"
-import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
+import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import { getCurrentUserFavorites } from "@/dataManagers/userManager"
 
 interface RecipeProps {

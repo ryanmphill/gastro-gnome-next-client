@@ -7,7 +7,7 @@ import { useState } from "react"
 import { EditIngredients } from "./EditIngredients"
 import { EditCategories } from "./EditCategories"
 import styles from "../../recipeForm.module.css"
-import { editRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { editRecipe } from "@/dataManagers/recipeManagers/recipeManager"
 import { useEditedIngredientContext } from "@/context/EditedIngredientContext"
 import { useEditedCategoryContext } from "@/context/EditedCategoryContext"
 

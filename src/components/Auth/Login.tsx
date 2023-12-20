@@ -1,7 +1,7 @@
 import gastroLogo from "../../../public/assets/Chef_green.svg"
 import Link from "next/link"
 import styles from "./auth.module.css"
-import { loginAction } from "../../dataManagers/authManagers/server/authManagers"
+import { loginAction } from "../../dataManagers/authManagers/authManagers"
 
 const Login = () => {
 

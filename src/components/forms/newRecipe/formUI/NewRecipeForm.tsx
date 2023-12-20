@@ -1,12 +1,12 @@
 'use client'
-import { MouseEvent, useEffect, useState } from "react"
+import { useState } from "react"
 import { AddIngredients } from "./AddIngredients"
 import { AddCategories } from "./AddCategories"
 import { Genre } from "@/types/genreType"
 import { Ingredient, AttachedIngredient } from "@/types/ingredientType"
 import { Category, CategoryToAdd } from "@/types/categoryType"
 import styles from "../../recipeForm.module.css"
-import { createNewRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { createNewRecipe } from "@/dataManagers/recipeManagers/recipeManager"
 
 interface RecipeFormProps {
     genres: Genre[],

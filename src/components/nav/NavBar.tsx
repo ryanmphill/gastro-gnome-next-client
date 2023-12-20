@@ -1,5 +1,5 @@
 'use server'
-import { getCurrentUserId } from "@/dataManagers/authManagers/server/authManagers"
+import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import { NavBarContent } from "./NavBarContent"
 
 export const NavBar = async () => {
