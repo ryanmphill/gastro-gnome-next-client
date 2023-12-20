@@ -1,16 +1,13 @@
 'use client'
 import { AttachedCategory, Category } from '@/types/categoryType';
-import { Dispatch, MouseEvent, SetStateAction, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
+import { useEditedCategoryContext } from '@/context/EditedCategoryContext';
 
 interface EditCategoryProps {
-    categoriesToPost: AttachedCategory[],
     allCategories: Category[],
-    updateCategoriesToPost: Dispatch<SetStateAction<AttachedCategory[]>>,
-    initialCategories: AttachedCategory[],
-    categoriesToDelete: AttachedCategory[],
-    updateCategoriesToDelete: Dispatch<SetStateAction<AttachedCategory[]>>
+    initialCategories: AttachedCategory[]
 }
 
 /**Renders a searchable select with a button for adding or removing multiple category 'tags' to a recipe
@@ -20,9 +17,7 @@ interface EditCategoryProps {
  * Newly added categories are presented to the user with a green highlight, deleted categories with a red highlight,
  * and unchanged categories remain neutral.
  */
-export const EditCategories = ({ categoriesToPost, allCategories, updateCategoriesToPost,
-    initialCategories, categoriesToDelete, updateCategoriesToDelete
-}: EditCategoryProps) => {
+export const EditCategories = ({ allCategories, initialCategories }: EditCategoryProps) => {
 
     const [categoryToAdd, updateCategoryToAdd] = useState<AttachedCategory>(
         {
@@ -30,6 +25,8 @@ export const EditCategories = ({ categoriesToPost, allCategories, updateCategori
             "name": ""
         }
     )
+    const { categoriesToPost, updateCategoriesToPost, 
+        categoriesToDelete, updateCategoriesToDelete } = useEditedCategoryContext()
 
     const handleAddCategory = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()

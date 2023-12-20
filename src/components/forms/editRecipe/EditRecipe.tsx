@@ -5,6 +5,8 @@ import { getIngredients } from "@/dataManagers/ingredientManager"
 import { getSingleRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
 import { notFound } from "next/navigation"
 import { EditRecipeForm } from "./formUI/EditRecipeForm"
+import { EditedIngredientProvider } from "@/context/EditedIngredientContext"
+import { EditedCategoryProvider } from "@/context/EditedCategoryContext"
 
 /**Fetches data while running on the server and renders `EditRecipeForm`. 
  * 
@@ -18,7 +20,7 @@ export const EditRecipe = async ({ recipeId }: { recipeId: number }) => {
     const categoryData = getCategories()
     const recipeDetailData = getSingleRecipe(recipeId)
     const authorizedToEditData = authorizedToEditRecipe(recipeId)
-    
+
     const [
         genres,
         allIngredients,
@@ -34,12 +36,16 @@ export const EditRecipe = async ({ recipeId }: { recipeId: number }) => {
     ])
     if (isAuthorizedToEdit) {
         return <>
-            <EditRecipeForm
-                recipeId={recipeId}
-                genres={genres}
-                allIngredients={allIngredients}
-                allCategories={allCategories}
-                recipeDetails={recipeDetails} />
+            <EditedIngredientProvider>
+                <EditedCategoryProvider>
+                    <EditRecipeForm
+                        recipeId={recipeId}
+                        genres={genres}
+                        allIngredients={allIngredients}
+                        allCategories={allCategories}
+                        recipeDetails={recipeDetails} />
+                </EditedCategoryProvider>
+            </EditedIngredientProvider>
         </>
     } else {
         notFound()

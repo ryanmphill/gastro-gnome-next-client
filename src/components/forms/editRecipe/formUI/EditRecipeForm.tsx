@@ -1,13 +1,15 @@
 'use client'
-import { AttachedCategory, Category } from "@/types/categoryType"
+import { Category } from "@/types/categoryType"
 import { Genre } from "@/types/genreType"
-import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
+import { Ingredient } from "@/types/ingredientType"
 import { Recipe } from "@/types/recipeType"
 import { useState } from "react"
 import { EditIngredients } from "./EditIngredients"
 import { EditCategories } from "./EditCategories"
 import styles from "../../recipeForm.module.css"
 import { editRecipe } from "@/dataManagers/recipeManagers/server/recipeManager"
+import { useEditedIngredientContext } from "@/context/EditedIngredientContext"
+import { useEditedCategoryContext } from "@/context/EditedCategoryContext"
 
 interface EditRecipeFormProps {
     recipeId: number,
@@ -39,10 +41,8 @@ export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories
             "image": recipeDetails.image
         }
     )
-    const [ingredientsToDelete, updateIngredientsToDelete] = useState<AttachedIngredient[]>([])
-    const [ingredientsToPost, updateIngredientsToPost] = useState<AttachedIngredient[]>([])
-    const [categoriesToDelete, updateCategoriesToDelete] = useState<AttachedCategory[]>([])
-    const [categoriesToPost, updateCategoriesToPost] = useState<AttachedCategory[]>([])
+    const { ingredientsToDelete, ingredientsToPost } = useEditedIngredientContext()
+    const { categoriesToDelete, categoriesToPost } = useEditedCategoryContext()
     const initialCategories = [...recipeDetails.categories]
     const initialIngredients = [...recipeDetails.included_ingredients]
 
@@ -124,12 +124,9 @@ export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories
             </fieldset>
 
             <fieldset id={styles["addIngredients"]}>
-                <EditIngredients ingredientsToPost={ingredientsToPost}
+                <EditIngredients 
                     allIngredients={allIngredients}
-                    updateIngredientsToPost={updateIngredientsToPost}
-                    initialIngredients={initialIngredients}
-                    ingredientsToDelete={ingredientsToDelete}
-                    updateIngredientsToDelete={updateIngredientsToDelete} />
+                    initialIngredients={initialIngredients} />
             </fieldset>
 
             <fieldset>
@@ -236,12 +233,9 @@ export const EditRecipeForm = ({ recipeId, genres, allIngredients, allCategories
             </fieldset>
 
             <fieldset className="addCategories">
-                <EditCategories categoriesToPost={categoriesToPost}
+                <EditCategories 
                     allCategories={allCategories}
-                    updateCategoriesToPost={updateCategoriesToPost}
-                    initialCategories={initialCategories}
-                    categoriesToDelete={categoriesToDelete}
-                    updateCategoriesToDelete={updateCategoriesToDelete} />
+                    initialCategories={initialCategories} />
             </fieldset>
 
             <fieldset>
