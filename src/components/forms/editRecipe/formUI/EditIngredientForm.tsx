@@ -4,14 +4,11 @@ import { validateQuantityInput } from '@/utils/helpers/validateQuantityInput';
 import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
+import { useEditedIngredientContext } from '@/context/EditedIngredientContext';
 
 interface EditIngredientFormProps {
     initialIngredients: AttachedIngredient[],
     allIngredients: Ingredient[],
-    ingredientsToPost: AttachedIngredient[],
-    ingredientsToDelete: AttachedIngredient[],
-    updateIngredientsToPost: Dispatch<SetStateAction<AttachedIngredient[]>>,
-    updateIngredientsToDelete: Dispatch<SetStateAction<AttachedIngredient[]>>,
     setShowCustom: Dispatch<SetStateAction<boolean>>
 }
 
@@ -24,8 +21,7 @@ interface EditIngredientFormProps {
  * Newly added ingredients are presented to the user with a green highlight, deleted ingredients with a red highlight,
  * and unchanged ingredients remain neutral. 
   */
-export const EditIngredientForm = ({ initialIngredients, allIngredients, ingredientsToPost, ingredientsToDelete, 
-    updateIngredientsToPost, updateIngredientsToDelete, setShowCustom }: EditIngredientFormProps) => {
+export const EditIngredientForm = ({ initialIngredients, allIngredients, setShowCustom }: EditIngredientFormProps) => {
 
     const [ingredientToAdd, updateIngredientToAdd] = useState<AttachedIngredient>(
         {
@@ -35,6 +31,8 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, ingredi
             "quantity_unit": ""
         }
     )
+    const { ingredientsToPost, updateIngredientsToPost, 
+        ingredientsToDelete, updateIngredientsToDelete } = useEditedIngredientContext()
 
     const handleAddIngredient = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
         event.preventDefault()

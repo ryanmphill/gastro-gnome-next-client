@@ -1,16 +1,12 @@
 'use client'
 import { AttachedIngredient, Ingredient } from "@/types/ingredientType"
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState } from "react"
 import { CustomIngredient } from "../../sharedUI/CustomIngredient"
 import { EditIngredientForm } from "./EditIngredientForm"
 
 interface EditIngredientsProps {
-    ingredientsToPost: AttachedIngredient[],
     allIngredients: Ingredient[],
-    updateIngredientsToPost: Dispatch<SetStateAction<AttachedIngredient[]>>,
-    initialIngredients: AttachedIngredient[],
-    ingredientsToDelete: AttachedIngredient[],
-    updateIngredientsToDelete: Dispatch<SetStateAction<AttachedIngredient[]>>
+    initialIngredients: AttachedIngredient[]
 }
 
 /** By default, renders `EditIngredientsForm` for editing ingredients related to recipe.
@@ -20,9 +16,7 @@ interface EditIngredientsProps {
  * will render the form for adding a new ingredient to the database, which will then be available
  * to be added to the user's recipe.
  */
-export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngredientsToPost,
-    initialIngredients, ingredientsToDelete, updateIngredientsToDelete
-}: EditIngredientsProps) => {
+export const EditIngredients = ({ allIngredients, initialIngredients }: EditIngredientsProps) => {
     // Set state variable for tracking if the create custom ingredient view should be shown
     const [showCustom, setShowCustom] = useState(false)
 
@@ -32,10 +26,6 @@ export const EditIngredients = ({ ingredientsToPost, allIngredients, updateIngre
                 ? <EditIngredientForm
                     initialIngredients={initialIngredients}
                     allIngredients={allIngredients}
-                    ingredientsToPost={ingredientsToPost}
-                    ingredientsToDelete={ingredientsToDelete}
-                    updateIngredientsToPost={updateIngredientsToPost}
-                    updateIngredientsToDelete={updateIngredientsToDelete}
                     setShowCustom={setShowCustom} />
 
                 : <CustomIngredient
