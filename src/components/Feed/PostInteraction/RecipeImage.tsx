@@ -1,6 +1,6 @@
 'use client'
 import { BgImageStyle } from "@/types/bgImageType"
-import styles from "../RecipeFeed.module.css"
+import styles from "./PostInteraction.module.css"
 import { useRouter } from "next/navigation"
 
 interface RecipeImageProps {
