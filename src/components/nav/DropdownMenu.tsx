@@ -13,9 +13,10 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   }
 
   // Function to untoggle the dropdown when the user clicks anywhere else 
-  const handleOutsideClick = (event: any) => {
-    const dropdownContainer: any = document.querySelector('.DropdownMenu_dropdown__Gt85c')
-    if (!dropdownContainer.contains(event.target)) {
+  function handleOutsideClick(this: Document, event: MouseEvent) {
+    const dropdownContainer: HTMLElement | null = document.querySelector('.DropdownMenu_dropdown__Gt85c')
+    const target = event.target as Node
+    if (dropdownContainer && !dropdownContainer.contains(target)) {
       setIsOpen(false)
     }
   }
