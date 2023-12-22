@@ -4,6 +4,7 @@ import styles from './DropdownMenu.module.css' // Import CSS styles for the drop
 import gastroHamburger from "../../../public/assets/hamburger_green.svg"
 import Link from 'next/link';
 import { logoutAction } from '@/dataManagers/authManagers/authManagers';
+import Image from 'next/image';
 
 export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   const [isOpen, setIsOpen] = useState(false) // State to track if the dropdown is open or closed
@@ -44,7 +45,7 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   return (
     <div className={styles.dropdown}>
       <button className={styles["dropdown-button"]} onClick={toggleDropdown}>
-        <img src={gastroHamburger.src} alt="hamburger menu" id={styles.gastroHamburger}></img>
+        <Image src={gastroHamburger} alt="hamburger menu" id={styles.gastroHamburger}></Image>
       </button>
       {isOpen && <>
         <section className={styles["dropdown-content"]} onClick={toggleDropdown}>

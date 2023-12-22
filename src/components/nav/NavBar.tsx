@@ -3,6 +3,7 @@ import { DropdownMenu } from "./DropdownMenu"
 import Link from "next/link"
 import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import styles from "./NavBar.module.css"
+import Image from "next/image"
 
 export const NavBar = async () => {
     const currentUserId = await getCurrentUserId()
@@ -10,7 +11,7 @@ export const NavBar = async () => {
         <ul className={styles["navbar"]}>
             <li id={styles["logoContainer"]}>
                 <Link href={"/"} className={styles["link_img_wrapper"]}>
-                    <img className={styles["navbar__logo"]} src={gastroLogo.src} alt="Logo"></img>
+                    <Image className={styles["navbar__logo"]} src={gastroLogo} alt="Logo"></Image>
                 </Link>
                 <Link href={"/"} className={styles["link_title_wrapper"]}>
                     <h2 id={styles["gastroTitle"]}>Gastro Gnome</h2>

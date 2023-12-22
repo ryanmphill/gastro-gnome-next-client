@@ -25,6 +25,7 @@
 
 .login--logo {
     height: 100%;
+    width: auto;
 }
 
 .form--login {
