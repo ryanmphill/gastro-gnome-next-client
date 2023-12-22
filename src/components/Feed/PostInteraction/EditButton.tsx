@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from "next/navigation"
-import styles from "../RecipeFeed.module.css"
+import styles from "./PostInteraction.module.css"
 
 interface EditButtonProps {
     recipeId: number

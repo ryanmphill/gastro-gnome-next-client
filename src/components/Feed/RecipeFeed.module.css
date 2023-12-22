@@ -15,24 +15,6 @@
     to {opacity: 1;}
   }
 
-  .recipe--imgContainer {
-    background-color: #edf4e4;
-    background-image: var(--bg-image); /*Dynamically set recipe image to background image for control over dimensions*/
-    width: 100%;
-    padding-top: 100%; /*Make image square in mobile view*/
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-blend-mode: multiply;
-    border-radius: 25px;
-    box-shadow: 8px 6px 4px rgba(54, 68, 68, 0.25);
-    transition: all .2s ease-in-out;
-  }
-  
-  .recipe--imgContainer:hover {
-    cursor: pointer;
-  }
-
   .recipe--content {
     padding: 0.75rem;
     display: flex;
@@ -109,16 +91,6 @@
   
     .recipe--content {
       width: 60%;
-    }
-  
-    .recipe--imgContainer {
-      width: 15rem;
-      height: 15rem;
-      padding: 0;
-    }
-  
-    .recipe--imgContainer:hover {
-      transform: scale(1.02);
     }
   
     .recipe--headerContainer:hover {
