@@ -7,8 +7,15 @@ export default function ContentLayout({
 }) {
   return (
     <>
-        <NavBar />
-        {children}
+        <header>
+          <nav>
+            <NavBar />
+          </nav>
+        </header>
+        <main>
+          {children}
+        </main>
+        <footer></footer>
     </>
   )
 }

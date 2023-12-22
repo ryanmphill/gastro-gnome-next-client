@@ -1,48 +1,42 @@
 'use client'
 
-import { usePathname, useRouter } from "next/navigation"
+import { useSelectedLayoutSegment } from "next/navigation"
 import styles from "../profile.module.css"
+import Link from "next/link"
 
 interface DisplayTabProps {
     profileId: number,
     currentUserId: number
 }
 
-export const ProfileDisplayTab = ({profileId, currentUserId} : DisplayTabProps) => {
-    const pathname = usePathname()
-    const router = useRouter()
+export const ProfileDisplayTab = ({ profileId, currentUserId }: DisplayTabProps) => {
+    const segment = useSelectedLayoutSegment()
 
     return <>
         <div className={styles["profileDisplayTab"]}>
-            <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${pathname === `/profile/${profileId}` ? styles['active'] : ''}`}
-                onClick={(e) => {
-                    e.preventDefault()
-                    router.push(`/profile/${profileId}`, {scroll: false})
-                }}>
-                {
-                    profileId === currentUserId
-                        ? <>My Posts</>
-                        : <>Posts</>
-                }
-            </button>
+            <Link href={`/profile/${profileId}`} scroll={false} className={styles['profileLinkWrapper']}>
+                <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === '(index)' ? styles['active'] : ''}`}
+                >
+                    {
+                        profileId === currentUserId
+                            ? <>My Posts</>
+                            : <>Posts</>
+                    }
+                </button>
+            </Link>
+            <Link href={`/profile/${profileId}/favorites`} scroll={false} className={styles['profileLinkWrapper']}>
+                <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === 'favorites' ? styles['active'] : ''}`}
+                >Favorites</button>
+            </Link>
 
-            <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${pathname.includes("favorites") ? styles['active'] : ''}`}
-                onClick={(e) => {
-                    e.preventDefault()
-                    router.push(`/profile/${profileId}/favorites`, {scroll: false})
-                }}>Favorites</button>
-
-            <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${pathname.includes("followers") ? styles['active'] : ''}`}
-                onClick={(e) => {
-                    e.preventDefault()
-                    router.push(`/profile/${profileId}/followers`, {scroll: false})
-                }}>Followers</button>
-
-            <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${pathname.includes("following") ? styles['active'] : ''}`}
-                onClick={(e) => {
-                    e.preventDefault()
-                    router.push(`/profile/${profileId}/following`, {scroll: false})
-                }}>Following</button>
+            <Link href={`/profile/${profileId}/followers`} scroll={false} className={styles['profileLinkWrapper']}>
+                <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === 'followers' ? styles['active'] : ''}`}
+                >Followers</button>
+            </Link>
+            <Link href={`/profile/${profileId}/following`} scroll={false} className={styles['profileLinkWrapper']}>
+                <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === 'following' ? styles['active'] : ''}`}
+                >Following</button>
+            </Link>
         </div>
     </>
 }

@@ -23,6 +23,13 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
       "Accept": "application/json"
       }
     
+    // If user is trying to view '/following=true' while logged out, redirect to home
+    if (queryParams.includes("following=true")) {
+      if (!token || token?.value.length === 0) {
+        redirect('/')
+      }
+    }
+    
     const res = await fetch(`${apiUrl}/recipes${queryParams}`, {
       method: "GET",
       headers: reqHeaders,

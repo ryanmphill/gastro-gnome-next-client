@@ -2,6 +2,7 @@ import gastroLogo from "../../../public/assets/Chef_green.svg"
 import Link from "next/link"
 import styles from "./auth.module.css"
 import { loginAction } from "../../dataManagers/authManagers/authManagers"
+import Image from "next/image"
 
 const Login = () => {
 
@@ -11,7 +12,7 @@ const Login = () => {
                 <form action={loginAction}>
                     <section className={styles["login--headerContainer"]}>
                         <div className={styles["login--logoContainer"]}>
-                            <img className={styles["login--logo"]} src={gastroLogo.src} alt="Logo"></img>
+                            <Image className={styles["login--logo"]} src={gastroLogo} priority={true} alt="Logo"></Image>
                         </div>
                         <div className="login--headerFlex">
                             <h1 className={styles["login--header"]}>Gastro Gnome</h1>

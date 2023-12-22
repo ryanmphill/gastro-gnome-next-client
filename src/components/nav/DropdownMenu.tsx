@@ -4,6 +4,7 @@ import styles from './DropdownMenu.module.css' // Import CSS styles for the drop
 import gastroHamburger from "../../../public/assets/hamburger_green.svg"
 import Link from 'next/link';
 import { logoutAction } from '@/dataManagers/authManagers/authManagers';
+import Image from 'next/image';
 
 export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   const [isOpen, setIsOpen] = useState(false) // State to track if the dropdown is open or closed
@@ -13,9 +14,10 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   }
 
   // Function to untoggle the dropdown when the user clicks anywhere else 
-  const handleOutsideClick = (event: any) => {
-    const dropdownContainer: any = document.querySelector('.DropdownMenu_dropdown__Gt85c')
-    if (!dropdownContainer.contains(event.target)) {
+  function handleOutsideClick(this: Document, event: MouseEvent) {
+    const dropdownContainer: HTMLElement | null = document.querySelector('.DropdownMenu_dropdown__Gt85c')
+    const target = event.target as Node
+    if (dropdownContainer && !dropdownContainer.contains(target)) {
       setIsOpen(false)
     }
   }
@@ -43,7 +45,7 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   return (
     <div className={styles.dropdown}>
       <button className={styles["dropdown-button"]} onClick={toggleDropdown}>
-        <img src={gastroHamburger.src} alt="hamburger menu" id={styles.gastroHamburger}></img>
+        <Image src={gastroHamburger} alt="hamburger menu" id={styles.gastroHamburger}></Image>
       </button>
       {isOpen && <>
         <section className={styles["dropdown-content"]} onClick={toggleDropdown}>
@@ -52,7 +54,7 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
             currentUser !== 0
               ? <>
                 <Link className={styles["dropdown--link"]} href={`/profile/${currentUser}`}>Profile</Link>
-                <div className={`${styles["navbar__menuItem"]} ${styles["navbar__logout"]}`}>
+                <div className="navbar__menuItem navbar__logout">
                   <button className={`${styles["dropdown--link"]} ${styles["dropdown--btn_link"]}`}
                     onClick={() => startTransition(() => logoutAction())}>
                     Logout

@@ -96,8 +96,8 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize 
                             <td>{formatNum(nutrition?.totalDaily?.SUGAR?.quantity)}{nutrition?.totalDaily?.SUGAR?.unit ?? "-"}</td>
                         </tr>
                         <tr>
-                            <td>Including added sugars {formatNum(nutrition?.totalNutrients?.SUGAR?.added?.quantity)} {nutrition?.totalNutrients?.SUGAR?.added?.unit ?? "-"}</td>
-                            <td>{formatNum(nutrition?.totalDaily?.SUGAR?.added?.quantity)}{nutrition?.totalDaily?.SUGAR?.added?.unit ?? "-"}</td>
+                            <td>Including added sugars {formatNum(nutrition?.totalNutrients?.[`SUGAR.added`]?.quantity)} {nutrition?.totalNutrients?.[`SUGAR.added`]?.unit ?? "-"}</td>
+                            <td>{formatNum(nutrition?.totalDaily?.[`SUGAR.added`]?.quantity)}{nutrition?.totalDaily?.[`SUGAR.added`]?.unit ?? "-"}</td>
                         </tr>
                         <tr className={styles["heavyTableBorder"]}>
                             <th>Protein {formatNum(nutrition?.totalNutrients?.PROCNT?.quantity)} {nutrition?.totalNutrients?.PROCNT?.unit ?? "-"}</th>

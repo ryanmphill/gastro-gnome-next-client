@@ -21,6 +21,7 @@
     width: 100%;
     margin: 0;
     transition: all .25s ease-in-out;
+    height: auto;
   }
 
   #gastroHamburger:hover {
@@ -55,6 +56,7 @@
     background-color: inherit;
     width: 100%;
     text-align: inherit;
+    cursor: pointer;
   }
   
   .dropdown--link:hover {

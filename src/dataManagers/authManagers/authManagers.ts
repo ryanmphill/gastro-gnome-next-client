@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers'
 import { redirect } from "next/navigation"
 
@@ -84,7 +85,10 @@ export const logoutAction = () => {
     cookies().delete('gastro_token')
     const cookieStore = cookies()
     console.log(cookieStore.getAll())
-    redirect('/')
+    // Revalidate data to remove authenticated privileges
+    revalidateTag("currentUserId")
+    revalidateTag("authorizedToEdit")
+    revalidatePath('/new-recipe', 'page')
 }
 
 export const getCurrentUserId = async (): Promise<number> => {
@@ -99,6 +103,7 @@ export const getCurrentUserId = async (): Promise<number> => {
               "Accept": "application/json",
               "Authorization": `Token ${token.value}`,
             },
+            next: { tags: ['currentUserId'] }
             // cache: 'no-store'
           })
           if (res.status !== 200) {
@@ -129,6 +134,7 @@ export const authorizedToEditRecipe = async (recipeId: number): Promise<boolean 
                 "Accept": "application/json",
                 "Authorization": `Token ${token.value}`
             },
+            next: { tags: ['authorizedToEdit'] },
             cache: "no-store"
         })
         console.log(res.status, res.statusText)

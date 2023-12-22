@@ -28,6 +28,7 @@
 .navbar__logo {
     height: 100%;
     cursor: pointer;
+    width: auto;
 }
 
 #gastroTitle {
@@ -44,6 +45,24 @@
     list-style-type: none;
     height: 12vh;
 }
+
+/*Wraps button in Next.js Link component while hiding Link properties so that a button
+  element can be used for server-side optimized navigation*/
+.link_img_wrapper {
+    display: inline-block;
+    color: inherit;
+    text-decoration: inherit;
+    width: fit-content;
+    height: 100%;
+}
+
+.link_title_wrapper {
+    display: inline-block;
+    color: inherit;
+    text-decoration: inherit;
+    width: fit-content;
+}
+/*--------------------------------------------------------------------------------*/
 
 /*Desktop View------------------------------------------------------------------*/
 @media (min-width: 420px) {
