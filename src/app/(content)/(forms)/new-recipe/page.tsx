@@ -4,7 +4,8 @@ import { redirect } from "next/navigation"
 
 
 const NewRecipePage = () => {
-    const userIsAuthenticated = cookies().get('gastro_token') ? true : false
+    const token = cookies().get('gastro_token')
+    const userIsAuthenticated = token && token?.value.length > 0 ? true : false
     if (userIsAuthenticated) {
         return <>
             <NewRecipe />
