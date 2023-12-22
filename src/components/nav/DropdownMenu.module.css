@@ -55,6 +55,7 @@
     background-color: inherit;
     width: 100%;
     text-align: inherit;
+    cursor: pointer;
   }
   
   .dropdown--link:hover {

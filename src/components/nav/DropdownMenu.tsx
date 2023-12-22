@@ -53,7 +53,7 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
             currentUser !== 0
               ? <>
                 <Link className={styles["dropdown--link"]} href={`/profile/${currentUser}`}>Profile</Link>
-                <div className={`${styles["navbar__menuItem"]} ${styles["navbar__logout"]}`}>
+                <div className="navbar__menuItem navbar__logout">
                   <button className={`${styles["dropdown--link"]} ${styles["dropdown--btn_link"]}`}
                     onClick={() => startTransition(() => logoutAction())}>
                     Logout
