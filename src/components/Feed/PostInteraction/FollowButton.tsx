@@ -26,13 +26,6 @@ export const FollowButton = ({ currentUserId, userToFollowId, usersFollows }
             startTransition(() => updateOptimisticFollows(usersFollows))
         },[usersFollows, updateOptimisticFollows]
     )
-    
-    // Get the current location
-    const pathname = usePathname()
-    const router = useRouter()
-
-    // Check if the user is viewing their profile to dynamically update the profile's list of follows
-    const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
     // Handle the click to follow a user
     const handleFollow = async (event: MouseEvent<HTMLButtonElement>) => {

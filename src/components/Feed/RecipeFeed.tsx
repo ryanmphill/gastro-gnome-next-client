@@ -21,7 +21,7 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
     const usersFavsData = getCurrentUserFavorites()
     const [usersFollows, usersFavs] = await Promise.all([usersFollowsData, usersFavsData])
 
-    return <article className="recipeFeed">
+    return <section className="recipeFeed">
     {
         recipes.map(
             (recipe) => {
@@ -32,13 +32,13 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                 }
                 
 
-                return <section className={styles["recipe"]} key={`recipe--${recipe.id}`}>
+                return <article className={styles["recipe"]} key={`recipe--${recipe.id}`}>
                     <RecipeImage recipeId={recipe.id} bgImageStyle={bgImageStyle} />
-                    <div className={styles["recipe--content"]}>
-                        <div className={styles["recipe--headerContainer"]}><h3><Link className={styles["recipe--header"]} href={`/recipe/${recipe.id}`}>{recipe.title}</Link></h3></div>
-                        <div>{recipe.description}</div>
-                        <div className={styles["recipe__userContainer"]}>
-                            <div>Posted by: <Link href={`/profile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></div>
+                    <section className={styles["recipe--content"]}>
+                        <header className={styles["recipe--headerContainer"]}><h3><Link className={styles["recipe--header"]} href={`/recipe/${recipe.id}`}>{recipe.title}</Link></h3></header>
+                        <p>{recipe.description}</p>
+                        <section className={styles["recipe__userContainer"]}>
+                            <p>Posted by: <Link href={`/profile/${recipe?.user?.id}`}>{recipe?.user?.full_name}</Link></p>
                             {
                                 currentUserId !== recipe?.user?.id && currentUserId !== 0
                                 && <Suspense>
@@ -48,7 +48,7 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                                         usersFollows={usersFollows} />
                                     </Suspense>
                             }
-                        </div>
+                        </section>
                         <footer className={styles["recipe--footer"]}>
                             {
                                 currentUserId === recipe?.user?.id
@@ -67,11 +67,11 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                                 </Suspense>
                             }
                         </footer>
-                    </div>
+                    </section>
                     
-                </section>
+                </article>
             }
         )
     }
-</article>
+</section>
 }

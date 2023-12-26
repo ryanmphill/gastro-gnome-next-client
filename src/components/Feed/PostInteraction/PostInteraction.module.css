@@ -34,6 +34,7 @@
 
 /*Recipe Image Container -------------------------------------------------*/
 .recipe--imgContainer {
+  display: block;
   background-color: #edf4e4;
   background-image: var(--bg-image);
   /*Dynamically set recipe image to background image for control over dimensions*/
