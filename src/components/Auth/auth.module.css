@@ -36,7 +36,7 @@
     min-width: 98%;
     box-shadow: -1px 1px 4px rgba(47, 77, 77, 0.5);
     border-radius: 10px;
-    background-image: linear-gradient(45deg, #c8d3bc 0%, #edf4e4  51%, #c7d3b9  100%);
+    background-image: linear-gradient(45deg, #c8d3bc 0%, #edf4e4 51%, #c7d3b9 100%);
     height: 95%;
 }
 
@@ -59,8 +59,8 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .registerForm-control {
@@ -76,8 +76,8 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .container--login {
@@ -136,9 +136,9 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     transition: transform .2s ease-out;
-  }
-  
-  .btn-primary:after {
+}
+
+.btn-primary:after {
     background-color: rgb(23, 22, 22, 0.5);
     border-radius: 10px;
     content: "";
@@ -151,35 +151,36 @@
     transform: translate(4px, 4px);
     transition: transform .2s ease-out;
     z-index: -1;
-  }
-  
-  .btn-primary:hover:after {
+}
+
+.btn-primary:hover:after {
     transform: translate(0, 0);
-  }
-  
-  .btn-primary:active {
+}
+
+.btn-primary:active {
     background-color: #c48d46;
     outline: 0;
-  }
-  
-  .btn-primary:hover {
+}
+
+.btn-primary:hover {
     outline: 0;
     background-color: #eccda5;
     border: 2px solid #eccda5;
-  }
-  
-  .btn-primary-wrapper {
+}
+
+.btn-primary-wrapper {
     position: relative;
     z-index: 0;
     display: inline-block;
-  }
-  
-  @media (min-width: 768px) {
+}
+
+@media (min-width: 768px) {
     .btn-primary {
-      padding: 0 40px;
+        padding: 0 40px;
     }
-  }
-  /*---------------------------------------------------------------------------------*/
+}
+
+/*---------------------------------------------------------------------------------*/
 
 /*Desktop View--------------------------------------------------------------------------*/
 @media (min-width: 600px) {

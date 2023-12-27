@@ -34,12 +34,6 @@
   text-shadow: -0.25px 0.25px 0.25px rgba(43, 46, 46, 0.50);
 }
 
-/* .pageFooter {
-    height: 10vh;
-    border-top: 1px solid rgba(143, 159, 174, 0.5);
-    margin-top: 1rem;
-} */
-
 .followingListItem,
 .followedByListItem {
   display: flex;

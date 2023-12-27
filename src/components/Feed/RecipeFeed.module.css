@@ -1,100 +1,106 @@
 .recipe {
-    border: 1px dashed rgba(143, 159, 174, 0.5);
-    margin: 1rem 0;
-    box-shadow: 8px 6px 4px rgba(54, 68, 68, 0.25);
-    border-radius: 25px;
-    background-color: #b0c19d;
-    column-gap: 1rem;
-    width: 100%;
-    background-image: linear-gradient(45deg, #9cb085 0%, #c9d4bd  51%, #b0c19d  100%);
-    animation: fadeEffect 0.75s;
+  border: 1px dashed rgba(143, 159, 174, 0.5);
+  margin: 1rem 0;
+  box-shadow: 8px 6px 4px rgba(54, 68, 68, 0.25);
+  border-radius: 25px;
+  background-color: #b0c19d;
+  column-gap: 1rem;
+  width: 100%;
+  background-image: linear-gradient(45deg, #9cb085 0%, #c9d4bd 51%, #b0c19d 100%);
+  animation: fadeEffect 0.75s;
+}
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
   }
 
-  @keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  to {
+    opacity: 1;
+  }
+}
+
+.recipe--content {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recipe--header {
+  text-decoration: none;
+  color: inherit;
+}
+
+.recipe--headerContainer {
+  width: fit-content;
+  transition: all 0.1s ease-in-out;
+}
+
+.recipe__userContainer {
+  display: flex;
+  column-gap: 0.75rem;
+}
+
+.recipe--footer {
+  margin-bottom: 0;
+  border-top: 1px dashed #edf4e4;
+}
+
+/* Main button theme ------------------------------------------------------------- */
+.btn-secondary {
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  border-radius: 10px;
+  display: block;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #f09819;
+  background-image: linear-gradient(45deg, #e4b06d 0%, #d9cec1 51%, #ca9044 100%);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-secondary:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  text-decoration: none;
+  color: #edf4e4;
+  text-shadow: 0.25px 0.25px 3px rgba(34, 40, 40, 1);
+}
+
+.btn-secondary:active {
+  transform: scale(0.95);
+}
+
+.btn-group-left {
+  display: inline-block;
+}
+
+.btn-group-left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/*-----------------------------------------------------------------------------*/
+
+@media (min-width: 520px) {
+  .recipe {
+    display: flex;
+    justify-content: flex-start;
   }
 
   .recipe--content {
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 60%;
   }
 
-  .recipe--header {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .recipe--headerContainer {
-    width:fit-content;
-    transition: all 0.1s ease-in-out;
-  }
-
-  .recipe__userContainer {
-    display: flex;
-    column-gap: 0.75rem;
-  }
-
-  .recipe--footer {
-    margin-bottom: 0;
-    border-top: 1px dashed #edf4e4;
-  }
-
-  /* Main button theme ------------------------------------------------------------- */
-.btn-secondary {
-    margin-top: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    text-align: center;
-    transition: 0.5s;
-    background-size: 200% auto;
-    border-radius: 10px;
-    display: block;
-    border: 0px;
-    font-weight: 700;
-    box-shadow: 0px 0px 14px -7px #f09819;
-    background-image: linear-gradient(45deg, #e4b06d 0%, #d9cec1  51%, #ca9044  100%);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  
-  .btn-secondary:hover {
-    background-position: right center;
-    /* change the direction of the change here */
-    text-decoration: none;
+  .recipe--headerContainer:hover {
     color: #edf4e4;
-    text-shadow: 0.25px 0.25px 3px rgba(34, 40, 40, 1);
+    text-shadow: 0.5px 0.5px 2px rgba(34, 40, 40, 0.75);
   }
-  
-  .btn-secondary:active {
-    transform: scale(0.95);
-  }
-  
-  .btn-group-left {
-    display: inline-block;
-  }
-  
-  .btn-group-left {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  /*-----------------------------------------------------------------------------*/
-
-  @media (min-width: 520px) {
-    .recipe {
-      display: flex;
-      justify-content: flex-start;
-    }
-  
-    .recipe--content {
-      width: 60%;
-    }
-  
-    .recipe--headerContainer:hover {
-      color: #edf4e4;
-      text-shadow: 0.5px 0.5px 2px rgba(34, 40, 40, 0.75);
-    }
-  }
+}
