@@ -19,9 +19,9 @@ export default function ProfileLayout({
     }
 
     return (
-      <section className={styles["pageBody"]}>
+      <main className={styles["pageBody"]}>
         <ProfileHeader profileId={profileId} />
           {children}
-      </section>
+      </main>
     )
   }

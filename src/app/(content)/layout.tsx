@@ -10,9 +10,7 @@ export default function ContentLayout({
       <header>
         <NavBar />
       </header>
-      <main>
-        {children}
-      </main>
+      {children}
       <footer></footer>
     </>
   )

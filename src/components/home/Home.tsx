@@ -1,4 +1,3 @@
-'use server'
 import styles from './home.module.css'
 import { getRecipes } from '@/dataManagers/recipeManagers/recipeManager'
 import { RecipeFeed } from '@/components/Feed/RecipeFeed'
@@ -19,7 +18,6 @@ interface searchParamsProp {
 }
 
 const Home = async ({ searchParams } : searchParamsProp ) => {
-console.log("query", searchParams)
 const queryString = searchParams ? convertToQueryString(searchParams) : ""
 const display = searchParams && searchParams.following === "true" ? "postsFollowed" : "allPosts"
 const recipeData = getRecipes(queryString)
@@ -40,14 +38,12 @@ const [
 
 const chosenCategories = formatCategoryQueryParams(searchParams?.category)
 
-  return <section className={styles["pageBody"]}>
+  return <main className={styles["pageBody"]}>
     <Suspense>
         <FeedChoice 
         display={display}
         currentUserId={currentUserId} />
     </Suspense>
-
-    <div className="feedControl">
 
       <FilterBar
         categories={categories}
@@ -67,7 +63,6 @@ const chosenCategories = formatCategoryQueryParams(searchParams?.category)
             currentUserId={currentUserId} />
       </Suspense>
 
-    </div>
-  </section>
+  </main>
 }
 export default Home
