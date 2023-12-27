@@ -15,14 +15,14 @@ export const FilterBar = ({ categories, categoryTypes, chosenCategories } : Filt
 
     return <section className="filterContainer"> 
     <Suspense>
-        <section className={styles["filterBar"]}>
+        <div className={styles["filterBar"]}>
             <SearchRecipes />
 
             <FilterByCategories
             chosenCategories={chosenCategories}
             categories={categories}
             categoryTypes={categoryTypes} />
-        </section>
+        </div>
         <SelectedCategories
         chosenCategories={chosenCategories} />
     </Suspense>

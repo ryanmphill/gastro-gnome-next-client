@@ -13,7 +13,7 @@ export const FeedChoice = ({ display, currentUserId } : FeedChoiceProps) => {
     const router = useRouter()
 
     return <>
-        <div className={styles["recipeDisplayTab"]}>
+        <section className={styles["recipeDisplayTab"]}>
             <button className={`${styles["recipeDisplayTabLink"]} ${styles["recipeDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${display === "allPosts" ? styles["active"] : ''}`}
             onClick={(e) => {
                 e.preventDefault()
@@ -28,6 +28,6 @@ export const FeedChoice = ({ display, currentUserId } : FeedChoiceProps) => {
                 const newQuery = addToQuery("following", "true", searchParams)
                 router.push(newQuery, {scroll: false})
             }}>My Feed</button>
-        </div>
+        </section>
     </>
 }

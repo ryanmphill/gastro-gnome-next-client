@@ -15,14 +15,14 @@ export const SearchRecipes = () => {
     const handleSearchClick = (evt: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLButtonElement>) => {
         evt.preventDefault()
         const newQuery = updateSearchInQuery(searchTerms, searchParams)
-        router.push(newQuery, {scroll: false})
+        router.push(newQuery, { scroll: false })
     }
 
-    const handleSearchChange = (e : ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         updateSearchTerms(e.target.value)
         if (e.target.value === "") {
             const newQuery = clearSearchFromQuery(searchParams)
-            router.push(newQuery, {scroll: false})
+            router.push(newQuery, { scroll: false })
         }
     }
 
