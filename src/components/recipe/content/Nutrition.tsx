@@ -9,13 +9,13 @@ interface NutritionProps {
     servingSize: number
 }
 
-export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize } : NutritionProps) => {
+export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize }: NutritionProps) => {
 
     // Define function to build ingredient array to send to nutrition api
     const buildIngredientsArray = () => {
         let ingredientsToSend: string[] = []
         attachedIngredients.forEach(ingr => {
-                ingredientsToSend.push(`${ingr.quantity} ${ingr.quantity_unit} ${ingr.name}`)
+            ingredientsToSend.push(`${ingr.quantity} ${ingr.quantity_unit} ${ingr.name}`)
         })
         return ingredientsToSend
     }
@@ -30,9 +30,9 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize 
             const oneServing = num / servingSize
             const roundedNum = Math.round(oneServing)
             return roundedNum
-          } else {
+        } else {
             return "-"
-          }
+        }
     }
     return <section className={styles["nutriFactsContainer"]}>
         {
