@@ -32,7 +32,6 @@ export const ProfileFollowing = async ({ profileId } : ProfileFollowingProps) =>
                             currentUserId !== user?.id
                             && <Suspense>
                                 <FollowButton
-                                    currentUserId={currentUserId}
                                     userToFollowId={user?.id}
                                     usersFollows={currentUsersFollows} />
                             </Suspense>

@@ -3,17 +3,15 @@ import { MouseEvent, startTransition, useEffect, useOptimistic, useState } from 
 import followImg from "../../../../public/assets/follow.png"
 import followingImg from "../../../../public/assets/following.png"
 import styles from "./PostInteraction.module.css"
-import { usePathname, useRouter } from "next/navigation"
 import { followUser, unFollowUser } from "@/dataManagers/userManager"
 
 interface FollowButtonProps {
-    currentUserId: number,
     userToFollowId: number,
     usersFollows: number[]
 }
 
 
-export const FollowButton = ({ currentUserId, userToFollowId, usersFollows } 
+export const FollowButton = ({ userToFollowId, usersFollows } 
     : FollowButtonProps) => {
 
     const [optimisticFollows, updateOptimisticFollows] = useOptimistic(

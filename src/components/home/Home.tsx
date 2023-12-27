@@ -44,12 +44,10 @@ const Home = async ({ searchParams }: searchParamsProp) => {
         display={display}
         currentUserId={currentUserId} />
     </Suspense>
-
     <FilterBar
       categories={categories}
       categoryTypes={categoryTypes}
       chosenCategories={chosenCategories} />
-
     {
       display === "allPosts"
         ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
@@ -62,7 +60,6 @@ const Home = async ({ searchParams }: searchParamsProp) => {
       <RecipeFeed recipes={recipes}
         currentUserId={currentUserId} />
     </Suspense>
-
   </main>
 }
 export default Home

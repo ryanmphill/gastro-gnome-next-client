@@ -43,7 +43,6 @@ export const RecipeFeed = async ({ recipes, currentUserId } : RecipeFeedProps) =
                                 currentUserId !== recipe?.user?.id && currentUserId !== 0
                                 && <Suspense>
                                         <FollowButton
-                                        currentUserId={currentUserId}
                                         userToFollowId={recipe.user.id}
                                         usersFollows={usersFollows} />
                                     </Suspense>

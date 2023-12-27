@@ -1,5 +1,4 @@
 'use client'
-
 import { useSelectedLayoutSegment } from "next/navigation"
 import styles from "../profile.module.css"
 import Link from "next/link"
