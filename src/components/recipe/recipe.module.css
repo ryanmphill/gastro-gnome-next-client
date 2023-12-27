@@ -3,15 +3,20 @@
     border-radius: 10px;
     padding: 1rem;
     margin-top: 0.5rem;
-    background-image: linear-gradient(45deg, #c8d3bc 0%, #edf4e4  51%, #c7d3b9  100%);
+    background-image: linear-gradient(45deg, #c8d3bc 0%, #edf4e4 51%, #c7d3b9 100%);
     animation: detailsFade 0.75s;
     margin-bottom: 1rem;
 }
 
 @keyframes detailsFade {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 .recipeDetails--topContainer {
     display: flex;
@@ -30,6 +35,7 @@
     border-bottom: 1px solid rgba(143, 159, 174, 0.5);
     padding-bottom: 0.5rem;
 }
+
 /*Recipe Detais Image-------------------------------------------------------*/
 .recipeDetails__imgContainer {
     width: 100%;
@@ -58,6 +64,7 @@
     border-radius: 25px;
     box-shadow: 8px 6px 4px rgba(54, 68, 68, 0.25);
 }
+
 /*--------------------------------------------------------------------------*/
 
 .recipeDetails_times {
@@ -118,6 +125,7 @@
     border-radius: 5px;
     background-color: #fff;
 }
+
 .nutriFacts {
     padding: 0.5rem;
     text-align: left;
@@ -165,24 +173,24 @@
     border: 0px;
     font-weight: 700;
     box-shadow: 0px 0px 14px -7px #f09819;
-    background-image: linear-gradient(45deg, #e4b06d 0%, #d9cec1  51%, #ca9044  100%);
+    background-image: linear-gradient(45deg, #e4b06d 0%, #d9cec1 51%, #ca9044 100%);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-  }
-  
-  .btn-secondary:hover {
+}
+
+.btn-secondary:hover {
     background-position: right center;
     /* change the direction of the change here */
     text-decoration: none;
     color: #edf4e4;
     text-shadow: 0.25px 0.25px 3px rgba(34, 40, 40, 1);
-  }
-  
-  .btn-secondary:active {
+}
+
+.btn-secondary:active {
     transform: scale(0.95);
-  }
+}
 
 /*Desktop View----------------------------------------------------------------------*/
 @media (min-width: 600px) {
@@ -246,7 +254,9 @@
         row-gap: 1rem;
     }
 
-    #recipeDetails--desc, .recipeDetails__ingredientContainer, .nutriFactsContainer {
+    #recipeDetails--desc,
+    .recipeDetails__ingredientContainer,
+    .nutriFactsContainer {
         border-bottom: none;
     }
 

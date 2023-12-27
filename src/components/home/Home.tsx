@@ -1,4 +1,3 @@
-'use server'
 import styles from './home.module.css'
 import { getRecipes } from '@/dataManagers/recipeManagers/recipeManager'
 import { RecipeFeed } from '@/components/Feed/RecipeFeed'
@@ -11,63 +10,56 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 
 interface searchParamsProp {
-    searchParams?: {
-        search?: string,
-        category?: string[] | string,
-        following?: string
-    }
+  searchParams?: {
+    search?: string,
+    category?: string[] | string,
+    following?: string
+  }
 }
 
-const Home = async ({ searchParams } : searchParamsProp ) => {
-console.log("query", searchParams)
-const queryString = searchParams ? convertToQueryString(searchParams) : ""
-const display = searchParams && searchParams.following === "true" ? "postsFollowed" : "allPosts"
-const recipeData = getRecipes(queryString)
-const currentUserIdData = getCurrentUserId()
-const categoryData = getCategories()
-const categoryTypeData = getCategoryTypes()
-const [
-    recipes, 
-    currentUserId, 
-    categories, 
+const Home = async ({ searchParams }: searchParamsProp) => {
+  const queryString = searchParams ? convertToQueryString(searchParams) : ""
+  const display = searchParams && searchParams.following === "true" ? "postsFollowed" : "allPosts"
+  const recipeData = getRecipes(queryString)
+  const currentUserIdData = getCurrentUserId()
+  const categoryData = getCategories()
+  const categoryTypeData = getCategoryTypes()
+  const [
+    recipes,
+    currentUserId,
+    categories,
     categoryTypes
-] = await Promise.all([
-    recipeData, 
-    currentUserIdData, 
-    categoryData, 
+  ] = await Promise.all([
+    recipeData,
+    currentUserIdData,
+    categoryData,
     categoryTypeData
-])
+  ])
 
-const chosenCategories = formatCategoryQueryParams(searchParams?.category)
+  const chosenCategories = formatCategoryQueryParams(searchParams?.category)
 
-  return <section className={styles["pageBody"]}>
+  return <main className={styles["pageBody"]}>
     <Suspense>
-        <FeedChoice 
+      <FeedChoice
         display={display}
         currentUserId={currentUserId} />
     </Suspense>
-
-    <div className="feedControl">
-
-      <FilterBar
-        categories={categories}
-        categoryTypes={categoryTypes} 
-        chosenCategories={chosenCategories}/>
-
-      {
-        display === "allPosts"
-          ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
-          : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You're Following</h2>
-      }
-      <Link className={styles["newRecipeLink"]} href={"/new-recipe"}>
+    <FilterBar
+      categories={categories}
+      categoryTypes={categoryTypes}
+      chosenCategories={chosenCategories} />
+    {
+      display === "allPosts"
+        ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
+        : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You're Following</h2>
+    }
+    <Link className={styles["newRecipeLink"]} href={"/new-recipe"}>
       <button className={styles["btn-primary"]}>Post a Recipe</button>
-      </Link>
-      <Suspense>
-        <RecipeFeed recipes={recipes}
-            currentUserId={currentUserId} />
-      </Suspense>
-
-    </div>
-  </section>
+    </Link>
+    <Suspense>
+      <RecipeFeed recipes={recipes}
+        currentUserId={currentUserId} />
+    </Suspense>
+  </main>
 }
 export default Home

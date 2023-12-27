@@ -8,10 +8,13 @@ interface RecipeImageProps {
     bgImageStyle: BgImageStyle
 }
 
-export const RecipeImage = ({ recipeId, bgImageStyle } : RecipeImageProps) => {
+export const RecipeImage = ({ recipeId, bgImageStyle }: RecipeImageProps) => {
     const router = useRouter()
-    return <div className={styles["recipe--imgContainer"]}
-        style={bgImageStyle}
-        onClick={() => router.push(`/recipe/${recipeId}`)}>
-    </div>
+    return <figure>
+        <span className={styles["recipe--imgContainer"]}
+            role="img"
+            style={bgImageStyle}
+            onClick={() => router.push(`/recipe/${recipeId}`)}>
+        </span>
+    </figure>
 }

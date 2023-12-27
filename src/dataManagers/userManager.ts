@@ -1,8 +1,8 @@
 'use server'
 import { currentUserType } from "@/types/userTypes";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 const apiUrl:string = "http://localhost:8000";
 

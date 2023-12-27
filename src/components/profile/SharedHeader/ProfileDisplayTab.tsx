@@ -1,5 +1,4 @@
 'use client'
-
 import { useSelectedLayoutSegment } from "next/navigation"
 import styles from "../profile.module.css"
 import Link from "next/link"
@@ -13,7 +12,7 @@ export const ProfileDisplayTab = ({ profileId, currentUserId }: DisplayTabProps)
     const segment = useSelectedLayoutSegment()
 
     return <>
-        <div className={styles["profileDisplayTab"]}>
+        <nav className={styles["profileDisplayTab"]}>
             <Link href={`/profile/${profileId}`} scroll={false} className={styles['profileLinkWrapper']}>
                 <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === '(index)' ? styles['active'] : ''}`}
                 >
@@ -37,6 +36,6 @@ export const ProfileDisplayTab = ({ profileId, currentUserId }: DisplayTabProps)
                 <button className={`${styles["profileDisplayTabLink"]} ${styles["profileDisplayTab--hoverEffect"]} ${styles["underline-effect"]} ${segment === 'following' ? styles['active'] : ''}`}
                 >Following</button>
             </Link>
-        </div>
+        </nav>
     </>
 }

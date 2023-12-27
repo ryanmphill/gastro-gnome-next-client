@@ -1,5 +1,4 @@
 'use client'
-import { usePathname } from "next/navigation"
 import { MouseEvent, startTransition, useOptimistic } from "react"
 import styles from "./PostInteraction.module.css"
 import { addRecipeToFavorites, removeRecipeFromFavorites } from "@/dataManagers/userManager"
@@ -16,12 +15,6 @@ export const FavoriteButton = ( {currentUserId, recipeId, usersFavs} : FavoriteB
         usersFavs,
         (_currentState, updatedFavs: number[]) => updatedFavs   
         )
-
-    // Get the current location
-    const pathname = usePathname()
-
-    // Check if the user is viewing their profile to dynamically update the profile's list of favorites
-    const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
     // Handle the click to favorite a post
     const handleFavorite = async (event: MouseEvent<HTMLButtonElement>) => {

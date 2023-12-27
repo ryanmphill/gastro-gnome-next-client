@@ -9,8 +9,8 @@ interface SelectedCategoryProps {
 }
 
 export const SelectedCategories = ({ chosenCategories }
-     : SelectedCategoryProps ) => {
-    
+    : SelectedCategoryProps) => {
+
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -18,7 +18,7 @@ export const SelectedCategories = ({ chosenCategories }
     const handleRemoveSelected = (evt: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, queryToRemove: string) => {
         evt.preventDefault()
         const newQuery = removeFromQuery("category", `${queryToRemove}`, searchParams)
-        router.push(newQuery, {scroll: false})
+        router.push(newQuery, { scroll: false })
     }
 
     return <>

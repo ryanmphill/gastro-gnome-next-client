@@ -13,7 +13,7 @@ interface FilterByCategoriesProps {
     categoryTypes: CategoryType[]
 }
 
-export const FilterByCategories = ({ chosenCategories, categories, categoryTypes} 
+export const FilterByCategories = ({ chosenCategories, categories, categoryTypes }
     : FilterByCategoriesProps) => {
 
     // State variable for the type of category selected by user in the 'filter by' dropdown
@@ -45,12 +45,12 @@ export const FilterByCategories = ({ chosenCategories, categories, categoryTypes
             return;
         }
         // Get a copy of the current array of categories that are being used to filter
-        const currentCategories = [ ...chosenCategories ]
+        const currentCategories = [...chosenCategories]
         // Check if the category has already been added
         const alreadyAdded = currentCategories.some(categoryName => categoryName === chosenCategory.name)
         if (!alreadyAdded) {
             const newQuery = addToQuery("category", `${chosenCategory.name}`, searchParams)
-            router.push(newQuery, {scroll: false})
+            router.push(newQuery, { scroll: false })
         }
     }
 

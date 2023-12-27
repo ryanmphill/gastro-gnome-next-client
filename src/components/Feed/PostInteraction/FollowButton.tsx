@@ -3,17 +3,15 @@ import { MouseEvent, startTransition, useEffect, useOptimistic, useState } from 
 import followImg from "../../../../public/assets/follow.png"
 import followingImg from "../../../../public/assets/following.png"
 import styles from "./PostInteraction.module.css"
-import { usePathname, useRouter } from "next/navigation"
 import { followUser, unFollowUser } from "@/dataManagers/userManager"
 
 interface FollowButtonProps {
-    currentUserId: number,
     userToFollowId: number,
     usersFollows: number[]
 }
 
 
-export const FollowButton = ({ currentUserId, userToFollowId, usersFollows } 
+export const FollowButton = ({ userToFollowId, usersFollows } 
     : FollowButtonProps) => {
 
     const [optimisticFollows, updateOptimisticFollows] = useOptimistic(
@@ -26,13 +24,6 @@ export const FollowButton = ({ currentUserId, userToFollowId, usersFollows }
             startTransition(() => updateOptimisticFollows(usersFollows))
         },[usersFollows, updateOptimisticFollows]
     )
-    
-    // Get the current location
-    const pathname = usePathname()
-    const router = useRouter()
-
-    // Check if the user is viewing their profile to dynamically update the profile's list of follows
-    const viewingProfile = pathname === `/userprofile/${currentUserId}`
 
     // Handle the click to follow a user
     const handleFollow = async (event: MouseEvent<HTMLButtonElement>) => {

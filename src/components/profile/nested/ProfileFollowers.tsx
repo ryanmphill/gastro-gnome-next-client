@@ -21,7 +21,7 @@ export const ProfileFollowers = async ({ profileId } : ProfileFollowersProps) =>
     ])
 
     return <>
-        <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Followers</h2>
+        <h3 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Followers</h3>
         {
             profileOwnersFollowers.length > 0
                 ? profileOwnersFollowers.map((follower) => {
@@ -31,7 +31,6 @@ export const ProfileFollowers = async ({ profileId } : ProfileFollowersProps) =>
                             currentUserId !== follower?.id
                             && <Suspense>
                                 <FollowButton
-                                    currentUserId={currentUserId}
                                     userToFollowId={follower.id}
                                     usersFollows={currentUsersFollows} />
                             </Suspense>

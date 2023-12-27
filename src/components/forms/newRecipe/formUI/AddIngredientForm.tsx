@@ -63,29 +63,30 @@ export const AddIngredientForm = ({
     }
 
     return <>
-        <div className={`${styles["addedIngredients"]} ${styles["fadeIn"]}`}>
-            {
-                includedIngredients.length > 0
-                && includedIngredients.map(includedIngredient => {
+        <table className={styles["ingredientTable"]}>
+            <tbody className={`${styles["addedIngredients"]} ${styles["fadeIn"]}`}>
+                {
+                    includedIngredients.length > 0
+                    && includedIngredients.map(includedIngredient => {
 
-                    return <div className={styles["addedIngredientRow"]} key={`addedIngDetails--${includedIngredient.ingredient}`}>
-                        <span className={styles["flex-column1"]}>{includedIngredient.name}</span>
-                        <span className={styles["flex-column2"]}>{includedIngredient.quantity} {includedIngredient.quantity_unit}</span>
-                        <span className={styles["flex-column3"]}>
-                            <button data-id={includedIngredient.ingredient}
-                                onClick={(click) => {
-                                    click.preventDefault()
-                                    click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)
-                                }
-                                }
-                                className={styles["btn--removeItem"]}>X</button>
-                        </span>
-                    </div>
-                })
-            }
-        </div>
-
-        <section className={styles["ingredientInputContainer"]}>
+                        return <tr className={styles["addedIngredientRow"]} key={`addedIngDetails--${includedIngredient.ingredient}`}>
+                            <td className={styles["flex-column1"]}>{includedIngredient.name}</td>
+                            <td className={styles["flex-column2"]}>{includedIngredient.quantity} {includedIngredient.quantity_unit}</td>
+                            <td className={styles["flex-column3"]}>
+                                <button data-id={includedIngredient.ingredient}
+                                    onClick={(click) => {
+                                        click.preventDefault()
+                                        click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)
+                                    }
+                                    }
+                                    className={styles["btn--removeItem"]}>X</button>
+                            </td>
+                        </tr>
+                    })
+                }
+            </tbody>
+        </table>
+        <fieldset className={styles["ingredientInputContainer"]}>
             <div className={`form-group ${styles["ingredientSelectContainer"]} ${styles["ingredientInputs"]}`}>
                 <label>Choose Ingredient:
                     <Select
@@ -144,7 +145,7 @@ export const AddIngredientForm = ({
                         }
                     } />
             </div>
-        </section>
+        </fieldset>
         <button className={styles["btn-secondary"]} id={styles["btn--addIngredient"]}
             onClick={
                 (event) => {

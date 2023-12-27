@@ -13,7 +13,7 @@ interface CustomIngredientProps {
  * the `form within a form`. Once an ingredient is successfully added, it can then be associated 
  * with the recipe  that is either being created or updated.
  */
-export const CustomIngredient = ({ allIngredients, setShowCustom } : CustomIngredientProps) => {
+export const CustomIngredient = ({ allIngredients, setShowCustom }: CustomIngredientProps) => {
     // Set state variable for ingredient to be added
     const [newIngredient, updateNewIngredient] = useState({
         name: ""
@@ -41,7 +41,7 @@ export const CustomIngredient = ({ allIngredients, setShowCustom } : CustomIngre
     }
 
     return <>
-        <div className={`form-group ${styles["ingredientInputs"]} ${styles["fadeIn"]}`}>
+        <fieldset className={`form-group ${styles["ingredientInputs"]} ${styles["fadeIn"]}`}>
             <label htmlFor="CustomIngredient_input">Create New Custome Ingredient:</label>
             <input
                 type="text"
@@ -56,16 +56,16 @@ export const CustomIngredient = ({ allIngredients, setShowCustom } : CustomIngre
                         updateNewIngredient(copy) // Updating custom ingredient with value of copy
                     }
                 } />
-        </div>
+        </fieldset>
         <button className={`${styles["btn-secondary"]} ${styles["btn-group-left"]}`}
-        onClick={(click) => handleCreateCustom(click)}
+            onClick={(click) => handleCreateCustom(click)}
         >Create Custom Ingredient</button>
 
         <button className={`${styles["btn-secondary"]} ${styles["btn-group-right"]}`}
-        onClick={(e) => {
-            e.preventDefault()
-            setShowCustom(false)
-        }}
+            onClick={(e) => {
+                e.preventDefault()
+                setShowCustom(false)
+            }}
         >Cancel</button>
         <div><p>After adding your custom ingredient, you'll be able to find it in the search bar and add it to your recipe.</p></div>
     </>
