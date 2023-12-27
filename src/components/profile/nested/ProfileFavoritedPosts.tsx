@@ -26,8 +26,8 @@ export const ProfileFavoritedPosts = async ({profileId} : FavoritePostsProps) =>
     return <>
         {
             profileId === currentUserId
-                ? <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>My Favorite Recipes</h2>
-                : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes {ownerOfProfile.full_name.split(" ")[0]} Has Favorited</h2>
+                ? <h3 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>My Favorite Recipes</h3>
+                : <h3 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes {ownerOfProfile.full_name.split(" ")[0]} Has Favorited</h3>
         }
         <RecipeFeed
             recipes={favoritedRecipes}
