@@ -1,6 +1,6 @@
 'use client'
 import { AttachedCategory, Category } from '@/types/categoryType';
-import { MouseEvent, useState } from 'react';
+import { Fragment, MouseEvent, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 import { useEditedCategoryContext } from '@/context/EditedCategoryContext';
@@ -25,7 +25,7 @@ export const EditCategories = ({ allCategories, initialCategories }: EditCategor
             "name": ""
         }
     )
-    const { categoriesToPost, updateCategoriesToPost, 
+    const { categoriesToPost, updateCategoriesToPost,
         categoriesToDelete, updateCategoriesToDelete } = useEditedCategoryContext()
 
     const handleAddCategory = (event: MouseEvent<HTMLButtonElement>) => {
@@ -89,13 +89,13 @@ export const EditCategories = ({ allCategories, initialCategories }: EditCategor
             { // Display Categories already on recipe card with interface for deleting
                 initialCategories.length > 0
                 && initialCategories.map(initialCategory => {
-                    return <div key={`displayInitCat--${initialCategory.id}`}>
+                    return <Fragment key={`displayInitCat--${initialCategory.id}`}>
                         {   /*If marked for deletion, display undo button*/
                             markedForDeletion(initialCategory)
                                 ? <div className={`${styles["addedCategory"]} ${styles["categoryToDelete"]}`} key={`addededCat--${initialCategory.id}`}>
                                     <section>
-                                        <div>{initialCategory.name}</div>
-                                        <div className={styles["deleteStamp"]}>Marked for deletion</div>
+                                        <p>{initialCategory.name}</p>
+                                        <p className={styles["deleteStamp"]}>Marked for deletion</p>
                                     </section>
                                     <button
                                         onClick={(click) => handleUndoDeleteCat(click, initialCategory)}
@@ -112,7 +112,7 @@ export const EditCategories = ({ allCategories, initialCategories }: EditCategor
                                     >X</button>
                                 </div>
                         }
-                    </div>
+                    </Fragment>
                 })
             }
 
@@ -132,27 +132,27 @@ export const EditCategories = ({ allCategories, initialCategories }: EditCategor
                 })
             }
         </div>
-        <section className="selectCategoryContainer">
-            <div className={`form-group ${styles["selectCategories"]}`}>
-                <label>Add a category tag:
-                    <Select
-                        className="category--select"
-                        id="categoryChoices"
-                        instanceId="categoryChoices"
-                        options={allCategories}
-                        onChange={(selectedOption) => {
-                            const copy = { ...categoryToAdd }
-                            copy.id = selectedOption?.id ?? 0
-                            copy.name = selectedOption?.name ?? ""
-                            updateCategoryToAdd(copy)
-                        }}
-                        getOptionLabel={(option) => option.name}
-                        getOptionValue={(option) => String(option.id)}
-                        placeholder="Select a Category"
-                    />
-                </label>
-            </div>
-        </section>
+
+        <div className={`form-group ${styles["selectCategories"]}`}>
+            <label>Add a category tag:
+                <Select
+                    className="category--select"
+                    id="categoryChoices"
+                    instanceId="categoryChoices"
+                    options={allCategories}
+                    onChange={(selectedOption) => {
+                        const copy = { ...categoryToAdd }
+                        copy.id = selectedOption?.id ?? 0
+                        copy.name = selectedOption?.name ?? ""
+                        updateCategoryToAdd(copy)
+                    }}
+                    getOptionLabel={(option) => option.name}
+                    getOptionValue={(option) => String(option.id)}
+                    placeholder="Select a Category"
+                />
+            </label>
+        </div>
+
         <button className={styles["btn-secondary"]}
             onClick={
                 (event) => { handleAddCategory(event) }

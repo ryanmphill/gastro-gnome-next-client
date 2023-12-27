@@ -1,7 +1,7 @@
 'use client'
 import { AttachedIngredient, Ingredient } from '@/types/ingredientType';
 import { validateQuantityInput } from '@/utils/helpers/validateQuantityInput';
-import { Dispatch, KeyboardEvent, MouseEvent, SetStateAction, useState } from 'react';
+import { Dispatch, Fragment, KeyboardEvent, MouseEvent, SetStateAction, useState } from 'react';
 import Select from 'react-select';
 import styles from "../../recipeForm.module.css"
 import { useEditedIngredientContext } from '@/context/EditedIngredientContext';
@@ -31,7 +31,7 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, setShow
             "quantity_unit": ""
         }
     )
-    const { ingredientsToPost, updateIngredientsToPost, 
+    const { ingredientsToPost, updateIngredientsToPost,
         ingredientsToDelete, updateIngredientsToDelete } = useEditedIngredientContext()
 
     const handleAddIngredient = (event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>) => {
@@ -120,66 +120,68 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, setShow
     }
 
     return <>
-        <div className={styles["addedIngredients"]}>
-            { /*Initial ingredients already attached to the recipe card*/
-                initialIngredients.length > 0
-                && initialIngredients.map(initialIngredient => {
-                    return <div key={`displayInitIng--${initialIngredient.ingredient}`}>
-                        { // If user has marked for delete, display with red highlight and show 'undo' button
-                            markedForDeletion(initialIngredient)
-                                ?
-                                <div className={`${styles["addedIngredientRow"]} ${styles["ingredientToDelete"]}`} key={`initialIngDetails1--${initialIngredient.ingredient}`}>
-                                    <span className={styles["flex-column1"]}>{initialIngredient.name}</span>
-                                    <span className={styles["flex-column2"]}>{initialIngredient.quantity} {initialIngredient.quantity_unit}</span>
-                                    <span className={`${styles["flex-column3"]} ${styles["deleteStamp"]}`}>
-                                        Marked for Deletion <button
-                                            onClick={(click) => {
-                                                click.preventDefault()
-                                                click.target === document.activeElement && handleUndoDelete(click, initialIngredient)
-                                            }}
-                                            className={styles["btn--undoDelete"]}>Undo</button>
-                                    </span>
-                                </div>
+        <table className={styles["ingredientTable"]}>
+            <tbody className={styles["addedIngredients"]}>
+                { /*Initial ingredients already attached to the recipe card*/
+                    initialIngredients.length > 0
+                    && initialIngredients.map(initialIngredient => {
+                        return <Fragment key={`displayInitIng--${initialIngredient.ingredient}`}>
+                            { // If user has marked for delete, display with red highlight and show 'undo' button
+                                markedForDeletion(initialIngredient)
+                                    ?
+                                    <tr className={`${styles["addedIngredientRow"]} ${styles["ingredientToDelete"]}`} key={`initialIngDetails1--${initialIngredient.ingredient}`}>
+                                        <td className={styles["flex-column1"]}>{initialIngredient.name}</td>
+                                        <td className={styles["flex-column2"]}>{initialIngredient.quantity} {initialIngredient.quantity_unit}</td>
+                                        <td className={`${styles["flex-column3"]} ${styles["deleteStamp"]}`}>
+                                            Marked for Deletion <button
+                                                onClick={(click) => {
+                                                    click.preventDefault()
+                                                    click.target === document.activeElement && handleUndoDelete(click, initialIngredient)
+                                                }}
+                                                className={styles["btn--undoDelete"]}>Undo</button>
+                                        </td>
+                                    </tr>
 
-                                : /*Else, display with neutral color and delete button */
-                                <div className={styles["addedIngredientRow"]} key={`initialIngDetails2--${initialIngredient.ingredient}`}>
-                                    <span className={styles["flex-column1"]}>{initialIngredient.name}</span>
-                                    <span className={styles["flex-column2"]}>{initialIngredient.quantity} {initialIngredient.quantity_unit}</span>
-                                    <span className={styles["flex-column3"]}>
-                                        <button data-id={initialIngredient.ingredient}
-                                            onClick={(click) => {
-                                                click.preventDefault()
-                                                click.target === document.activeElement && handleDeleteExistingIngredient(click, initialIngredient)
-                                            }}
-                                            key={`btn--dltIng2${initialIngredient.ingredient}`}
-                                            className={styles["btn--removeItem"]}>X</button>
-                                    </span>
-                                </div>
-                        }
-                    </div>
-                })
-            }
+                                    : /*Else, display with neutral color and delete button */
+                                    <tr className={styles["addedIngredientRow"]} key={`initialIngDetails2--${initialIngredient.ingredient}`}>
+                                        <td className={styles["flex-column1"]}>{initialIngredient.name}</td>
+                                        <td className={styles["flex-column2"]}>{initialIngredient.quantity} {initialIngredient.quantity_unit}</td>
+                                        <td className={styles["flex-column3"]}>
+                                            <button data-id={initialIngredient.ingredient}
+                                                onClick={(click) => {
+                                                    click.preventDefault()
+                                                    click.target === document.activeElement && handleDeleteExistingIngredient(click, initialIngredient)
+                                                }}
+                                                key={`btn--dltIng2${initialIngredient.ingredient}`}
+                                                className={styles["btn--removeItem"]}>X</button>
+                                        </td>
+                                    </tr>
+                            }
+                        </Fragment>
+                    })
+                }
 
-            {   /*New ingredients being added to recipe card by user, displayed with green highlight*/
-                ingredientsToPost.length > 0
-                && ingredientsToPost.map(includedIngredient => {
-                    return <div className={`${styles["addedIngredientRow"]} ${styles["addedIngredientRow--editForm"]}`} key={`addedIngDetails--${includedIngredient.ingredient}`}>
-                        <span className={styles["flex-column1"]}>{includedIngredient.name}</span>
-                        <span className={styles["flex-column2"]}>{includedIngredient.quantity} {includedIngredient.quantity_unit}</span>
-                        <span className={styles["flex-column3"]}>
-                            <button data-id={includedIngredient.ingredient}
-                                onClick={(click) => {
-                                    click.preventDefault()
-                                    click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)
-                                }}
-                                key={`btnremIng--${includedIngredient.ingredient}`}
-                                className={styles["btn--removeItem"]}>X</button>
-                        </span>
-                    </div>
-                })
-            }
-        </div>
-        <section className={styles["ingredientInputContainer"]}>
+                {   /*New ingredients being added to recipe card by user, displayed with green highlight*/
+                    ingredientsToPost.length > 0
+                    && ingredientsToPost.map(includedIngredient => {
+                        return <tr className={`${styles["addedIngredientRow"]} ${styles["addedIngredientRow--editForm"]}`} key={`addedIngDetails--${includedIngredient.ingredient}`}>
+                            <td className={styles["flex-column1"]}>{includedIngredient.name}</td>
+                            <td className={styles["flex-column2"]}>{includedIngredient.quantity} {includedIngredient.quantity_unit}</td>
+                            <td className={styles["flex-column3"]}>
+                                <button data-id={includedIngredient.ingredient}
+                                    onClick={(click) => {
+                                        click.preventDefault()
+                                        click.target === document.activeElement && handleRemoveIngredient(click, includedIngredient)
+                                    }}
+                                    key={`btnremIng--${includedIngredient.ingredient}`}
+                                    className={styles["btn--removeItem"]}>X</button>
+                            </td>
+                        </tr>
+                    })
+                }
+            </tbody>
+        </table>
+        <fieldset className={styles["ingredientInputContainer"]}>
             <div className={`form-group ${styles["ingredientSelectContainer"]} ${styles["ingredientInputs"]}`}>
                 <label>Choose Ingredient:
                     <Select
@@ -236,7 +238,7 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, setShow
                         }
                     } />
             </div>
-        </section>
+        </fieldset>
         <button className={styles["btn-secondary"]} id={styles["btn--addIngredient"]}
             onClick={
                 (event) => {

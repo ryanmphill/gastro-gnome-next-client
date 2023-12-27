@@ -28,8 +28,8 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 #addIngredients {
@@ -39,16 +39,21 @@
     box-shadow: 8px 6px 4px rgba(54, 68, 68, 0.25);
     border-radius: 10px;
     background-color: #b0c19d;
-    background-image: linear-gradient(45deg, #9cb085 0%, #c9d4bd  51%, #b0c19d  100%);
+    background-image: linear-gradient(45deg, #9cb085 0%, #c9d4bd 51%, #b0c19d 100%);
+}
+
+.ingredientTable {
+    width: 100%;
 }
 
 .addedIngredients {
+    display: block;
     border-radius: 10px;
     background-color: #f1f4ed;
     padding: 0.5rem;
     height: 40vh;
     overflow: auto;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     /*---inverse box shadow-----*/
     box-shadow: rgba(54, 68, 68, 0.25) 4px 4px 8px 2px inset;
 }
@@ -59,10 +64,9 @@
     justify-content: space-between;
     padding: 0.15rem 0.25rem;
     border-bottom: 1px solid rgba(47, 76, 76, 0.5)
-    
 }
 
-.addedIngredientRow span {
+.addedIngredientRow td {
     flex-basis: 25%;
 }
 
@@ -79,8 +83,8 @@
 }
 
 .ingredientInputContainer {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
     justify-content: space-between;
 }
 
@@ -103,8 +107,8 @@
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .ingredientInputs {
@@ -158,6 +162,7 @@
     box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
     border-radius: 10px;
 }
+
 /*----------------------------------------------------------------------*/
 /*React-Select for category tag styles----------------------------------*/
 .selectCategories :global(#categoryChoices) {
@@ -165,6 +170,7 @@
     box-shadow: -1px 1px 5px rgba(43, 46, 46, 0.20);
     border-radius: 10px;
 }
+
 /*----------------------------------------------------------------------*/
 
 .recipe--textarea {
@@ -230,12 +236,12 @@
 
 .ingredientToDelete {
     background-color: rgb(232, 220, 220);
-    background-image: linear-gradient(45deg, rgb(216, 191, 191) 0%, rgb(217, 197, 197)  51%, rgb(232, 220, 220)  100%);
+    background-image: linear-gradient(45deg, rgb(216, 191, 191) 0%, rgb(217, 197, 197) 51%, rgb(232, 220, 220) 100%);
 }
 
 .addedIngredientRow--editForm {
     background-color: rgb(218, 237, 218);
-    background-image: linear-gradient(45deg, rgb(211, 232, 211) 0%, rgb(218, 237, 218)  51%, rgb(210, 231, 210)  100%);
+    background-image: linear-gradient(45deg, rgb(211, 232, 211) 0%, rgb(218, 237, 218) 51%, rgb(210, 231, 210) 100%);
 }
 
 .categoryToDelete {
@@ -255,12 +261,17 @@
 
 .fadeIn {
     animation: formFadeEffect 0.75s;
-  }
-  
-  @keyframes formFadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
+}
+
+@keyframes formFadeEffect {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 /*Post/submit button--------------------------------------------------------*/
 .btn-primary {
@@ -323,6 +334,7 @@
         padding: 0 40px;
     }
 }
+
 /*---------------------------------------------------------------------------------*/
 
 /*Secondary Button-----------------------------------------------------------------*/
@@ -371,8 +383,8 @@
     border-bottom-left-radius: 0;
 }
 
-  /*Desktop view--------------------------------------------------------*/
-  @media (min-width: 700px) {
+/*Desktop view--------------------------------------------------------*/
+@media (min-width: 700px) {
     .ingredientInputContainer {
         display: flex;
         flex-wrap: wrap;
@@ -384,12 +396,12 @@
     }
 
     .addedIngredients {
-        height: 20vh;
+        height: 25vh;
     }
-  }
+}
 
-  @media (min-width: 495px) {
+@media (min-width: 495px) {
     #btn--showCustom {
         margin-top: 0;
     }
-  }
+}
