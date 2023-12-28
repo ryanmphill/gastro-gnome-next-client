@@ -6,7 +6,7 @@ import { NutritionSchema } from "@/types/nutritionType"
 export const fetchNutrition = async (recipeTitle: string, ingredients: string[]): Promise<NutritionSchema> => {
 
     /*Temporarily halt nutrition API call --------------- */
-    return await Promise.resolve({});
+    // return await Promise.resolve({});
     /*----------------------------------------------------*/
 
     const title = recipeTitle

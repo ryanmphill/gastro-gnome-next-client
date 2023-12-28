@@ -4,10 +4,11 @@ import { getCurrentUserId } from "@/dataManagers/authManagers/authManagers"
 import { getCurrentUserFavorites } from "@/dataManagers/userManager"
 
 interface RecipeProps {
-    recipeId: number
+    recipeId: number,
+    loadNutrition: boolean
 }
 
-const Recipe = async ({ recipeId } : RecipeProps) => {
+const Recipe = async ({ recipeId, loadNutrition }: RecipeProps) => {
     const recipeDetailData = getSingleRecipe(recipeId)
     const currentUserIdData = getCurrentUserId()
     const usersFavsData = getCurrentUserFavorites()
@@ -16,17 +17,18 @@ const Recipe = async ({ recipeId } : RecipeProps) => {
         currentUserId,
         usersFavs
     ] = await Promise.all([
-        recipeDetailData, 
+        recipeDetailData,
         currentUserIdData,
         usersFavsData
     ])
 
     return <>
-    <RecipeContent 
-    recipeDetails={recipeDetails}
-    currentUserId={currentUserId}
-    recipeId={recipeId}
-    usersFavs={usersFavs} />
+        <RecipeContent
+            recipeDetails={recipeDetails}
+            currentUserId={currentUserId}
+            recipeId={recipeId}
+            usersFavs={usersFavs}
+            loadNutrition={loadNutrition} />
     </>
 }
 export default Recipe

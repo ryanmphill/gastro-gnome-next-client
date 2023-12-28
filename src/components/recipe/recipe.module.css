@@ -136,6 +136,27 @@
     font-size: x-small;
 }
 
+.loadNutritionContainer {
+    text-align: right;
+}
+
+.loadNutritionLink {
+    display: inline-block;
+    color: inherit;
+    text-decoration: inherit;
+    width: fit-content;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+#loadNutritionButton {
+    font-size: 1em;
+    margin: 0;
+    box-shadow: -1px 1px 4px rgba(22, 22, 22, 0.5);
+}
+
 .lightTableBorder {
     border-bottom: 1px solid rgba(35, 35, 35, 0.75);
 }
@@ -190,6 +211,10 @@
 
 .btn-secondary:active {
     transform: scale(0.95);
+}
+
+.btn-secondary:disabled {
+    opacity: 0.65;
 }
 
 /*Desktop View----------------------------------------------------------------------*/
