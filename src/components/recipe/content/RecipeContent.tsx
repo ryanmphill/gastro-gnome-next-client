@@ -5,15 +5,17 @@ import Link from "next/link"
 import { Nutrition } from "./Nutrition"
 import { RecipeEditButton } from "./RecipeEditButton"
 import styles from "../recipe.module.css"
+import { Suspense } from "react"
 
 interface RecipeContentProps {
     recipeId: number,
     currentUserId: number,
     recipeDetails: Recipe,
-    usersFavs: number[]
+    usersFavs: number[],
+    loadNutrition: boolean
 }
 
-const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs }: RecipeContentProps) => {
+const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs, loadNutrition }: RecipeContentProps) => {
     const attachedIngredients = [...recipeDetails.included_ingredients]
     const attachedCategories = [...recipeDetails.categories]
 
@@ -67,8 +69,8 @@ const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs }: Re
                     </section>
 
                     <section>
-                            <h4>Description</h4>
-                            <div className={styles["recipeDetails--textblock"]} id={styles["recipeDetails--desc"]} >{recipeDetails.description}</div>
+                        <h4>Description</h4>
+                        <div className={styles["recipeDetails--textblock"]} id={styles["recipeDetails--desc"]} >{recipeDetails.description}</div>
                     </section>
                 </div>
             </div>
@@ -88,10 +90,14 @@ const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs }: Re
                     </ul>
                 </div>
 
-                <Nutrition
-                    recipeTitle={recipeDetails.title}
-                    attachedIngredients={attachedIngredients}
-                    servingSize={recipeDetails.serving_size} />
+                <Suspense>
+                    <Nutrition
+                        recipeTitle={recipeDetails.title}
+                        attachedIngredients={attachedIngredients}
+                        servingSize={recipeDetails.serving_size}
+                        loadNutrition={loadNutrition}
+                        recipeId={recipeId} />
+                </Suspense>
             </section>
 
             <section>

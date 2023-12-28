@@ -1,15 +1,19 @@
 import { fetchNutrition } from "@/dataManagers/nutritionManager"
 import { AttachedIngredient } from "@/types/ingredientType"
 import styles from "../recipe.module.css"
+import { NutritionSchema } from "@/types/nutritionType"
+import Link from "next/link"
 
 
 interface NutritionProps {
     recipeTitle: string,
     attachedIngredients: AttachedIngredient[],
-    servingSize: number
+    servingSize: number,
+    loadNutrition: boolean,
+    recipeId: number
 }
 
-export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize }: NutritionProps) => {
+export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize, loadNutrition, recipeId }: NutritionProps) => {
 
     // Define function to build ingredient array to send to nutrition api
     const buildIngredientsArray = () => {
@@ -22,7 +26,10 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize 
 
     const nutritionIngr = buildIngredientsArray()
 
-    const nutrition = await fetchNutrition(recipeTitle, nutritionIngr)
+    let nutrition: NutritionSchema = {}
+    if (loadNutrition) {
+        nutrition = await fetchNutrition(recipeTitle, nutritionIngr)
+    }
 
     // Define a function to format the numbers in the results
     const formatNum = (num: number | undefined) => {
@@ -38,11 +45,25 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize 
         {
             nutritionIngr.length > 0 && recipeTitle.length > 0 &&
             <section className={styles["nutriFactsWrapper"]}>
-
                 <table className={styles["nutriFacts"]}>
                     <thead>
                         <tr>
-                            <th><h2>Nutrition Facts</h2></th>
+                            <th>
+                                <h2>Nutrition Facts</h2>
+                            </th>
+                            <th className={styles["loadNutritionContainer"]}>
+                                <Link href={`/recipe/${recipeId}?nutrition=true`}
+                                    scroll={false} prefetch={false}
+                                    className={`${styles["loadNutritionLink"]} ${loadNutrition ? styles["disabled"] : ''}`}
+                                >
+                                    <button className={styles["btn-secondary"]}
+                                        disabled={loadNutrition}
+                                        id={styles["loadNutritionButton"]}
+                                    >
+                                        Load Nutrition
+                                    </button>
+                                </Link>
+                            </th>
                         </tr>
                         <tr>
                             <th>Makes {servingSize} servings</th>
