@@ -2,7 +2,7 @@ import { Category, CategoryType } from "@/types/categoryType"
 
 const apiUrl: string = 'http://localhost:8000'
 
-
+/**Retrieves all public categories */
 export const getCategories = async (): Promise<Category[]> => {
     const res = await fetch(`${apiUrl}/categories`, {cache: "force-cache"})
     if (!res.ok) {
