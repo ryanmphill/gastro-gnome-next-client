@@ -2,19 +2,34 @@
 import { Ingredient } from "@/types/ingredientType"
 import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 const apiUrl: string = 'http://localhost:8000'
 
-
-export const getIngredients = async (): Promise<Ingredient[]> => {
-    const res = await fetch(`${apiUrl}/ingredients`, {
+/**Retrieves all public ingredients + any custom ingredients created by the authenticated user
+ * making the request.
+ * 
+ * If no authentication credentials provided, redirects to login page.
+*/
+export const getIngredients = async (): Promise<Ingredient[] | never> => {
+    const token = cookies().get('gastro_token')
+    if (token && token.value.length > 0) {
+    const res = await fetch(`${apiUrl}/ingredients/custom_list`, {
         cache: "force-cache",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Token ${token.value}`
+        },
         next: { tags: ['allIngredients'] }
     })
     if (!res.ok) {
         throw Error("Unable to fetch Ingredients") 
     }
     return res.json()
+    } else {
+        redirect('/login')
+    }
 }
 
 export const createNewIngredient = async (newIngredient: {name: string}): Promise<Ingredient> => {
