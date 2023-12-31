@@ -34,7 +34,7 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
       method: "GET",
       headers: reqHeaders,
       cache: "force-cache",
-      next: { tags: ['recipes'] }
+      next: { tags: ['recipes'], revalidate: 30 }
     })
     if (!res.ok) {
         throw Error("Unable to fetch Recipes") 

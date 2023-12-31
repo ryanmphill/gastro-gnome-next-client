@@ -9,5 +9,7 @@ export type AttachedIngredient = {
 
 export type Ingredient = {
     id: number,
-    name: string
+    name: string,
+    public: boolean,
+    created_by: number
 }

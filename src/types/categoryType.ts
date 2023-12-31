@@ -2,7 +2,9 @@ export type Category = {
     id: number,
     name: string,
     category_type: number,
-    category_type_label: string
+    category_type_label: string,
+    public: boolean,
+    created_by: number
 }
 
 export type CategoryType = {
