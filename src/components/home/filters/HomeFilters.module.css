@@ -206,3 +206,23 @@
         justify-content: flex-end;
     }
 }
+
+@media (min-width: 820px) {
+    .filterBar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .filterBar__categories {
+        justify-content: space-between;
+        font-size: inherit;
+    }
+
+    .filterBar__categoryType {
+        flex-basis: 27%;
+    }
+
+    .searchBarContainer {
+        margin-bottom: 0;
+    }
+}
