@@ -67,6 +67,6 @@ export const CustomIngredient = ({ allIngredients, setShowCustom }: CustomIngred
                 setShowCustom(false)
             }}
         >Cancel</button>
-        <div><p>After adding your custom ingredient, you'll be able to find it in the search bar and add it to your recipe.</p></div>
+        <div><p>After adding your custom ingredient, you&apos;ll be able to find it in the search bar and add it to your recipe.</p></div>
     </>
 }

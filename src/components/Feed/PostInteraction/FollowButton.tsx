@@ -4,6 +4,7 @@ import followImg from "../../../../public/assets/follow.png"
 import followingImg from "../../../../public/assets/following.png"
 import styles from "./PostInteraction.module.css"
 import { followUser, unFollowUser } from "@/dataManagers/userManager"
+import Image from "next/image"
 
 interface FollowButtonProps {
     userToFollowId: number,
@@ -56,8 +57,8 @@ export const FollowButton = ({ userToFollowId, usersFollows }
     return <>
         {
             !alreadyFollowed
-                ? <button className={styles["btn--follow"]} onClick={click => handleFollow(click)}><img src={followImg.src} alt="follow" className={styles["followIcon"]}></img></button>
-                : <button className={styles["btn--follow"]} onClick={click => handleUndoFollow(click)}><img src={followingImg.src} alt="following" className={`${styles["followIcon"]} ${styles["following"]}`}></img></button>
+                ? <button className={styles["btn--follow"]} onClick={click => handleFollow(click)}><Image src={followImg} alt="follow" className={styles["followIcon"]}></Image></button>
+                : <button className={styles["btn--follow"]} onClick={click => handleUndoFollow(click)}><Image src={followingImg} alt="following" className={`${styles["followIcon"]} ${styles["following"]}`}></Image></button>
         }
     </>
 }

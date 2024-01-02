@@ -2,7 +2,8 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    padding: 0;
+    margin: 0;
+    padding: 14px 0;
     animation: navFade 0.75s;
 }
 

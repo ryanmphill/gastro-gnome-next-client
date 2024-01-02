@@ -45,15 +45,15 @@ export const DropdownMenu = ({ currentUser }: { currentUser: number }) => {
   return (
     <nav className={styles.dropdown}>
       <button className={styles["dropdown-button"]} onClick={toggleDropdown}>
-        <Image src={gastroHamburger} alt="hamburger menu" id={styles.gastroHamburger}></Image>
+        <Image src={gastroHamburger} sizes="35px" alt="hamburger menu" id={styles.gastroHamburger}></Image>
       </button>
       {isOpen && <>
         <section className={styles["dropdown-content"]} onClick={toggleDropdown}>
-          <Link className={`${styles["dropdown--link"]} ${styles['dropdown__top']}`} href={"/"}>Home</Link>
+          <Link className={`${styles["dropdown--link"]} ${styles['dropdown__top']}`} href={"/#top"}>Home</Link>
           { // Authenticated or unauthenticated user views
             currentUser !== 0
               ? <>
-                <Link className={styles["dropdown--link"]} href={`/profile/${currentUser}`}>Profile</Link>
+                <Link className={styles["dropdown--link"]} href={`/profile/${currentUser}#top`}>Profile</Link>
                   <button className={`${styles["dropdown--link"]} ${styles["dropdown--btn_link"]} ${styles['dropdown__bottom']}`}
                     onClick={() => startTransition(() => logoutAction())}>
                     Logout

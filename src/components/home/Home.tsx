@@ -52,7 +52,7 @@ const Home = async ({ searchParams }: searchParamsProp) => {
     {
       display === "allPosts"
         ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>
-        : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You're Following</h2>
+        : <h2 className={`${styles["myFeedFade"]} ${styles["feedHeader"]}`}>Recipes From People You&apos;re Following</h2>
     }
     <Link className={styles["newRecipeLink"]} href={"/new-recipe"}>
       <button className={styles["btn-primary"]}>Post a Recipe</button>

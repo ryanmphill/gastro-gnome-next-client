@@ -82,7 +82,7 @@ export const unFollowUser = async (id: number) => {
 export const getCurrentUserFavorites = async (): Promise<number[]> => {
   const cookieStore = cookies()
   const token = cookieStore.get('gastro_token')
-  console.log("getCurrentUserFollows running...", "token=", token)
+  console.log("getCurrentUserFavorites running...", "token=", token)
   if (token && token.value.length > 0) {
       const res = await fetch(`${apiUrl}/users/current`, {
           method: "GET",
