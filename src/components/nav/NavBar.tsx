@@ -10,10 +10,10 @@ export const NavBar = async () => {
     return (
         <ul className={styles["navbar"]}>
             <li id={styles["logoContainer"]}>
-                <Link href={"/"} className={styles["link_img_wrapper"]}>
-                    <Image className={styles["navbar__logo"]} src={gastroLogo} alt="Logo"></Image>
+                <Link href={"/#top"} className={styles["link_img_wrapper"]}>
+                    <Image className={styles["navbar__logo"]} sizes="(max-width: 420px) 38px, (max-width: 1080px) 48px, 63px" src={gastroLogo} alt="Logo"></Image>
                 </Link>
-                <Link href={"/"} className={styles["link_title_wrapper"]}>
+                <Link href={"/#top"} className={styles["link_title_wrapper"]}>
                     <h2 id={styles["gastroTitle"]}>Gastro Gnome</h2>
                 </Link>
             </li>

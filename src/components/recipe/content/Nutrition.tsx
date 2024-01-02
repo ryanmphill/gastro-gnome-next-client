@@ -3,6 +3,7 @@ import { AttachedIngredient } from "@/types/ingredientType"
 import styles from "../recipe.module.css"
 import { NutritionSchema } from "@/types/nutritionType"
 import Link from "next/link"
+import Image from "next/image"
 
 
 interface NutritionProps {
@@ -143,7 +144,7 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize,
                     </tbody>
                 </table>
                 <footer className={styles["attributionContainer"]}>
-                    <img src="https://developer.edamam.com/images/badge.svg" alt="Edamam Logo" className={styles["nutriAttribution"]}></img>
+                    <Image src="https://developer.edamam.com/images/badge.svg" alt="Edamam Logo" width={400} height={50} className={styles["nutriAttribution"]}></Image>
                 </footer>
             </section>
         }

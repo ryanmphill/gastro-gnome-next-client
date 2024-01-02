@@ -255,6 +255,6 @@ export const EditIngredientForm = ({ initialIngredients, allIngredients, setShow
                     setShowCustom(true)
                 }
             }
-        >Don't see the ingredient you're looking for?</button>
+        >Don&apos;t see the ingredient you&apos;re looking for?</button>
     </>
 }

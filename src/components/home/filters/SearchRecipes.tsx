@@ -4,6 +4,7 @@ import searchIcon from "../../../../public/assets/skillet-search-small.svg"
 import { clearSearchFromQuery, updateSearchInQuery } from "@/utils/helpers/formatQuery"
 import styles from "./HomeFilters.module.css"
 import { useRouter, useSearchParams } from "next/navigation"
+import Image from "next/image"
 
 export const SearchRecipes = () => {
     // State to track user input in search bar
@@ -37,6 +38,6 @@ export const SearchRecipes = () => {
             type="text" placeholder="Find a Recipe" />
         <button className={styles["btn--search"]}
             onClick={(evt) => handleSearchClick(evt)}
-        ><img className={styles["searchIcon"]} src={searchIcon.src} alt="search"></img></button>
+        ><Image className={styles["searchIcon"]} src={searchIcon} alt="search"></Image></button>
     </div>
 }

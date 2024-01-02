@@ -6,6 +6,7 @@ import { Nutrition } from "./Nutrition"
 import { RecipeEditButton } from "./RecipeEditButton"
 import styles from "../recipe.module.css"
 import { Suspense } from "react"
+import Image from "next/image"
 
 interface RecipeContentProps {
     recipeId: number,
@@ -45,15 +46,15 @@ const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs, load
 
             <section className={styles["recipeDetails__userInfo"]}>
                 <div><b>{recipeDetails?.genre?.name}</b></div>
-                <div>Posted by: <Link href={`/profile/${recipeDetails?.user?.id}`}>{recipeDetails?.user?.full_name}</Link></div>
+                <div>Posted by: <Link href={`/profile/${recipeDetails?.user?.id}#top`}>{recipeDetails?.user?.full_name}</Link></div>
             </section>
             <div className={styles["recipeDetails__imageAndTimesContainer"]}>
                 <section className={styles["recipeDetails__imgContainer"]}>
                     <div className={styles["recipeDetails__imgWrapper"]}>
                         {
                             recipeDetails?.image?.length > 0
-                                ? <img className={styles["recipeDetails--img"]} src={recipeDetails.image} alt="recipe" />
-                                : <img className={styles["recipeDetails--img"]} src={placeholderImg.src} alt="recipe" />
+                                ? <Image className={styles["recipeDetails--img"]} fill={true} quality={100} sizes="(max-width: 720px) 98vw, 48vw" src={recipeDetails.image} alt="recipe" />
+                                : <Image className={styles["recipeDetails--img"]} fill={true} sizes="(max-width: 720px) 98vw, 48vw" src={placeholderImg} alt="recipe" />
                         }
                     </div>
                 </section>
