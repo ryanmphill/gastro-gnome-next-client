@@ -33,7 +33,6 @@ export const getRecipes = async (queryParams: string): Promise<Recipe[]> => {
     const res = await fetch(`${apiUrl}/recipes${queryParams}`, {
       method: "GET",
       headers: reqHeaders,
-      cache: "force-cache",
       next: { tags: ['recipes'], revalidate: 30 }
     })
     if (!res.ok) {
