@@ -3,7 +3,7 @@ import { getRecipes } from '@/dataManagers/recipeManagers/recipeManager'
 import { RecipeFeed } from '@/components/Feed/RecipeFeed'
 import { FeedChoice } from '@/components/home/filters/FeedChoice'
 import { FilterBar } from '@/components/home/filters/FilterBar'
-import { convertToQueryString, formatCategoryQueryParams } from '@/utils/helpers/formatQuery'
+import { convertObjectToQueryString, formatCategoryParamsAsArray } from '@/utils/helpers/formatQuery'
 import { getCurrentUserId } from '@/dataManagers/authManagers/authManagers'
 import { getCategories, getCategoryTypes } from '@/dataManagers/categoryManager'
 import { Suspense } from 'react'
@@ -18,12 +18,15 @@ interface searchParamsProp {
 }
 
 const Home = async ({ searchParams }: searchParamsProp) => {
-  const queryString = searchParams ? convertToQueryString(searchParams) : ""
+  const queryString = searchParams ? convertObjectToQueryString(searchParams) : ""
   const display = searchParams && searchParams.following === "true" ? "postsFollowed" : "allPosts"
+  const chosenCategoryArray = formatCategoryParamsAsArray(searchParams?.category)
+
   const recipeData = getRecipes(queryString)
   const currentUserIdData = getCurrentUserId()
   const categoryData = getCategories()
   const categoryTypeData = getCategoryTypes()
+  
   const [
     recipes,
     currentUserId,
@@ -36,8 +39,6 @@ const Home = async ({ searchParams }: searchParamsProp) => {
     categoryTypeData
   ])
 
-  const chosenCategories = formatCategoryQueryParams(searchParams?.category)
-
   return <main className={styles["pageBody"]}>
     <Suspense>
       <FeedChoice
@@ -47,7 +48,7 @@ const Home = async ({ searchParams }: searchParamsProp) => {
     <FilterBar
       categories={categories}
       categoryTypes={categoryTypes}
-      chosenCategories={chosenCategories} />
+      chosenCategories={chosenCategoryArray} />
     {
       display === "allPosts"
         ? <h2 className={`${styles["discoverFade"]} ${styles["feedHeader"]}`}>Discover New Recipes</h2>

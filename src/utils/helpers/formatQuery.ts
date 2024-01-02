@@ -3,7 +3,7 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 /**  Takes an array of separate query strings (ex. ["search=example", ...]) and returns a single query string
  * with '?' at the beginning of the query and '&' joining the remaining queries
 */
-export const formatQuery = (queryArray : string[]): string => {
+export const convertArrayToQueryString = (queryArray : string[]): string => {
     let query = [ ...queryArray ];
     if (queryArray.length > 0) {
         const firstQuery = `?${query.shift()}`
@@ -63,8 +63,12 @@ interface searchParamsObj {
     following?: string
 }
 
-/**  Takes the searchParams object and converts to a string to be sent to API */
-export const convertToQueryString = (paramObj : searchParamsObj) => {
+/**Takes the searchParams object and converts to a string to be sent to API
+ * 
+ * Returns a single query string with '?' at the beginning of the query and '&' 
+ * joining the remaining queries
+*/
+export const convertObjectToQueryString = (paramObj : searchParamsObj) => {
     const queryStringArray: string[] = []
     if (paramObj.search) {
         queryStringArray.push(`search=${paramObj.search}`)
@@ -78,20 +82,20 @@ export const convertToQueryString = (paramObj : searchParamsObj) => {
     if (paramObj.category && Array.isArray(paramObj.category)) {
         paramObj.category.forEach((param) => queryStringArray.push(`category=${param}`))
     }
-    return formatQuery(queryStringArray)
+    return convertArrayToQueryString(queryStringArray)
 }
 
-/**  Ensures selected categories from query are stored as an array for consistant use as state
+/**Ensures selected `categories` from query are stored as an array for consistent use as state
  * 
- * Inputs:
+ * Possible Inputs/Outputs:
  * 
- * Single category from the searchParams object: (string) => ['string']
+ * Single `category` string from the `searchParams` object: `(string) => ['string']`
  * 
- * Multiple category searchParams are already in an array: (['string', 'string']) => ['string', 'string']
+ * Multiple category searchParams are already in an array of strings: `(['string', 'string']) => ['string', 'string']`
  * 
- * No category searchParams are entered: (undefined) => [ ]
+ * No category searchParams are entered: `(undefined) => []`
  */
-export const formatCategoryQueryParams = (categoryQuery: string | string[] | undefined) => {
+export const formatCategoryParamsAsArray = (categoryQuery: string | string[] | undefined) => {
     
     if (Array.isArray(categoryQuery)) {
         return categoryQuery
