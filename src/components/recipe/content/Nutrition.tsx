@@ -143,8 +143,15 @@ export const Nutrition = async ({ recipeTitle, attachedIngredients, servingSize,
                         </tr>
                     </tbody>
                 </table>
-                <footer className={styles["attributionContainer"]}>
-                    <Image src="https://developer.edamam.com/images/badge.svg" alt="Edamam Logo" width={400} height={50} className={styles["nutriAttribution"]}></Image>
+                <footer className={styles["nutritionFooter"]}>
+                    <div className={styles["attributionContainer"]}>
+                        <Image src="https://developer.edamam.com/images/badge.svg" 
+                        alt="Edamam Logo" 
+                        fill={true}
+                        sizes={"22.5em"}
+                        className={styles["nutriAttribution"]}>
+                        </Image>
+                    </div>
                 </footer>
             </section>
         }

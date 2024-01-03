@@ -174,16 +174,22 @@
     margin-bottom: 1rem;
 }
 
-.attributionContainer {
+.nutritionFooter {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.attributionContainer {
+    position: relative;
+    width: 76%;
+    max-height: 3.5em;
+    height: 3em;
+}
+
 .nutriAttribution {
     height: auto;
-    max-height: 3.5em;
-    width: 76%;
+    width: 100%;
 }
 
 /*UI--------------------------------------------------------------------------------*/
