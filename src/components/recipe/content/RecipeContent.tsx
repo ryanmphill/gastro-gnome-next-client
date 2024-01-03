@@ -53,8 +53,8 @@ const RecipeContent = ({ recipeId, currentUserId, recipeDetails, usersFavs, load
                     <div className={styles["recipeDetails__imgWrapper"]}>
                         {
                             recipeDetails?.image?.length > 0
-                                ? <Image className={styles["recipeDetails--img"]} fill={true} quality={100} sizes="(max-width: 720px) 98vw, 48vw" src={recipeDetails.image} alt="recipe" />
-                                : <Image className={styles["recipeDetails--img"]} fill={true} sizes="(max-width: 720px) 98vw, 48vw" src={placeholderImg} alt="recipe" />
+                                ? <Image className={styles["recipeDetails--img"]} fill={true} quality={85} sizes="(max-width: 720px) 93vw, 40vw" priority={true} src={recipeDetails.image} alt="recipe" />
+                                : <Image className={styles["recipeDetails--img"]} fill={true} sizes="(max-width: 720px) 93vw, 40vw" src={placeholderImg} alt="recipe" />
                         }
                     </div>
                 </section>
