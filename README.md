@@ -1,9 +1,91 @@
- ### Currently under construction. Coming Soon!
- # 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+ # Gastro Gnome
 
-## Gastro Gnome
+Gastro Gnome is an application intended for the true _gastronomes_ where users can discover, collect, and share their favorite recipes using an intuitive UI. The application is built with [Next.js](https://nextjs.org/) app router, a [Python/Django backend](https://github.com/ryanmphill/gastro-django-server) and interfaces with a [third party API](https://www.edamam.com/) to display a nutrition profile for each recipe.
 
-Gastro Gnome is an application intended for the true _gastronomes_ where users can discover, collect, and share their favorite recipes using an intuitive UI. The application is built with [Next.js](https://nextjs.org/) app router, a [Django backend](https://github.com/ryanmphill/gastro-django-server) and interfaces with a [third party API](https://www.edamam.com/) to display a nutrition profile for each recipe.
+![homepage](./public/screenCaptures/gastro-scrnsht-home.png)
+
+![homepage-mobile](./public/screenCaptures/gastro-scrnsht-m.png)
+
+## Getting Started
+
+1. Pull downt the this (client side) repository and install dependencies
+
+```bash
+npm install
+```
+
+2. Pull down the [server side repository](https://github.com/ryanmphill/gastro-django-server)
+
+If cloning via SSH:
+
+```bash
+git clone git@github.com:ryanmphill/gastro-django-server.git
+```
+
+3. In the server side directory, install necessary dependencies via [pipenv](https://pipenv.pypa.io/en/latest/) and start the virtual environment:
+
+```bash
+pipenv shell
+```
+
+4. Start up a local web server for the API. It should automatically listen on port 8000
+
+```bash
+python3 manage.py runserver
+```
+
+5. If you want to use the [Edamam API](https://www.edamam.com/) locally, you will need to create an account to get an id and key. Make a `.env.local` file in the root directory of the client side project, and add the following:
+
+```bash
+EDAMAM_ID = "<PASTE ID HERE>"
+EDAMAM_KEY = "<PASTE KEY HERE>"
+```
+
+6. If you simply want to demo the project, you can run and preview the build for the best performance:
+
+```bash
+npm run build
+```
+
+Wait for the build to complete and then run:
+
+```bash
+npm start
+```
+
+Now you should be able to view the project on `http://localhost:3000`
+
+**Note**: If you want to preview live changes while making edits to the project, you can run in development mode. Just know that route changes will take more time to load this way:
+
+```bash
+npm run dev
+```
+
+## Deployed Project
+
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+Coming soon to `gastro-gnome.com`!
+
+## Screenshots
+
+![profile](./public/screenCaptures/gastro-scrnsht-profile.png)
+
+![profile-mobile](./public/screenCaptures/gastro-scrnsht-profile-m.png)
+
+![recipe](./public/screenCaptures/gastro-scrnsht-recipe1.png)
+
+![recipe-mobile](./public/screenCaptures/gastro-scrnsht-recipe1-m.png)
+
+![nutrition](./public/screenCaptures/gastro-scrnsht-recipe2.png)
+
+![nutrition-mobile](./public/screenCaptures/gastro-scrnsht-recipe2-m.png)
+
+![](./public/screenCaptures/gastro-scrnsht-recipelist-m.png)
+
+## Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev/reference/react)
 
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
