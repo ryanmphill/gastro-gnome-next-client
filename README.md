@@ -8,7 +8,7 @@ Gastro Gnome is an application intended for the true _gastronomes_ where users c
 
 ## Getting Started
 
-1. Pull downt the this (client side) repository and install dependencies
+1. Make sure you have Node.js and npm installed on your machine. Pull down the this (client side) repository and install dependencies.
 
 ```bash
 npm install
@@ -41,7 +41,7 @@ EDAMAM_ID = "<PASTE ID HERE>"
 EDAMAM_KEY = "<PASTE KEY HERE>"
 ```
 
-6. If you simply want to demo the project, you can run and preview the build for the best performance:
+6. If you simply want to demo the project, you can run and preview the build for the best performance. From the root directory of the client side project:
 
 ```bash
 npm run build
