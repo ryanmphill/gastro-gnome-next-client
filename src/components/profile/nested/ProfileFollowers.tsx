@@ -28,7 +28,7 @@ export const ProfileFollowers = async ({ profileId } : ProfileFollowersProps) =>
                     return <div key={`follower--${follower.id}`} className={styles["followedByListItem"]}>
                         <div><Link href={`/profile/${follower?.id}`}>{follower?.full_name}</Link></div>
                         {
-                            currentUserId !== follower?.id
+                            currentUserId !== follower?.id && currentUserId !== 0
                             && <Suspense>
                                 <FollowButton
                                     userToFollowId={follower.id}

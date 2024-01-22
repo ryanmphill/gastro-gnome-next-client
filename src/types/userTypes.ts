@@ -1,4 +1,4 @@
-export type currentUserType = {
+export type userType = {
     id: number,
     bio: string,
     image_url: string,

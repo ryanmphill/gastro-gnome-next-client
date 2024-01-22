@@ -1,5 +1,5 @@
 'use server'
-import { currentUserType } from "@/types/userTypes";
+import { userType } from "@/types/userTypes";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
@@ -72,7 +72,7 @@ export const unFollowUser = async (id: number) => {
           if (res.status !== 200) {
             return []
           }
-          const userData: currentUserType = await res.json()
+          const userData: userType = await res.json()
           return userData.following
     } else {
         return []
@@ -97,7 +97,7 @@ export const getCurrentUserFavorites = async (): Promise<number[]> => {
         if (res.status !== 200) {
           return []
         }
-        const userData: currentUserType = await res.json()
+        const userData: userType = await res.json()
         return userData.favorites
   } else {
       return []
@@ -144,7 +144,7 @@ revalidateTag('favoritedRecipes')
 return await res.json()
 };
 
-export const getProfileInfo = async (profileId: number): Promise<currentUserType> => {
+export const getProfileInfo = async (profileId: number): Promise<userType> => {
   const res = await fetch(`${apiUrl}/users/${profileId}`, {
     method: "GET",
     headers: {
@@ -165,7 +165,7 @@ export const getProfileInfo = async (profileId: number): Promise<currentUserType
 
 /** Retrieves the the expanded user data for users currently following a given user 
  * whose profile is being visited */
-export const getProfileFollowers = async (profileId: number): Promise<currentUserType[]> => {
+export const getProfileFollowers = async (profileId: number): Promise<userType[]> => {
   const res = await fetch(`${apiUrl}/users/${profileId}/followers`, {
     method: "GET",
     headers: {
@@ -182,7 +182,7 @@ export const getProfileFollowers = async (profileId: number): Promise<currentUse
 
 /** Retrieves the the expanded user data for users currently being followed by a given user 
  * whose profile is being visited */
-export const getProfileFollowing = async (profileId: number): Promise<currentUserType[]> => {
+export const getProfileFollowing = async (profileId: number): Promise<userType[]> => {
   const res = await fetch(`${apiUrl}/users/${profileId}/following`, {
     method: "GET",
     headers: {
